@@ -1,0 +1,32 @@
+
+#No more than 100 characters per line !
+
+#<type>(<scope>): <subject>
+#<BLANK LINE>
+#<body>
+#<BLANK LINE>
+#<footer>
+
+#type: {feat, fix, docs, style, refactor, test, build, ci, perf, chore(maintain), revert}
+
+#scope: anything refering to location of change, or nothing (no parenthesis)
+
+#subject: use imperative present tense, don't capitalize first letter, no dot at the end
+
+#body: imperative, present tense ; motivation for change and constrasts with previous behavior
+
+#footer: breaking change, issues
+
+#breaking change example: 
+#BREAKING CHANGE: isolate scope bindings definition has changed and
+#the inject option for the directive controller injection was removed.
+        
+#To migrate the code follow the example below:
+#[...]
+
+#issues example: 
+
+#Closes #123, #245, #992
+
+#Revert
+#If the commit reverts a previous commit, it should begin with revert: , followed by the header of the reverted commit. In the body it should say: This reverts commit <hash>., where the hash is the SHA of the commit being reverted.

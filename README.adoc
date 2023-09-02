@@ -1,0 +1,39 @@
+# NixOS dotfiles
+
+
+## No git ?
+
+```
+nix-shell -p git
+git clone git@github.com:scarisey/nixos-dotfiles.git
+cd nixos-dotfiles
+nix-shell ##the shell.nix file will activate flake feature
+```
+
+## Fresh install
+
+  * On live CD
+
+```
+nixos-install --flake .#hostname 
+```
+
+  * On NixOS
+
+```
+sudo nixos-rebuild switch --flake .#hostname
+```
+
+## Apply configurations
+
+NixOS system configuration:
+
+```
+sudo nixos-rebuild switch --flake .
+```
+
+Home manager configuration:
+
+```
+home-manager switch --flake .
+```
