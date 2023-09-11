@@ -12,8 +12,10 @@
     nixgl.nixGLIntel
   ];
 
+  home.file."fhs.nix".source = ./fhs.nix;
+
   home.shellAliases = {
-    nixShell = "nix develop ~/git/github.com/scarisey/nixos-dotfiles -c $SHELL";
+    nixShell = "nix-shell $HOME/fhs.nix";
   };
 
 }

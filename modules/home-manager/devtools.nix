@@ -31,6 +31,7 @@ let
         gradle
         #others
         nodejs
+        nodePackages."fx"
         cargo
       ]
       ++ optionals cfg.intellij [

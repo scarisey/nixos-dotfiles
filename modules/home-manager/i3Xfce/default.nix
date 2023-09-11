@@ -4,9 +4,9 @@ let
   # Shorter name to access final settings a 
   # user of devtools.nix module HAS ACTUALLY SET.
   # cfg is a typical convention.
-  cfg = config.scarisey.i3; in
+  cfg = config.scarisey.i3Xfce; in
 {
-  options.scarisey.i3 = {
+  options.scarisey.i3Xfce = {
     enable = mkEnableOption "i3 home configuration";
     browserPath = mkOption {
       type = types.path;

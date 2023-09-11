@@ -7,5 +7,5 @@
   gui = import ./gui.nix;
   devtools = import ./devtools.nix;
   myshell = import ./myshell.nix;
-  i3 = import ./i3;
+  i3Xfce = import ./i3Xfce;
 }

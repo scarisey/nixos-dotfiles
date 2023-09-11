@@ -4,7 +4,6 @@
 {
   # List your module files here
   # my-module = import ./my-module.nix;
-  scarisey = {
-    i3 = import ./i3.nix;
-  };
+  i3Xfce = import ./i3.nix;
+  kde = import ./kde.nix;
 }

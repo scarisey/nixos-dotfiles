@@ -5,7 +5,8 @@
 
   scarisey.myshell.enable = true;
   scarisey.gui.enable = true;
-  scarisey.devtools.enable = true;
-  scarisey.devtools.intellij = true;
+  scarisey.devtools.enable = false;
+  scarisey.devtools.intellij = false;
+  scarisey.i3Xfce.enable = false;
 
 }

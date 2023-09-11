@@ -18,66 +18,25 @@
     ../common.nix
   ];
 
-
-  networking.hostName = "titan"; # Define your hostname.
+  networking.hostName = "vm"; # Define your hostname.
   #networking.wireless.enable = true; # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  services.xserver = {
-    # Enable the X11 windowing system.
+  scarisey.i3Xfce.enable = false;
+  scarisey.kde.enable = true;
+
+  services.openssh = {
     enable = true;
-    # Configure keymap in X11
-    layout = "fr";
-    xkbVariant = "azerty";
-    videoDrivers = [ "nvidia" ];
+    settings = {
+      # Forbid root login through SSH.
+      PermitRootLogin = "no";
+      # Use keys only. Remove if you want to SSH using password (not recommended)
+      PasswordAuthentication = true;
+    };
   };
-  # Enable OpenGL
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-  };
-  hardware.nvidia = {
-
-    # Modesetting is needed most of the time
-    modesetting.enable = true;
-
-    # Enable power management (do not disable this unless you have a reason to).
-    # Likely to cause problems on laptops and with screen tearing if disabled.
-    powerManagement.enable = true;
-
-    # Use the NVidia open source kernel module (which isn't “nouveau”).
-    # Support is limited to the Turing and later architectures. Full list of 
-    # supported GPUs is at: 
-    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
-    # Only available from driver 515.43.04+
-    open = false;
-
-    # Enable the Nvidia settings menu,
-    # accessible via `nvidia-settings`.
-    nvidiaSettings = true;
-
-    # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
-
-  #GNOME
-  services.xserver.displayManager.gdm = {
-    enable = true;
-    wayland = false;
-  };
-  services.xserver.desktopManager.gnome.enable = true;
-  xdg.portal.enable = true;
-
-
-  #Flatpak since I need a gentle transition ...
-  services.flatpak.enable = true;
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
   # Enable sound with pipewire.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
@@ -98,7 +57,6 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -108,6 +66,7 @@
   # };
 
   # List services that you want to enable:
+
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
