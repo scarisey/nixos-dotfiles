@@ -26,14 +26,10 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  services.xserver = {
-    # Enable the X11 windowing system.
-    enable = true;
-    # Configure keymap in X11
-    layout = "fr";
-    xkbVariant = "azerty";
-    videoDrivers = [ "nvidia" ];
-  };
+  services.xserver.videoDrivers = [ "nvidia" ];
+  scarisey.kde.enable = true;
+
+
   # Enable OpenGL
   hardware.opengl = {
     enable = true;
@@ -64,16 +60,8 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
-  #GNOME
-  services.xserver.displayManager.gdm = {
-    enable = true;
-    wayland = false;
-  };
-  services.xserver.desktopManager.gnome.enable = true;
-  xdg.portal.enable = true;
-
-
   #Flatpak since I need a gentle transition ...
+  xdg.portal.enable = true;
   services.flatpak.enable = true;
   # Enable CUPS to print documents.
   services.printing.enable = true;
