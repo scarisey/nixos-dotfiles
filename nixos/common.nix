@@ -55,6 +55,10 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  #i18n
+  i18n = {
+    defaultLocale = "fr_FR.UTF-8";
+  };
 
   # Configure console keymap
   console.keyMap = "fr";
