@@ -30,6 +30,8 @@
 	tool = vimdiff
 [commit]
 	template = ./.gitmessage
+[lfs "transfer"]
+  maxretries = 10
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
