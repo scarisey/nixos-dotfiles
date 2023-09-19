@@ -6,7 +6,7 @@
   scarisey.myshell.enable = true;
   scarisey.gui.enable = true;
   scarisey.devtools.enable = true;
-  scarisey.devtools.intellij = true;
+  scarisey.devtools.all = true;
 
   home.packages = with pkgs; [
     nixgl.nixGLIntel

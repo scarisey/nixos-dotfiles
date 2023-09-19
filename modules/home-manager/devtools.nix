@@ -8,7 +8,11 @@ let
 {
   options.scarisey.devtools = {
     enable = mkEnableOption "Collection of development tools";
+    all = mkEnableOption "All tools installed";
     intellij = mkEnableOption "Include Intellij Idea community edition";
+    jvm = mkEnableOption "JVM dev tools";
+    javascript = mkEnableOption "Javascript dev tools";
+    rust = mkEnableOption "Rust dev tools";
   };
   config =
     let
@@ -22,19 +26,20 @@ let
         #lua
         lua
         luarocks
-        #jvm
+      ] ++ optionals (cfg.jvm || cfg.all) [
         jdk
         sbt
         scala-cli
         coursier
         maven
         gradle
-        #others
+      ] ++ optionals (cfg.javascript || cfg.all) [
         nodejs
         nodePackages."fx"
+      ] ++ optionals (cfg.rust || cfg.all) [
         cargo
       ]
-      ++ optionals cfg.intellij [
+      ++ optionals (cfg.intellij || cfg.all) [
         jetbrains.idea-community
       ];
 
