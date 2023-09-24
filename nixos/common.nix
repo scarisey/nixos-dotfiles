@@ -69,7 +69,7 @@
     shell = pkgs.zsh;
     isNormalUser = true;
     description = "sylvain";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
   };
 
   # List packages installed in system profile. To search, run:
