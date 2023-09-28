@@ -27,6 +27,8 @@
 
   scarisey.i3Xfce.enable = false;
   scarisey.kde.enable = true;
+  scarisey.cloud.enable = true;
+  scarisey.cloud.all = true;
 
   services.openssh = {
     enable = true;
