@@ -30,8 +30,9 @@
   scarisey.kde.enable = true;
   virtualisation.docker.enable = true;
 
-  environment.systemPackages = [
-    pkgs.unstable.distrobox
+  environment.systemPackages = with pkgs;[
+    unstable.distrobox
+    xorg.xhost
   ];
 
   # Enable OpenGL
