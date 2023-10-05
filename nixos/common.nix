@@ -50,6 +50,12 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  #Time
+  time = {
+    hardwareClockInLocalTime = true;
+    timeZone = "Europe/Paris";
+  };
+
   #networking.wireless.enable = true; # Enables wireless support via wpa_supplicant.
 
   # Enable networking
