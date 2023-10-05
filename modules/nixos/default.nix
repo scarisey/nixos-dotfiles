@@ -7,4 +7,5 @@
   i3Xfce = import ./i3.nix;
   kde = import ./kde.nix;
   cloud = import ./cloud.nix;
+  distrobox = import ./distrobox.nix;
 }

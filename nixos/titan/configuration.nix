@@ -28,12 +28,7 @@
 
   services.xserver.videoDrivers = [ "nvidia" ];
   scarisey.kde.enable = true;
-  virtualisation.docker.enable = true;
-
-  environment.systemPackages = with pkgs;[
-    unstable.distrobox
-    xorg.xhost
-  ];
+  scarisey.distrobox.enable = true;
 
   # Enable OpenGL
   hardware.opengl = {
