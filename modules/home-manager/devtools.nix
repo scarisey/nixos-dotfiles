@@ -40,7 +40,7 @@ let
         cargo
       ]
       ++ optionals (cfg.intellij || cfg.all) [
-        jetbrains.idea-community
+        unstable.jetbrains.idea-community
       ];
 
       home.sessionVariables = {
