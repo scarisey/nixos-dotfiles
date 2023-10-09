@@ -6,6 +6,7 @@
   # my-module = import ./my-module.nix;
   i3Xfce = import ./i3.nix;
   kde = import ./kde.nix;
+  gnome = import ./gnome.nix;
   cloud = import ./cloud.nix;
   distrobox = import ./distrobox.nix;
 }
