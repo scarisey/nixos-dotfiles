@@ -55,7 +55,12 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
-  services.resolved.enable = true;
+  # networking.nameservers = [  ];
+  services.resolved = {
+    enable = true;
+    fallbackDns = [ "8.8.8.8" ];
+    # domains = [  ];
+  };
 
   #i18n
   i18n = {
