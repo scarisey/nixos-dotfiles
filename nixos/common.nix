@@ -55,6 +55,7 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+  services.resolved.enable = true;
 
   #i18n
   i18n = {
