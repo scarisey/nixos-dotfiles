@@ -9,4 +9,5 @@
   gnome = import ./gnome.nix;
   cloud = import ./cloud.nix;
   distrobox = import ./distrobox.nix;
+  bridges = import ./bridges.nix;
 }

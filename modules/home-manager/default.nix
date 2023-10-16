@@ -8,4 +8,5 @@
   devtools = import ./devtools.nix;
   myshell = import ./myshell.nix;
   i3Xfce = import ./i3Xfce;
+  quickemu = import ./quickemu.nix;
 }

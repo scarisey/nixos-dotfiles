@@ -7,6 +7,7 @@
   scarisey.gui.enable = true;
   scarisey.devtools.enable = true;
   scarisey.devtools.all = true;
+  scarisey.quickemu.enable = true;
 
   home.packages = with pkgs; [
     nixgl.nixGLIntel

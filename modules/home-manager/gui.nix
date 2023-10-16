@@ -16,9 +16,6 @@ in
     home.packages = with pkgs; [
       unstable.google-chrome
 
-      quickemu
-      quickgui
-
       alacritty
       conky
 
