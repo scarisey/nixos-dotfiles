@@ -10,8 +10,8 @@ in
   config = mkIf cfg.enable {
 
     home.packages = with pkgs; [
-      quickemu
-      quickgui
+      unstable.quickemu
+      unstable.quickgui
     ];
 
     home.file."quickemu/ubuntu-22.04.conf" = {

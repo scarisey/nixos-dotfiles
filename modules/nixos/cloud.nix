@@ -17,8 +17,8 @@ in
 
   config = mkIf cfg.enable {
     virtualisation.docker.enable = cfg.all || cfg.docker;
-    environment.systemPackages = with pkgs;  pkgIf cfg.k9s [ k9s ] ++ pkgIf cfg.kubectl [ kubectl ]
-      ++ pkgIf cfg.helm [ kubernetes-helm ] ++ pkgIf cfg.azure [ azure-cli ];
+    environment.systemPackages = with pkgs;  pkgIf cfg.k9s k9s ++ pkgIf cfg.kubectl kubectl
+      ++ pkgIf cfg.helm kubernetes-helm ++ pkgIf cfg.azure azure-cli;
   };
 
 }
