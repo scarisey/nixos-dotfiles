@@ -70,6 +70,13 @@
   # Configure console keymap
   console.keyMap = "fr";
 
+  #journald size
+  services.journald = {
+    extraConfig = ''
+      SystemMaxUse=512MB
+      RuntimeMaxUse=512MB
+    '';
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.sylvain = {
