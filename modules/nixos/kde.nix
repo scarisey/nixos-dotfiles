@@ -24,5 +24,11 @@ in
       };
 
     };
+
+    environment.systemPackages = with pkgs;[
+      krita
+      kolourpaint
+      plasma5Packages.kalk
+    ];
   };
 }
