@@ -28,9 +28,9 @@ let
         luarocks
       ] ++ optionals (cfg.jvm || cfg.all) [
         jdk
-        sbt
-        scala-cli
-        coursier
+        unstable.sbt
+        unstable.scala-cli
+        unstable.coursier
         maven
         gradle
       ] ++ optionals (cfg.javascript || cfg.all) [
