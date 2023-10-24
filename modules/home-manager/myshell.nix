@@ -81,6 +81,8 @@ in
         rm -Rf ~/.cache/nvim
       '';
 
+      #shell in FHS
+      fhsshell = "nix-shell $HOME/fhs.nix";
     };
 
     programs.zsh = {
@@ -182,5 +184,7 @@ in
       source = ./nvim;
       recursive = true;
     };
+
+    home.file."fhs.nix".source = ./fhs.nix;
   };
 }

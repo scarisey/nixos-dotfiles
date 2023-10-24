@@ -43,7 +43,7 @@ let
         unstable.jetbrains.idea-community
       ];
 
-      home.sessionVariables = {
+      home.sessionVariables = mkIf (cfg.jvm || cfg.all) {
         JAVA_HOME = "${pkgs.jdk}";
       };
 
