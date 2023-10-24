@@ -3,7 +3,7 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/251c28ea6dc9cd381d007289b78639751b0e5fb2";
+    nixpkgs.url = "github:nixos/nixpkgs/b21a8c71aa75e67bd58eb709f4506a76c7fd28a1";
     # You can access packages and modules from different nixpkgs revs
     # at the same time. Here's an working example:
     nixpkgs-unstable.url = "github:nixos/nixpkgs/7c9cc5a6e5d38010801741ac830a3f8fd667a7a0";

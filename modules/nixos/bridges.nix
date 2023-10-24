@@ -9,11 +9,11 @@ in
   };
 
   config = mkIf cfg.enable {
-    networking.interfaces.eth0.useDHCP = true;
+    networking.interfaces.enp39s0.useDHCP = true;
     networking.interfaces.br0.useDHCP = true;
     networking.bridges = {
       "br0" = {
-        interfaces = [ "eth0" ];
+        interfaces = [ "enp39s0" ];
       };
     };
   };

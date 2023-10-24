@@ -29,6 +29,7 @@
   services.xserver.videoDrivers = [ "nvidia" ];
   scarisey.kde.enable = true;
   scarisey.distrobox.enable = true;
+  scarisey.bridges.enable = true;
 
   # Enable OpenGL
   hardware.opengl = {
