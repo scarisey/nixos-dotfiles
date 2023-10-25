@@ -30,6 +30,7 @@
   scarisey.kde.enable = true;
   scarisey.distrobox.enable = true;
   scarisey.bridges.enable = true;
+  scarisey.qemu.enable = true;
 
   # Enable OpenGL
   hardware.opengl = {

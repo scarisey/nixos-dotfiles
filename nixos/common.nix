@@ -83,7 +83,7 @@
     shell = pkgs.zsh;
     isNormalUser = true;
     description = "sylvain";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "libvirtd" ];
   };
 
   # List packages installed in system profile. To search, run:

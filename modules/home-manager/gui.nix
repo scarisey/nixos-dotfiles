@@ -17,9 +17,7 @@ in
       unstable.google-chrome
 
       alacritty
-      conky
 
-      timeshift
       xclip
       pavucontrol
       flameshot
@@ -27,9 +25,6 @@ in
 
     home.file.".alacritty.yml" = {
       source = ./alacritty/alacritty.yml;
-    };
-    home.file.".conkyrc" = {
-      source = ./conky/conkyrc;
     };
   };
 }
