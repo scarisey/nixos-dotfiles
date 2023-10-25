@@ -179,6 +179,7 @@ in
 
     home.file.".gitmessage".source = ./git/gitmessage;
     home.file.".gitconfig".source = ./git/gitconfig;
+    home.file.".gitignore".source = ./git/gitignore;
 
     home.file.".config/nvim" = {
       source = ./nvim;
