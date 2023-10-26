@@ -9,4 +9,5 @@
   myshell = import ./myshell.nix;
   i3Xfce = import ./i3Xfce;
   quickemu = import ./quickemu.nix;
+  cloud = import ./cloud.nix;
 }
