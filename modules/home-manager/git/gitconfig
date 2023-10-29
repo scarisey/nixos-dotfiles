@@ -25,7 +25,7 @@
 [core]
 	autocrlf = input
 	editor = vim
-  excludesfile = ~/.gitignore
+  excludesfile = ~/git/.gitignore
 [credential]
 [merge]
 	tool = vimdiff
