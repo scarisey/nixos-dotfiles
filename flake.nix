@@ -45,6 +45,7 @@
           in
           {
             default = pkgs.mkShell {
+              LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
               shellHook = ''
                 exec ${pkgs.zsh}/bin/zsh
               '';
