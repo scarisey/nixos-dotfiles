@@ -13,6 +13,9 @@
     home-manager.url = "github:nix-community/home-manager/release-23.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    # For unpatched binaries
+    nix-alien.url = "github:thiagokokada/nix-alien";
+    nix-alien.inputs.nixpkgs.follows = "nixpkgs";
     #For Non Nixos systems
     nixgl.url = "github:guibou/nixGL";
     nixgl.inputs.nixpkgs.follows = "nixpkgs";
@@ -34,12 +37,20 @@
         let pkgs = nixpkgs.legacyPackages.${system};
         in import ./pkgs { inherit pkgs; }
       );
-      # Devshell for bootstrapping
-      # Acessible through 'nix develop' or 'nix-shell' (legacy)
-      devShells = forAllSystems (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-        in import ./shell.nix { inherit pkgs; }
-      );
+      devShells = forAllSystems
+        (system:
+          let
+            overlays = [ (import ./overlays { inherit inputs; }).modifications ];
+            pkgs = import nixpkgs { inherit system overlays; };
+          in
+          {
+            default = pkgs.mkShell {
+              shellHook = ''
+                exec ${pkgs.zsh}/bin/zsh
+              '';
+            };
+          }
+        );
 
       # Your custom packages and modifications, exported as overlays
       overlays = import ./overlays { inherit inputs; };

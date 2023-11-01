@@ -47,6 +47,7 @@ in
       cht-sh
       perl536Packages.EmailOutlookMessage
 
+      nix-alien
     ];
 
     home.sessionVariables = {
@@ -81,8 +82,6 @@ in
         rm -Rf ~/.cache/nvim
       '';
 
-      #shell in FHS
-      fhsshell = "nix-shell $HOME/fhs.nix";
     };
 
     programs.zsh = {
@@ -186,6 +185,5 @@ in
       recursive = true;
     };
 
-    home.file."fhs.nix".source = ./fhs.nix;
   };
 }
