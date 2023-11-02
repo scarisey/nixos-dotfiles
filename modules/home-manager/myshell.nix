@@ -92,6 +92,7 @@ in
       initExtra = ''
         eval $(thefuck --alias)
         source $HOME/.customzsh.rc &> /dev/null|| true 
+        export PATH=$PATH:$HOME/.local/bin/
       '';
 
       history = {

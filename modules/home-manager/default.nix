@@ -11,4 +11,5 @@
   quickemu = import ./quickemu.nix;
   cloud = import ./cloud.nix;
   kde = import ./kde.nix;
+  asciidoctor = import ./asciidoctor.nix;
 }

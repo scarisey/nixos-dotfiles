@@ -13,6 +13,7 @@
   scarisey.cloud.all = true;
   scarisey.cloud.enable = true;
   scarisey.kde.enable = true;
+  scarisey.asciidoctor.enable = true;
 
   home.packages = with pkgs; [
     nixgl.nixGLIntel
