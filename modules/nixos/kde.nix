@@ -29,6 +29,7 @@ in
       krita
       kolourpaint
       plasma5Packages.kalk
+      libsForQt5.qtstyleplugin-kvantum
       yakuake
     ];
   };

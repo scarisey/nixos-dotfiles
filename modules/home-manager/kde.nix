@@ -9,7 +9,7 @@ in
   };
   config = mkIf cfg.enable {
 
-    home.packages = with pkgs;[ libsForQt5.ksshaskpass libsForQt5.kwallet-pam ];
+    home.packages = with pkgs;[ libsForQt5.ksshaskpass libsForQt5.kwallet-pam materia-kde-theme papirus-icon-theme ];
 
     home.file.".config/plasma-workspace/env/ssh-agent-startup.sh" = {
       source = ./kde/ssh-agent-startup.sh;
