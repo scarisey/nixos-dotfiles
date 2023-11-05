@@ -13,6 +13,7 @@ let
     jvm = mkEnableOption "JVM dev tools";
     javascript = mkEnableOption "Javascript dev tools";
     rust = mkEnableOption "Rust dev tools";
+    go = mkEnableOption "Go dev tools";
   };
   config =
     let
@@ -41,6 +42,9 @@ let
       ]
       ++ optionals (cfg.intellij || cfg.all) [
         unstable.jetbrains.idea-community
+      ]
+      ++ optionals (cfg.go || cfg.all) [
+        go
       ];
 
       home.sessionVariables = mkIf (cfg.jvm || cfg.all) {
