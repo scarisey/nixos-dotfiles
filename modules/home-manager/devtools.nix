@@ -14,6 +14,7 @@ let
     javascript = mkEnableOption "Javascript dev tools";
     rust = mkEnableOption "Rust dev tools";
     go = mkEnableOption "Go dev tools";
+    protobuf = mkEnableOption "Protobuf tools";
   };
   config =
     let
@@ -45,6 +46,9 @@ let
       ]
       ++ optionals (cfg.go || cfg.all) [
         go
+      ]
+      ++ optionals (cfg.protobuf || cfg.all) [
+        protobuf
       ];
 
       home.sessionVariables = mkIf (cfg.jvm || cfg.all) {
