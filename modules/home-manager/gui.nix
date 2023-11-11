@@ -6,6 +6,7 @@ in
 {
   options.scarisey.gui = {
     enable = mkEnableOption "Common GUI tools";
+    obs = mkEnableOption "OBS Studio";
   };
   config = mkIf cfg.enable {
 
@@ -21,7 +22,9 @@ in
       xclip
       pavucontrol
       flameshot
-    ];
+
+      (mkIf cfg.obs unstable.obs-studio)
+    ] ;
 
     home.file.".alacritty.yml" = {
       source = ./alacritty/alacritty.yml;

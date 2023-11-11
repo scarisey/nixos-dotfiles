@@ -5,6 +5,7 @@
 
   scarisey.myshell.enable = true;
   scarisey.gui.enable = true;
+  scarisey.gui.obs = true;
   scarisey.devtools = {
     enable = true;
     all = true;

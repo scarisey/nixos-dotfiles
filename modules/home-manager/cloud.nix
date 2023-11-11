@@ -2,7 +2,6 @@
 with lib;
 let
   cfg = config.scarisey.cloud;
-  pkgIf = pred: package: optionals (cfg.all || pred) [ package ];
 in
 {
   options.scarisey.cloud = {
@@ -15,9 +14,13 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs;  pkgIf cfg.k9s unstable.k9s ++ pkgIf cfg.kubectl unstable.kubectl
-      ++ pkgIf cfg.kubectl unstable.kubelogin
-      ++ pkgIf cfg.helm unstable.kubernetes-helm ++ pkgIf cfg.azure azure-cli;
+    home.packages = with pkgs;  [
+      (mkIf (cfg.all || cfg.k9s) unstable.k9s )
+        (mkIf (cfg.all || cfg.kubectl) unstable.kubectl)
+        (mkIf (cfg.all || cfg.kubectl) unstable.kubelogin)
+        (mkIf (cfg.all || cfg.helm) unstable.kubernetes-helm )
+        (mkIf (cfg.all || cfg.azure) azure-cli)
+    ];
   };
 
 }
