@@ -13,6 +13,7 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+  boot.supportedFilesystems = [ "btrfs" "cifs" "f2fs" "jfs" "ntfs" "reiserfs" "vfat" "xfs" ];
 
   fileSystems."/" =
     {
@@ -24,6 +25,11 @@
     {
       device = "/dev/disk/by-uuid/2D79-E4CE";
       fsType = "vfat";
+    };
+
+  fileSystems."/aux" =
+    {
+      device = "/dev/disk/by-label/Aux";
     };
 
   swapDevices = [ ];
