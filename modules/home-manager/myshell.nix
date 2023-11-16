@@ -46,6 +46,7 @@ in
       cryfs
       cht-sh
       perl536Packages.EmailOutlookMessage
+      retry
 
       nix-alien
     ];
