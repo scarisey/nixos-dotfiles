@@ -4,6 +4,8 @@
     ./hardware.nix
     ../common.nix
   ];
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "vm";
   scarisey.network.enable = true;
   scarisey.i3Xfce.enable = false;
