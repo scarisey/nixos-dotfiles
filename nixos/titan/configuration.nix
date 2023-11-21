@@ -26,6 +26,10 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
   xdg.portal.enable = true;
+  services.plex = {
+    enable = true;
+    openFirewall = true;
+  };
   services.flatpak.enable = true;
   services.printing.enable = true;
   sound.enable = true;

@@ -23,6 +23,8 @@ in
       pavucontrol
       flameshot
 
+      unstable.authy
+
       (mkIf cfg.obs unstable.obs-studio)
     ] ;
 
