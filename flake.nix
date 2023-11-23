@@ -30,11 +30,13 @@
       forAllSystems = nixpkgs.lib.genAttrs [
         "x86_64-linux"
       ];
-      thisLib = (import ./lib { lib = nixpkgs.lib; });
-      forHosts = thisLib.forHosts ./nixos;
-      forUsers = thisLib.forUsers ./home-manager;
+      lib' = (import ./lib {lib = nixpkgs.lib;});
+      forHosts = lib'.forHosts ./nixos;
+      forUsers = lib'.forUsers ./home-manager;
     in
     rec {
+      inherit lib';
+
       packages = forAllSystems (system:
         let pkgs = nixpkgs.legacyPackages.${system};
         in import ./pkgs { inherit pkgs; }

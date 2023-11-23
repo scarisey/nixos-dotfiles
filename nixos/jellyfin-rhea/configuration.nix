@@ -4,10 +4,10 @@
     ./hardware.nix
     ../common.nix
   ];
-  networking.hostName = "plex-rhea";
+  networking.hostName = "jellyfin-rhea";
   scarisey.network.enable = true;
 
-  services.plex = {
+  services.jellyfin = {
     enable = true;
     openFirewall = true;
   };

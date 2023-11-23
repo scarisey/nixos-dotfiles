@@ -1,16 +1,89 @@
 on:
   push:
-    branches: [ci/generators]
+    branches: [main]
 
 jobs:
-  generate_lxc_containers:
-    name: Generate LXC containers
-    runs-on: ubuntu-22.04
+  generate_shell_lxc_container:
+    name: Generate Shell LXC container
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@main
       - name: Generate shell-rhea
-        run: nix build .#nixosConfigurations.shell-rhea.config.formats.proxmox-lxc
+        run: |
+          nix build .#nixosConfigurations.shell-rhea.config.formats.proxmox-lxc
+          mv result shell-rhea.tar.gz
+      - name: Upload archive
+        uses: actions/upload-artifact@v3
+        with:
+          path: shell-rhea.tar.gz
+          name: shell-rhea.tar.gz
+  generate_plex_lxc_container:
+    name: Generate Plex LXC container
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
       - name: Generate plex-rhea
-        run: nix build .#nixosConfigurations.plex-rhea.config.formats.proxmox-lxc
+        run: |
+          nix build .#nixosConfigurations.plex-rhea.config.formats.proxmox-lxc
+          mv result plex-rhea.tar.gz
+      - name: Upload archive
+        uses: actions/upload-artifact@v3
+        with:
+          path: plex-rhea.tar.gz
+          name: plex-rhea.tar.gz
+  generate_jellyfin_lxc_container:
+    name: Generate Jellyfin LXC container
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+      - name: Generate jellyfin-rhea
+        run: |
+          nix build .#nixosConfigurations.jellyfin-rhea.config.formats.proxmox-lxc
+          mv result jellyfin-rhea.tar.gz
+      - name: Upload archive
+        uses: actions/upload-artifact@v3
+        with:
+          path: jellyfin-rhea.tar.gz
+          name: jellyfin-rhea.tar.gz
+  generate_inputs_lxc_container:
+    name: Generate Inputs LXC container
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+      - name: Generate inputs-rhea
+        run: |
+          nix build .#nixosConfigurations.inputs-rhea.config.formats.proxmox-lxc
+          mv result inputs-rhea.tar.gz
+      - name: Upload archive
+        uses: actions/upload-artifact@v3
+        with:
+          path: inputs-rhea.tar.gz
+          name: inputs-rhea.tar.gz
+  release:
+    name: Create Github release
+    needs: [
+        generate_plex_lxc_container,
+        generate_jellyfin_lxc_container,
+        generate_inputs_lxc_container,
+        generate_shell_lxc_container
+      ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Download archive
+        uses: actions/download-artifact@v3
+        with:
+          path: ./assets/
+      - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          find ./assets -type f -print| xargs gh release create ${{ github.ref_name }} --title ${{ github.ref_name }} --generate-notes 

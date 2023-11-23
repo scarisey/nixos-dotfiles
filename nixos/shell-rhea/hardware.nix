@@ -4,7 +4,7 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports = [ ];
+  imports = [ (modulesPath + "/virtualisation/proxmox-lxc.nix") ];
 
   # boot.initrd.availableKernelModules = [ "xhci_pci" "ohci_pci" "ehci_pci" "virtio_pci" "ahci" "usbhid" "sr_mod" "virtio_blk" ];
   # boot.initrd.kernelModules = [ ];
