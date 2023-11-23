@@ -1,0 +1,16 @@
+on:
+  push:
+    branches: [ci/generators]
+
+jobs:
+  generate_lxc_containers:
+    name: Generate LXC containers
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+      - name: Generate shell-rhea
+        run: nix build .#nixosConfigurations.shell-rhea.config.formats.proxmox-lxc
+      - name: Generate plex-rhea
+        run: nix build .#nixosConfigurations.plex-rhea.config.formats.proxmox-lxc
