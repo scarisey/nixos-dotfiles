@@ -3,6 +3,7 @@
   imports = [
     ./hardware.nix
     ../common.nix
+    inputs.home-manager.nixosModules.home-manager
   ];
   networking.hostName = "shell-rhea";
   scarisey.network.enable = true;
@@ -11,5 +12,7 @@
     enableCompletion = true;
     enableBashCompletion = true;
   };
+
+  inherit (../../home-manager/sylvain/shell-rhea/home.nix {});
 
 }
