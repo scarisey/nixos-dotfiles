@@ -10,6 +10,7 @@ jobs:
       NIXPKGS_ALLOW_BROKEN: "1"
       NIXPKGS_ALLOW_UNFREE: "1"
       NIXPKGS_ALLOW_INSECURE: "1"
+      NIX_CONFIG: "experimental-features = nix-command flakes"
     permissions:
       contents: write
     steps:
@@ -23,6 +24,9 @@ jobs:
           GIT_AUTHOR_EMAIL: github-actions[bot]@users.noreply.github.com
           GIT_COMMITTER_NAME: github-actions[bot]
           GIT_COMMITTER_EMAIL: github-actions[bot]@users.noreply.github.com
+      - name: Build dry run the titan config
+        run: |
+          nix build --dry-run .#nixosConfigurations.titan.config.system.build.toplevel && nix build --dry-run .\#homeConfigurations.sylvain@titan.activationPackage
       - name: Push changes to remote
         run: |
           git remote remove origin
