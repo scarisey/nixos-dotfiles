@@ -1,3 +1,4 @@
+name: "Generate LXC containers"
 on:
   push:
     branches: [main]
