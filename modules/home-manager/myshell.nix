@@ -83,6 +83,8 @@ in
         rm -Rf ~/.cache/nvim
       '';
 
+      retry = ''f(){while true;do "$@" && break;sleep 1;done};f'';
+
     };
 
     programs.zsh = {
