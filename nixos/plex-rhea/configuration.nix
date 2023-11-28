@@ -17,4 +17,8 @@
     enableBashCompletion = true;
   };
 
+  users.users.sylvain = {
+    #password cannot be used outside of localhost
+    hashedPassword = "$y$j9T$ildrgr/AZztZX8xjaQ2EG0$olCstgEx9yILmo/ds18JO/iOr9GBUZly9b6KIAex9E0";
+  };
 }
