@@ -43,6 +43,12 @@ function _checkArg() {
 	fi
 }
 
+function _ifEmpty() {
+	if [ -z ${1:-''} ]; then
+		"${@:2}"
+	fi
+}
+
 function foo() {
 	echo foo
 }
