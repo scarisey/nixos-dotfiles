@@ -1,7 +1,9 @@
 name: "Generate LXC containers"
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - "feat/**"
 
 jobs:
   generate_shell_lxc_container:
@@ -20,22 +22,6 @@ jobs:
         with:
           path: shell-rhea.tar.xz
           name: shell-rhea.tar.xz
-  generate_plex_lxc_container:
-    name: Generate Plex LXC container
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@main
-      - name: Generate plex-rhea
-        run: |
-          nix build .#nixosConfigurations.plex-rhea.config.formats.proxmox-lxc
-          mv result plex-rhea.tar.xz
-      - name: Upload archive
-        uses: actions/upload-artifact@v3
-        with:
-          path: plex-rhea.tar.xz
-          name: plex-rhea.tar.xz
   generate_jellyfin_lxc_container:
     name: Generate Jellyfin LXC container
     runs-on: ubuntu-latest
@@ -72,7 +58,6 @@ jobs:
     name: Create Github release
     needs:
       [
-        generate_plex_lxc_container,
         generate_jellyfin_lxc_container,
         generate_inputs_lxc_container,
         generate_shell_lxc_container,

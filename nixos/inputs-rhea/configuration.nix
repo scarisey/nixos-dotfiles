@@ -10,11 +10,12 @@
   services.transmission = { 
     enable = true; #Enable transmission daemon
     openRPCPort = true; #Open firewall for RPC
+    openPeerPorts = true;
     settings = { #Override default settings
+      peer-port = 51413;
       rpc-bind-address = "0.0.0.0"; #Bind to own IP
       rpc-whitelist = "127.0.0.1"; #Whitelist your remote machine (10.0.0.1 in this example)
     };
-    home = "/var/lib/vz/transmission";
   };
 
   programs.zsh = {
@@ -22,8 +23,4 @@
     enableBashCompletion = true;
   };
 
-  users.users.sylvain = {
-    #password cannot be used outside of localhost
-    hashedPassword = "$y$j9T$CVprxZqnR5qYVpje2xJcq/$umiUZg7f4afafK.XEdIs4aEKV1Vn4ojMXH1pP0WCtdD";
-  };
 }

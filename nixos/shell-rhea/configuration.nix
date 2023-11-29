@@ -15,9 +15,13 @@
 
   users.users.sylvain = {
     #password cannot be used outside of localhost
-    hashedPassword = "$y$j9T$FFPOi.DlX8Hs7CL586FWQ0$4vBkcRlV3F93EkzzKMjqB/su57nAdqTwceyKUqmCn66";
+    hashedPassword = "$y$j9T$v262u5DLusg/VSY.23LS61$0w0TSNEPngUtNt9s4fdryVqVDHkKpF8rREwBobotHE1";
   };
 
-  inherit (../../home-manager/sylvain/shell-rhea/home.nix {});
+  inherit (home-manager {
+    home-manager.useGlobalPkgs = true;
+    home-manager.useUserPackages = true;
+    home-manager.users.sylvain = (import ../../home-manager/sylvain/shell-rhea/home.nix {});
+  });
 
 }

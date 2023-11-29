@@ -65,7 +65,8 @@
         nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [ path ];
-        });
+        }
+      );
 
       homeConfigurations = forUsers (user: path:
         home-manager.lib.homeManagerConfiguration {
