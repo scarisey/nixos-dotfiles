@@ -29,8 +29,6 @@
 [credential]
 [merge]
 	tool = vimdiff
-[commit]
-	template = ./.gitmessage
 [lfs "transfer"]
   maxretries = 10
 [filter "lfs"]

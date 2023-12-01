@@ -3,6 +3,8 @@
     ../common.nix
   ];
 
+  targets.genericLinux.enable=true;
+
   scarisey.myshell.enable = true;
   scarisey.gui.enable = true;
   scarisey.gui.obs = true;

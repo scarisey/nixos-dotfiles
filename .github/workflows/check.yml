@@ -1,0 +1,22 @@
+name: "Nix flake check"
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    env:
+      NIXPKGS_ALLOW_BROKEN: "1"
+      NIXPKGS_ALLOW_UNFREE: "1"
+      NIXPKGS_ALLOW_INSECURE: "1"
+      NIX_CONFIG: "experimental-features = nix-command flakes"
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@v7
+      - name: Check
+        run: |
+          nix flake check

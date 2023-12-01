@@ -10,10 +10,16 @@ in
   config = mkIf cfg.enable (mkMerge [
     {
       networking.networkmanager.enable = true;
+      networking.nameservers = [ "8.8.8.8" "8.8.4.4" "1.1.1.1" "208.67.222.222" ];
       services.resolved = {
         enable = true;
-        fallbackDns = [ "8.8.8.8" ];
+        fallbackDns = [ "8.8.8.8" "1.1.1.1"];
       };
+
+      environment.systemPackages = with pkgs;[
+        dig
+        netcat-openbsd
+      ];
     }
 
     (mkIf cfg.bridges.enable {

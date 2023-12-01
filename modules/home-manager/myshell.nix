@@ -23,7 +23,7 @@ in
       peco #querying input
       fd #better find
       bat
-      exa
+      eza
       jq
       yq
       neovim
@@ -46,7 +46,7 @@ in
       cryfs
       cht-sh
       perl536Packages.EmailOutlookMessage
-      retry
+      cz-cli
 
       nix-alien
     ];
@@ -61,10 +61,10 @@ in
       dotfiles = "git --git-dir $GITDIR/dotfiles/ --work-tree=$HOME";
       initDotfiles = "f(){ mkdir -p $GITDIR || true; git clone --bare $1 $GITDIR/dotfiles; dotfiles config status.showUntrackedFiles no; }; f";
       vi = "nvim";
-      #exa
-      ll = "exa --long --header";
-      la = "exa --long --all --header";
-      lt = "exa -T -L=2";
+      #eza
+      ll = "eza --long --header";
+      la = "eza --long --all --header";
+      lt = "eza -T -L=2";
 
       #tmux
       ta = "tmux attach-session";
