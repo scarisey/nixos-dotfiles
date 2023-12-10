@@ -20,14 +20,16 @@
   };
   hardware.nvidia = {
     modesetting.enable = true;
-    powerManagement.enable = true;
+    powerManagement.enable = false;
+    powerManagement.finegrained = false;
     open = false;
     nvidiaSettings = true;
+    forceFullCompositionPipeline = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
   xdg.portal.enable = true;
   services.plex = {
-    enable = true;
+    enable = false;
     openFirewall = true;
   };
   services.flatpak.enable = true;
