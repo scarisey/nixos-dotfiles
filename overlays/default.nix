@@ -17,9 +17,6 @@
         overlays = [ (import ./unstable.nix) ];
       };
 
-      jdk = final.temurin-bin-17;
-      jre = final.jdk;
-
       # example = prev.example.overrideAttrs (oldAttrs: rec {
       # ...
       # });
