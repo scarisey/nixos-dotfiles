@@ -42,7 +42,7 @@ let
         cargo
       ]
       ++ optionals (cfg.intellij || cfg.all) [
-        unstable.jetbrains.idea-community
+        jetbrains.idea-community
       ]
       ++ optionals (cfg.go || cfg.all) [
         go
@@ -52,8 +52,9 @@ let
       ];
 
       home.sessionVariables = mkIf (cfg.jvm || cfg.all) {
-        JAVA_HOME = "${pkgs.jdk}";
+        JAVA_HOME = "${pkgs.jdk}/lib/openjdk";
       };
+      home.file.".jdks/current".source = "${pkgs.jdk}/lib/openjdk";
 
       home.activation.npmSetPrefix = hm.dag.entryAfter [ "reloadSystemd" ] "$DRY_RUN_CMD ${config.home.path}/bin/npm $VERBOSE_ARG set prefix ${npmGlobalDir}"; #then npm -g install should work
     };
