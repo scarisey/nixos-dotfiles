@@ -17,6 +17,8 @@ in
     home.packages = with pkgs; [
       unstable.google-chrome
 
+      unstable.vlc
+
       alacritty
 
       xclip
@@ -26,7 +28,7 @@ in
       unstable.authy
 
       (mkIf cfg.obs unstable.obs-studio)
-    ] ;
+    ];
 
     home.file.".alacritty.yml" = {
       source = ./alacritty/alacritty.yml;
