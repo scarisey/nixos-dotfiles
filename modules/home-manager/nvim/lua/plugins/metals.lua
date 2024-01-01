@@ -9,9 +9,34 @@ return {
   },
   {
     "scalameta/nvim-metals",
+    as = "metals",
+    ft = { "scala", "sbt", "java" },
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "mfussenegger/nvim-dap",
+      {
+        "mfussenegger/nvim-dap",
+        config = function()
+          local dap = require("dap")
+          dap.configurations.scala = {
+            {
+              type = "metals",
+              request = "launch",
+              name = "runortest",
+              metals = {
+                runttype = "runortestfile",
+              },
+            },
+            {
+              type = "scala",
+              request = "launch",
+              name = "test target",
+              metals = {
+                runttype = "testtarget",
+              },
+            },
+          }
+        end,
+      },
       {
         "folke/which-key.nvim",
         opts = {
@@ -21,30 +46,17 @@ return {
         },
       },
     },
-    ft = { "scala", "sbt", "java" },
     keys = { { "<leader>mm", "<cmd>:lua require'telescope'.extensions.metals.commands()<cr>" } },
-    init = function()
-      local metals_config = require("metals").bare_config()
-      metals_config.init_options.statusBarProvider = "on"
+    config = function()
+      local metals = require("metals")
+      local metals_config = metals.bare_config()
       metals_config.settings = {
         showImplicitArguments = true,
         excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
       }
+      metals_config.init_options.statusBarProvider = "on"
       metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
-      metals_config.on_attach = function(client, bufnr)
-        require("metals").setup_dap()
-      end
-
-      local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = { "scala", "sbt", "java" },
-        callback = function()
-          require("metals").initialize_or_attach(metals_config)
-        end,
-        group = nvim_metals_group,
-      })
-
-      -- Debug settings if you're using nvim-dap
+      -- Begin DAP - Debug settings if you're using nvim-dap
       local dap = require("dap")
 
       dap.configurations.scala = {
@@ -66,6 +78,18 @@ return {
           },
         },
       }
+      metals_config.on_attach = function(client, bufnr)
+        metals.setup_dap()
+      end
+      -- End DAP
+      local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "scala", "sbt", "java" },
+        callback = function()
+          metals.initialize_or_attach(metals_config)
+        end,
+        group = nvim_metals_group,
+      })
     end,
   },
 }
