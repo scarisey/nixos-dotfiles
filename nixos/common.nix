@@ -48,6 +48,9 @@
       PermitRootLogin = "no";
       PasswordAuthentication = false;
     };
+    extraConfig = ''
+      HashKnownHosts yes
+    '';
   };
 
   system.stateVersion = "23.05";
