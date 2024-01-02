@@ -37,3 +37,9 @@ Home manager configuration:
 ```
 home-manager switch --flake .
 ```
+
+or
+
+```
+nix run . -- switch --flake .
+```
