@@ -48,6 +48,8 @@ in
       perl536Packages.EmailOutlookMessage
       cz-cli
 
+      linkrec
+
       nix-alien
     ];
 

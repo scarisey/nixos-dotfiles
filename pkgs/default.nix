@@ -3,4 +3,5 @@
 
 { pkgs ? (import ../nixpkgs.nix) { } }: {
   scriptExample = pkgs.callPackage ./example { };
+  linkrec = pkgs.callPackage ./linkrec { };
 }
