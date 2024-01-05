@@ -189,7 +189,5 @@ in
       recursive = true;
     };
 
-    home.file."scriptExample.sh".source = ./scriptExample.sh;
-
   };
 }
