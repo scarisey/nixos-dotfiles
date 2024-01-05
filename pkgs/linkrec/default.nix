@@ -1,9 +1,9 @@
-{ stdenv, lib, bash, makeWrapper, coreutils, findutils, ... }:
+{ stdenv, lib, bash, makeWrapper, coreutils, findutils, gnused, ... }:
 let
   fs = lib.fileset; #check https://nix.dev/tutorials/file-sets
   sourceFiles = fs.difference ./. (fs.maybeMissing ./result);
 in
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   pname = "linkrec";
   version = "1.0";
 
@@ -13,14 +13,11 @@ stdenv.mkDerivation {
   };
 
   nativeBuildInputs = [ makeWrapper ];
-  buildInputs = [ bash coreutils findutils ];
+  buildInputs = [ bash coreutils findutils gnused ];
 
   postInstall = ''
     wrapProgram $out/bin/linkrec \
-      --set PATH ${lib.makeBinPath [
-        coreutils
-        findutils
-      ]}
+      --set PATH ${lib.makeBinPath buildInputs}
   '';
 
   installPhase = ''
