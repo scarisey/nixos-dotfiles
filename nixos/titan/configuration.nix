@@ -10,9 +10,7 @@
   networking.hostName = "titan";
   services.xserver.videoDrivers = [ "nvidia" ];
   scarisey.network.enable = true;
-  scarisey.kde.enable = true;
-  scarisey.distrobox.enable = true;
-  scarisey.qemu.enable = true;
+  scarisey.gnome.enable = true;
   hardware.opengl = {
     enable = true;
     driSupport = true;
@@ -20,9 +18,8 @@
   };
   hardware.nvidia = {
     modesetting.enable = true;
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
-    open = false;
+    powerManagement.enable = true;
+    open = true;
     nvidiaSettings = true;
     forceFullCompositionPipeline = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;

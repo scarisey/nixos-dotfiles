@@ -8,6 +8,5 @@
   scarisey.gui.obs = true;
   scarisey.devtools.enable = true;
   scarisey.devtools.all = true;
-  scarisey.kde.enable = true;
 
 }

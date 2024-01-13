@@ -24,13 +24,14 @@ in
       };
 
     };
-
+    programs.dconf.enable = true; #gnome compat
     environment.systemPackages = with pkgs;[
       krita
       kolourpaint
       plasma5Packages.kalk
       libsForQt5.qtstyleplugin-kvantum
       yakuake
+      gnome.adwaita-icon-theme
     ];
   };
 }
