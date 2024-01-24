@@ -3,7 +3,7 @@
     ../common.nix
   ];
 
-  targets.genericLinux.enable=true;
+  targets.genericLinux.enable = true;
 
   scarisey.myshell.enable = true;
   scarisey.gui.enable = true;
@@ -16,7 +16,6 @@
   scarisey.cloud.all = true;
   scarisey.cloud.enable = true;
   scarisey.kde.enable = true;
-  scarisey.asciidoctor.enable = true;
 
   home.packages = with pkgs; [
     nixgl.nixGLIntel

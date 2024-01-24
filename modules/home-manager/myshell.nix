@@ -49,6 +49,7 @@ in
       cz-cli
 
       linkrec
+      adoc
 
       nix-alien
     ];

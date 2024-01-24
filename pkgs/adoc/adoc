@@ -14,21 +14,14 @@ ASCIIDOCTOR_OPTS_REVEALJS="-a revealjs_theme=${REVEALJS_THEME} -a revealjsdir=${
 function _usage() {
 	echo "USAGE"
 	echo "${SCRIPTNAME} prez [args for revealjs]"
-	echo "${SCRIPTNAME} adoc [args for asciidoctor]"
+	echo "${SCRIPTNAME} html [args for asciidoctor]"
 	exit 1
-}
-
-function _requirements() {
-	if ! command -v docker &>/dev/null; then
-		echo "docker could not be found"
-		exit
-	fi
 }
 
 function _checkCommand() {
 	case ${1:-''} in
 	prez) ;;
-	adoc) ;;
+	html) ;;
 	*)
 		_usage
 		exit 1
@@ -36,18 +29,13 @@ function _checkCommand() {
 	esac
 }
 
-function _dockerRun() {
-	docker run -it -u $(id -u):$(id -g) -v ${CURRENTDIR}:/documents/ asciidoctor/docker-asciidoctor $@
-}
-
 function prez() {
-	_dockerRun asciidoctor-revealjs ${ASCIIDOCTOR_OPTS_REVEALJS} ${ASCIIDOCTOR_OPTS_WITH_IMAGE} $@
+	asciidoctor-revealjs ${ASCIIDOCTOR_OPTS_REVEALJS} ${ASCIIDOCTOR_OPTS_WITH_IMAGE} $@
 }
 
-function adoc() {
-	_dockerRun asciidoctor ${ASCIIDOCTOR_OPTS_WITH_IMAGE} $@
+function html() {
+	asciidoctor ${ASCIIDOCTOR_OPTS_WITH_IMAGE} $@
 }
 
-_requirements
 _checkCommand $@
 $@
