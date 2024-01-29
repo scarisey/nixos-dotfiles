@@ -5,4 +5,5 @@
   scriptExample = pkgs.callPackage ./example { };
   linkrec = pkgs.callPackage ./linkrec { };
   adoc = pkgs.callPackage ./adoc { };
+  win32yank = pkgs.callPackage ./win32yank { };
 }
