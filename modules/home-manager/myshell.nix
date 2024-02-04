@@ -50,6 +50,7 @@ in
 
       linkrec
       adoc
+      basic-secret
 
       nix-alien
     ];
