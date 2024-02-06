@@ -1,23 +1,31 @@
-{ lib, buildNpmPackage, fetchFromGitLab, jq }:
-
-buildNpmPackage rec {
+{ lib, buildNpmPackage, fetchFromGitLab, jq, buildEnv }:
+let
   pname = "antora";
   version = "3.1.5";
-
-  src = fetchFromGitLab {
+  originalFiles = fetchFromGitLab {
     owner = pname;
     repo = pname;
     rev = "v${version}";
     hash = "sha256-PCtYV5jPGFja26Dv4kXiaw8ITWR4xzVP/9hc45UWHeg=";
   };
+  modifiedLock = ./package-lock.json;
+in
 
-  npmDepsHash = "sha256-//426AFUoJy7phqbbLdwkJvhOzcYsIumSaeAKefFsf4=";
+buildNpmPackage rec {
+  inherit pname version modifiedLock originalFiles;
+  src = originalFiles;
+
+  npmDepsHash = "sha256-1C26WWa1UXVcWVnDewULV40GjRTekWEp9daJauCZoK0=";
 
   # This is to stop tests from being ran, as some of them fail due to trying to query remote repositories
   postPatch = ''
+    cp ${modifiedLock} package-lock.json
     substituteInPlace package.json --replace \
       '"_mocha"' '""'
-    ${jq}/bin/jq '.dependencies."@sntke/antora-mermaid-extension" = "^0.0.4"' package.json > package.json
+    tmpfile=$(mktemp)
+    echo $tmpfile
+    ${jq}/bin/jq '.dependencies."@sntke/antora-mermaid-extension" = "~0.0.4"' ./package.json > $tmpfile
+    cp $tmpfile package.json
   '';
 
   postInstall = ''

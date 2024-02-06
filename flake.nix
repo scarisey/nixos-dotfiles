@@ -19,6 +19,7 @@
     #For Non Nixos systems
     nixgl.url = "github:guibou/nixGL";
     nixgl.inputs.nixpkgs.follows = "nixpkgs";
+
   };
 
   outputs = { self, nixpkgs, home-manager, nixgl, ... }@inputs:
@@ -35,8 +36,13 @@
       inherit lib';
       defaultPackage.x86_64-linux = home-manager.defaultPackage.x86_64-linux;
       packages = forAllSystems (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-        in import ./pkgs { inherit pkgs; }
+        let
+          overlays = [
+            (import ./overlays { inherit inputs; }).modifications
+          ];
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        import ./pkgs { inherit pkgs; }
       );
       devShells = forAllSystems
         (system:

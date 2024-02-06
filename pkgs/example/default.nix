@@ -1,3 +1,4 @@
+#debug building by following manual: https://nixos.org/manual/nixpkgs/stable/#sec-building-stdenv-package-in-nix-shell
 { stdenv, lib, bash, makeWrapper, coreutils, jq, ... }:
 let
   fs = lib.fileset; #check https://nix.dev/tutorials/file-sets
