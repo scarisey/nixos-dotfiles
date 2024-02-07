@@ -1,4 +1,4 @@
-{ lib, buildNpmPackage, fetchFromGitLab, jq, buildEnv }:
+{ lib, buildNpmPackage, fetchFromGitLab, fetchNpmDeps, jq, buildEnv, npmHooks }:
 let
   pname = "antora";
   version = "3.1.7";
@@ -9,7 +9,7 @@ let
     hash = "sha256-uGXXp6boS5yYsInSmkI9S0Tn85QGVp/5Fsh1u3G4oPk=";
   };
   modifiedLock = ./package-lock.json;
-  npmDepsHash = "sha256-Tntd68OkuQF4sKk0Mgn6fEMSOBNqzqoaHNuBSDJnO3Y=";
+  npmDepsHash = "";
   mermaid-extension-version = "~0.0.4";
 in
 
@@ -17,14 +17,20 @@ buildNpmPackage rec {
   inherit pname version modifiedLock originalFiles npmDepsHash;
   src = originalFiles;
 
+  mermaid_extension = fetchNpmDeps {
+    name = "@sntke/antora-mermaid-extension";
+    hash = "";
+  };
+
   postPatch = ''
-      cp ${modifiedLock} package-lock.json
     # This is to stop tests from being ran, as some of them fail due to trying to query remote repositories
       substituteInPlace package.json --replace \
         '"_mocha"' '""'
-      tmpfile=$(mktemp)
-      ${jq}/bin/jq '.dependencies."@sntke/antora-mermaid-extension" = "${mermaid-extension-version}"' ./package.json > $tmpfile
-      cp $tmpfile package.json
+      (
+        local postPatchHooks=() # written to by npmConfigHook
+        source ${npmHooks.npmConfigHook}/nix-support/setup-hook
+        npmRoot="${src}/antora-mermaid-extension"     npmDeps=${mermaid_extension}     npmConfigHook
+      )
   '';
 
   postInstall = ''
