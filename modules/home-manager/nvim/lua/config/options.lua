@@ -7,3 +7,4 @@ local opt = vim.opt
 opt.relativenumber = false
 vim.cmd("syntax off")
 vim.cmd("set termguicolors")
+opt.guifont = "Hasklug Nerd Font:h11"

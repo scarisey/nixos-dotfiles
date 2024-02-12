@@ -20,6 +20,7 @@ in
       unstable.vlc
 
       alacritty
+      neovide
 
       xclip
       pavucontrol
