@@ -8,3 +8,6 @@ opt.relativenumber = false
 vim.cmd("syntax off")
 vim.cmd("set termguicolors")
 opt.guifont = "Hasklug Nerd Font:h11"
+opt.titlestring = "%{substitute(getcwd(), $HOME, '~', '')}"
+opt.title = true
+opt.titlelen = 70
