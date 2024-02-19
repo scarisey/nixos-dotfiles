@@ -42,7 +42,7 @@ let
         cargo
       ]
       ++ optionals (cfg.intellij || cfg.all) [
-        jetbrains.idea-community
+        unstable.jetbrains.idea-community
       ]
       ++ optionals (cfg.go || cfg.all) [
         go
