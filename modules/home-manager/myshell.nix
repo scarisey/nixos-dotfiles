@@ -87,8 +87,10 @@ in
         rm -Rf ~/.cache/nvim
       '';
 
-      retry = ''f(){while true;do "$@" && break;sleep 1;done};f'';
+      #git
+      gitpurge = ''git branch --merged |grep -E -v "(^\*|main)"|xargs git branch -d'';
 
+      retry = ''f(){while true;do "$@" && break;sleep 1;done};f'';
     };
 
     programs.zsh = {
