@@ -11,6 +11,7 @@ in
     kubectl = mkEnableOption "kubectl";
     helm = mkEnableOption "helm";
     azure = mkEnableOption "az cli";
+    kcat = mkEnableOption "kafka cat";
   };
 
   config = mkIf cfg.enable {
@@ -20,6 +21,7 @@ in
         (mkIf (cfg.all || cfg.kubectl) unstable.kubelogin)
         (mkIf (cfg.all || cfg.helm) unstable.kubernetes-helm )
         (mkIf (cfg.all || cfg.azure) azure-cli)
+        (mkIf (cfg.all || cfg.kcat) unstable.kcat)
     ];
   };
 
