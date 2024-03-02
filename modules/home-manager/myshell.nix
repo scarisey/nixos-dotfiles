@@ -65,6 +65,8 @@ in
       dotfiles = "git --git-dir $GITDIR/dotfiles/ --work-tree=$HOME";
       initDotfiles = "f(){ mkdir -p $GITDIR || true; git clone --bare $1 $GITDIR/dotfiles; dotfiles config status.showUntrackedFiles no; }; f";
       vi = "nvim";
+      #bat
+      cat = "bat";
       #eza
       ll = "eza --long --header";
       la = "eza --long --all --header";
