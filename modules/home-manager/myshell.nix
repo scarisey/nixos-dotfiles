@@ -140,6 +140,7 @@ in
     programs.fzf = {
       enable = true;
       enableZshIntegration = true;
+      tmux.enableShellIntegration = true;
     };
     programs.direnv = {
       enable = true;
@@ -174,6 +175,9 @@ in
         set-option -g automatic-rename on
         set-option -g automatic-rename-format '#{b:pane_current_path}'
       '';
+      plugins = [
+        pkgs.tmuxPlugins.tmux-fzf
+      ];
     };
     programs.vim = {
       enable = true;
