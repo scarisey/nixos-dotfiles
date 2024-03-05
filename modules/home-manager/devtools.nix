@@ -15,6 +15,7 @@ let
     rust = mkEnableOption "Rust dev tools";
     go = mkEnableOption "Go dev tools";
     protobuf = mkEnableOption "Protobuf tools";
+    antora = mkEnableOption "Antora";
   };
   config =
     let
@@ -49,6 +50,9 @@ let
       ]
       ++ optionals (cfg.protobuf || cfg.all) [
         protobuf
+      ]
+      ++ optionals (cfg.antora || cfg.all) [
+        antora
       ];
 
       home.sessionVariables = mkIf (cfg.jvm || cfg.all) {
