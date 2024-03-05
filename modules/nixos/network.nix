@@ -9,6 +9,7 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     {
+      networking.enableIPv6 = false;
       networking.networkmanager.enable = true;
       networking.nameservers = [ "8.8.8.8" "8.8.4.4" "1.1.1.1" "208.67.222.222" ];
       services.resolved = {
