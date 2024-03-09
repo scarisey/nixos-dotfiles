@@ -10,6 +10,8 @@
   networking.hostName = "titan";
   services.xserver.videoDrivers = [ "nvidia" ];
   scarisey.network.enable = true;
+  scarisey.network.bridges.enable = true;
+  scarisey.qemu.enable = true;
   scarisey.gnome.enable = true;
   hardware.opengl = {
     enable = true;

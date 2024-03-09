@@ -10,7 +10,7 @@ in
   config = mkIf cfg.enable {
     virtualisation.libvirtd.enable = true;
     environment.systemPackages = with pkgs.unstable;[
-      qemu_full
+      qemu
       virt-manager
     ];
   };
