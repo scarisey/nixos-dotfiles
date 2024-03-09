@@ -9,5 +9,6 @@
   scarisey.devtools.enable = true;
   scarisey.devtools.all = true;
   scarisey.gnome.enable = true;
+  scarisey.quickemu.enable = true;
 
 }
