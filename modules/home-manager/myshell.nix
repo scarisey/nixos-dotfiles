@@ -50,6 +50,7 @@ in
 
       nethogs #network load by process
       nload #network load by interface
+      testdebits 
 
       linkrec
       adoc

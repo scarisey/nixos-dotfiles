@@ -7,5 +7,6 @@
   basic-secret = pkgs.callPackage ./basic-secret { };
   linkrec = pkgs.callPackage ./linkrec { };
   scriptExample = pkgs.callPackage ./example { };
+  testdebits = pkgs.callPackage ./testdebits { };
   win32yank = pkgs.callPackage ./win32yank { };
 }

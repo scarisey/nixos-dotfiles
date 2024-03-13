@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+SCRIPTNAME=$(basename "$0")
+
+function _usage() {
+	echo "USAGE"
+	echo "${SCRIPTNAME} ascendant [v4|v6]"
+	echo "${SCRIPTNAME} descendant [v4|v6]"
+	exit 1
+}
+
+function _checkCommand() {
+	case ${1:-''} in
+	ascendant) ;;
+	descendant) ;;
+	*)
+		_usage
+		exit 1
+		;;
+	esac
+}
+
+function _checkArg() {
+	if [ -z ${1:-''} ]; then
+		_usage
+		exit 1
+	fi
+}
+
+function _generateFile() {
+	if [[ -z /tmp/temp.iso ]]; then
+		head -c 10G /dev/urandom >/tmp/temp.iso
+	fi
+}
+
+function ascendant() {
+	_checkArg $1
+	_generateFile
+	case $1 in
+	v4)
+		curl --max-time 60 -4 -w %{size_upload} --http1.1 -o /dev/null -F "file=@/tmp/temp.iso" https://bouygues.testdebit.info/ul/
+		;;
+	v6)
+		curl --max-time 60 -6 -w %{size_upload} --http1.1 -o /dev/null -F "file=@/tmp/temp.iso" https://bouygues.testdebit.info/ul/
+		;;
+	*)
+		_usage
+		exit 1
+		;;
+	esac
+}
+
+function descendant() {
+	_checkArg $1
+	case $1 in
+	v4)
+		curl --max-time 8 -4 -o /dev/null https://bouygues.testdebit.info/10G.iso
+		;;
+	v6)
+		curl --max-time 8 -6 -o /dev/null https://bouygues.testdebit.info/10G.iso
+		;;
+	*)
+		_usage
+		exit 1
+		;;
+	esac
+}
+
+_checkCommand $@
+$@
