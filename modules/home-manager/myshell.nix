@@ -48,6 +48,9 @@ in
       perl536Packages.EmailOutlookMessage
       cz-cli
 
+      nethogs #network load by process
+      nload #network load by interface
+
       linkrec
       adoc
       basic-secret

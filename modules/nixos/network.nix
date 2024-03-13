@@ -21,6 +21,7 @@ in
         dig
         netcat-openbsd
       ];
+      programs.mtr.enable = true; #improved traceroute+ping to detect packet loss
     }
 
     (mkIf cfg.bridges.enable {
