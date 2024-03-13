@@ -50,6 +50,7 @@ in
 
       nethogs #network load by process
       nload #network load by interface
+      nmap #scan network - nmap -sn 192.168.1.128/24
       testdebits 
 
       linkrec
