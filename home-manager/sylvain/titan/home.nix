@@ -11,4 +11,5 @@
   scarisey.gnome.enable = true;
   scarisey.quickemu.enable = true;
 
+  home.packages = with pkgs; [ nix-alien ];
 }
