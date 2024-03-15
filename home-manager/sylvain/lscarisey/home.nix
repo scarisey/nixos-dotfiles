@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }: {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: {
   imports = [
     ../common.nix
   ];
@@ -21,5 +26,4 @@
     nixgl.nixGLIntel
     keepassxc
   ];
-
 }

@@ -1,14 +1,22 @@
-{ pkgs, lib, config, outputs, inputs, ... }: {
-  imports = (builtins.attrValues outputs.homeManagerModules);
+{
+  pkgs,
+  lib,
+  config,
+  outputs,
+  inputs,
+  ...
+}: {
+  imports = builtins.attrValues outputs.homeManagerModules;
 
   nixpkgs = {
-    overlays = (builtins.attrValues outputs.overlays) ++ [
-      inputs.nix-alien.overlays.default
-
-    ];
+    overlays =
+      (builtins.attrValues outputs.overlays)
+      ++ [
+        inputs.nix-alien.overlays.default
+      ];
     config = {
       allowUnfree = true;
-      allowUnfreePredicate = (_: true);
+      allowUnfreePredicate = _: true;
     };
   };
 

@@ -1,11 +1,15 @@
-{ pkgs, lib, config, ... }:
-with lib;
-let
-  # Shorter name to access final settings a 
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+with lib; let
+  # Shorter name to access final settings a
   # user of devtools.nix module HAS ACTUALLY SET.
   # cfg is a typical convention.
-  cfg = config.scarisey.devtools; in
-{
+  cfg = config.scarisey.devtools;
+in {
   options.scarisey.devtools = {
     enable = mkEnableOption "Collection of development tools";
     all = mkEnableOption "All tools installed";
@@ -17,49 +21,57 @@ let
     protobuf = mkEnableOption "Protobuf tools";
     antora = mkEnableOption "Antora";
   };
-  config =
-    let
-      npmGlobalDir = "$HOME/.npm-global";
-    in
-    mkIf cfg.enable {
-      home.packages = with pkgs; [
-        #c
-        gcc
-        glibc
-        #lua
-        lua
-        luarocks
-      ] ++ optionals (cfg.jvm || cfg.all) [
-        jdk
-        unstable.sbt
-        unstable.scala-cli
-        unstable.coursier
-        maven
-        gradle
-      ] ++ optionals (cfg.javascript || cfg.all) [
-        nodejs
-        nodePackages."fx"
-      ] ++ optionals (cfg.rust || cfg.all) [
-        cargo
-      ]
-      ++ optionals (cfg.intellij || cfg.all) [
-        unstable.jetbrains.idea-community
-      ]
-      ++ optionals (cfg.go || cfg.all) [
-        go
-      ]
-      ++ optionals (cfg.protobuf || cfg.all) [
-        protobuf
-      ]
-      ++ optionals (cfg.antora || cfg.all) [
-        antora
-      ];
+  config = let
+    npmGlobalDir = "$HOME/.npm-global";
+  in
+    mkIf cfg.enable (mkMerge [
+      {
+        home.packages = with pkgs;
+          [
+            #c
+            gcc
+            glibc
+            #lua
+            lua
+            luarocks
+          ]
+          ++ optionals (cfg.jvm || cfg.all) [
+            jdk
+            unstable.sbt
+            unstable.scala-cli
+            unstable.coursier
+            maven
+            gradle
+          ]
+          ++ optionals (cfg.javascript || cfg.all) [
+            nodejs
+            nodePackages."fx"
+          ]
+          ++ optionals (cfg.rust || cfg.all) [
+            cargo
+          ]
+          ++ optionals (cfg.intellij || cfg.all) [
+            unstable.jetbrains.idea-community
+          ]
+          ++ optionals (cfg.go || cfg.all) [
+            go
+          ]
+          ++ optionals (cfg.protobuf || cfg.all) [
+            protobuf
+          ]
+          ++ optionals (cfg.antora || cfg.all) [
+            antora
+          ];
+      }
+      (mkIf (cfg.javascript || cfg.all) {
+        home.activation.npmSetPrefix = hm.dag.entryAfter ["reloadSystemd"] "$DRY_RUN_CMD ${config.home.path}/bin/npm $VERBOSE_ARG set prefix ${npmGlobalDir}"; #then npm -g install should work
+      })
 
-      home.sessionVariables = mkIf (cfg.jvm || cfg.all) {
-        JAVA_HOME = "${pkgs.jdk}/lib/openjdk";
-      };
-      home.file.".jdks/current".source = "${pkgs.jdk}/lib/openjdk";
-
-      home.activation.npmSetPrefix = hm.dag.entryAfter [ "reloadSystemd" ] "$DRY_RUN_CMD ${config.home.path}/bin/npm $VERBOSE_ARG set prefix ${npmGlobalDir}"; #then npm -g install should work
-    };
+      (mkIf (cfg.jvm || cfg.all) {
+        home.sessionVariables = {
+          JAVA_HOME = "${pkgs.jdk}/lib/openjdk";
+        };
+        home.file.".jdks/current".source = "${pkgs.jdk}/lib/openjdk";
+      })
+    ]);
 }

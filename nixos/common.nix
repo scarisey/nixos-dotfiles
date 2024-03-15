@@ -1,16 +1,24 @@
-{ lib, config, pkgs, inputs, outputs, ... }:
 {
-  imports = (builtins.attrValues outputs.nixosModules);
+  lib,
+  config,
+  pkgs,
+  inputs,
+  outputs,
+  ...
+}: {
+  imports = builtins.attrValues outputs.nixosModules;
   nixpkgs = {
-    overlays = (builtins.attrValues outputs.overlays) ++ [
-      inputs.nix-alien.overlays.default
-    ];
+    overlays =
+      (builtins.attrValues outputs.overlays)
+      ++ [
+        inputs.nix-alien.overlays.default
+      ];
     config = {
       allowUnfree = true;
     };
   };
   nix = {
-    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
+    registry = lib.mapAttrs (_: value: {flake = value;}) inputs;
     nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
     settings = {
       experimental-features = "nix-command flakes";
@@ -39,7 +47,7 @@
     shell = pkgs.zsh;
     isNormalUser = true;
     description = "sylvain";
-    extraGroups = [ "networkmanager" "wheel" "docker" "libvirtd" ];
+    extraGroups = ["networkmanager" "wheel" "docker" "libvirtd"];
   };
   environment.systemPackages = with pkgs; [
     vim

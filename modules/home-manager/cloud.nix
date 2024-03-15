@@ -1,9 +1,12 @@
-{ pkgs, lib, config, ... }:
-with lib;
-let
-  cfg = config.scarisey.cloud;
-in
 {
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+with lib; let
+  cfg = config.scarisey.cloud;
+in {
   options.scarisey.cloud = {
     enable = mkEnableOption "My cloud config";
     all = mkEnableOption "All cloud software installed";
@@ -15,14 +18,13 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs;  [
-      (mkIf (cfg.all || cfg.k9s) unstable.k9s )
-        (mkIf (cfg.all || cfg.kubectl) unstable.kubectl)
-        (mkIf (cfg.all || cfg.kubectl) unstable.kubelogin)
-        (mkIf (cfg.all || cfg.helm) unstable.kubernetes-helm )
-        (mkIf (cfg.all || cfg.azure) azure-cli)
-        (mkIf (cfg.all || cfg.kcat) unstable.kcat)
+    home.packages = with pkgs; [
+      (mkIf (cfg.all || cfg.k9s) unstable.k9s)
+      (mkIf (cfg.all || cfg.kubectl) unstable.kubectl)
+      (mkIf (cfg.all || cfg.kubectl) unstable.kubelogin)
+      (mkIf (cfg.all || cfg.helm) unstable.kubernetes-helm)
+      (mkIf (cfg.all || cfg.azure) azure-cli)
+      (mkIf (cfg.all || cfg.kcat) unstable.kcat)
     ];
   };
-
 }

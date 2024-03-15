@@ -1,5 +1,11 @@
-{ lib, config, pkgs, inputs, outputs, ... }:
 {
+  lib,
+  config,
+  pkgs,
+  inputs,
+  outputs,
+  ...
+}: {
   imports = [
     ./hardware.nix
     ../common.nix
@@ -8,7 +14,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "titan";
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = ["nvidia"];
   scarisey.network.enable = true;
   scarisey.network.bridges.enable = true;
   scarisey.qemu.enable = true;

@@ -1,9 +1,12 @@
-{ pkgs, lib, config, ... }:
-with lib;
-let
-  cfg = config.scarisey.kde;
-in
 {
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+with lib; let
+  cfg = config.scarisey.kde;
+in {
   options.scarisey.kde = {
     enable = mkEnableOption "My kde config";
   };
@@ -16,16 +19,14 @@ in
       xkbVariant = "azerty";
       displayManager = {
         sddm.enable = true;
-
       };
       desktopManager = {
         xterm.enable = false;
         plasma5.enable = true;
       };
-
     };
     programs.dconf.enable = true; #gnome compat
-    environment.systemPackages = with pkgs;[
+    environment.systemPackages = with pkgs; [
       krita
       kolourpaint
       plasma5Packages.kalk

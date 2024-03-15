@@ -1,11 +1,15 @@
-{ pkgs, config, lib, ... }:
-with lib;
-let
-  # Shorter name to access final settings a 
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
+with lib; let
+  # Shorter name to access final settings a
   # user of devtools.nix module HAS ACTUALLY SET.
   # cfg is a typical convention.
-  cfg = config.scarisey.i3Xfce; in
-{
+  cfg = config.scarisey.i3Xfce;
+in {
   options.scarisey.i3Xfce = {
     enable = mkEnableOption "i3 home configuration";
     browserPath = mkOption {
@@ -44,7 +48,6 @@ let
   };
 
   config = mkIf cfg.enable {
-
     home.file = {
       ".config/i3/config".source = ./config;
       ".config/picom.conf".source = ./picom.conf;
@@ -63,7 +66,6 @@ let
         # copy the scripts directory recursively
         recursive = true;
       };
-
     };
 
     # allow fontconfig to discover fonts and configurations installed through home.packages
@@ -77,6 +79,5 @@ let
       "GBM_BACKEND" = "nvidia-drm";
       "__GLX_VENDOR_LIBRARY_NAME" = "nvidia";
     };
-
   };
 }

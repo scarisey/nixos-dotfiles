@@ -1,5 +1,11 @@
-{ lib, config, pkgs, inputs, outputs, ... }:
 {
+  lib,
+  config,
+  pkgs,
+  inputs,
+  outputs,
+  ...
+}: {
   imports = [
     ./hardware.nix
     ../common.nix
@@ -20,7 +26,7 @@
       vaapiVdpau
       libvdpau-va-gl
     ];
-    extraPackages32 = with pkgs.pkgsi686Linux; [ vaapiIntel ];
+    extraPackages32 = with pkgs.pkgsi686Linux; [vaapiIntel];
   };
   xdg.portal.enable = true;
   services.flatpak.enable = true;

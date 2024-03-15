@@ -1,17 +1,19 @@
-{ pkgs, config, lib, ... }:
-with lib;
-let
-  cfg = config.scarisey.myshell;
-in
 {
+  pkgs,
+  config,
+  lib,
+  ...
+}:
+with lib; let
+  cfg = config.scarisey.myshell;
+in {
   options.scarisey.myshell = {
     enable = mkEnableOption "My shell defaults";
   };
   config = mkIf cfg.enable {
-
     fonts.fontconfig.enable = true;
     home.packages = with pkgs; [
-      (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" "DroidSansMono" "Hack" "Hasklig" "Meslo" "UbuntuMono" ]; })
+      (nerdfonts.override {fonts = ["FiraCode" "FiraMono" "DroidSansMono" "Hack" "Hasklig" "Meslo" "UbuntuMono"];})
 
       git
       git-lfs
@@ -51,7 +53,7 @@ in
       nethogs #network load by process
       nload #network load by interface
       nmap #scan network - nmap -sn 192.168.1.128/24
-      testdebits 
+      testdebits
 
       linkrec
       adoc
@@ -62,7 +64,6 @@ in
       GITDIR = "$HOME/git";
       EDITOR = "vim";
     };
-
 
     home.shellAliases = {
       dotfiles = "git --git-dir $GITDIR/dotfiles/ --work-tree=$HOME";
@@ -105,7 +106,7 @@ in
       enableAutosuggestions = true;
       initExtra = ''
         eval $(thefuck --alias)
-        source $HOME/.customzsh.rc &> /dev/null|| true 
+        source $HOME/.customzsh.rc &> /dev/null|| true
         export PATH=$PATH:$HOME/.local/bin/
       '';
 
@@ -131,14 +132,11 @@ in
           "z"
           "ssh-agent"
         ];
-
       };
-
     };
     programs.starship = {
       enable = true;
       enableZshIntegration = true;
-
     };
     programs.fzf = {
       enable = true;
@@ -161,16 +159,16 @@ in
       mouse = true;
       extraConfig = ''
         source-file "$HOME/.gruvbox.tmuxtheme"
-        # vim-like pane resizing  
+        # vim-like pane resizing
         bind -r C-k resize-pane -U
         bind -r C-j resize-pane -D
         bind -r C-h resize-pane -L
         bind -r C-l resize-pane -R
         # vim-like pane switching
-        bind -r k select-pane -U 
-        bind -r j select-pane -D 
-        bind -r h select-pane -L 
-        bind -r l select-pane -R 
+        bind -r k select-pane -U
+        bind -r j select-pane -D
+        bind -r h select-pane -L
+        bind -r l select-pane -R
 
         #vi selection mode
         setw -g mode-keys vi
@@ -184,8 +182,8 @@ in
     };
     programs.vim = {
       enable = true;
-      plugins = with pkgs.vimPlugins; [ vim-airline vim-airline-themes dracula-vim vim-surround ];
-      extraConfig = "${ builtins.readFile ./vim/vimrc }";
+      plugins = with pkgs.vimPlugins; [vim-airline vim-airline-themes dracula-vim vim-surround];
+      extraConfig = "${builtins.readFile ./vim/vimrc}";
     };
 
     home.file.".gruvbox.tmuxtheme" = {
@@ -203,6 +201,5 @@ in
       source = ./nvim;
       recursive = true;
     };
-
   };
 }

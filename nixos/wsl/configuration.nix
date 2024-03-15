@@ -1,5 +1,11 @@
-{ lib, config, pkgs, inputs, outputs, ... }:
 {
+  lib,
+  config,
+  pkgs,
+  inputs,
+  outputs,
+  ...
+}: {
   imports = [
     ../common.nix
     inputs.nixos-wsl.nixosModules.wsl

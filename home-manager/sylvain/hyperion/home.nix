@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }: {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: {
   imports = [
     ../common.nix
   ];
@@ -11,5 +16,4 @@
     xclip
     pavucontrol
   ];
-
 }

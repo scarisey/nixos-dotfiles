@@ -1,17 +1,18 @@
 #The whole i3 configuration is inspired from https://github.com/ryan4yin/nix-config
-
-{ pkgs, lib, config, ... }:
-with lib;
-let
-  cfg = config.scarisey.i3Xfce;
-in
 {
-
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+with lib; let
+  cfg = config.scarisey.i3Xfce;
+in {
   options.scarisey.i3Xfce = {
     enable = mkEnableOption "My i3 config";
   };
   config = mkIf cfg.enable {
-    environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
+    environment.pathsToLink = ["/libexec"]; # links /libexec from derivations to /run/current-system/sw
     services = {
       gvfs.enable = true; # Mount, trash, and other functionalities
       tumbler.enable = true; # Thumbnail support for images
@@ -51,7 +52,6 @@ in
             feh # set wallpaper
           ];
         };
-
       };
     };
   };
