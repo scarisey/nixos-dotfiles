@@ -8,6 +8,7 @@ function _usage() {
 	echo "USAGE"
 	echo "${SCRIPTNAME} ascendant [v4|v6]"
 	echo "${SCRIPTNAME} descendant [v4|v6]"
+	echo "${SCRIPTNAME} pertepaquets addresseIp"
 	exit 1
 }
 
@@ -15,6 +16,7 @@ function _checkCommand() {
 	case ${1:-''} in
 	ascendant) ;;
 	descendant) ;;
+	pertepaquets) ;;
 	*)
 		_usage
 		exit 1
@@ -33,6 +35,11 @@ function _generateFile() {
 	if [[ -z /tmp/temp.iso ]]; then
 		head -c 10G /dev/urandom >/tmp/temp.iso
 	fi
+}
+
+function pertepaquets() {
+	_checkArg $1
+	mtr $1
 }
 
 function ascendant() {
