@@ -14,8 +14,9 @@
     hash = "sha256-uGXXp6boS5yYsInSmkI9S0Tn85QGVp/5Fsh1u3G4oPk=";
   };
   modifiedLock = ./package-lock.json;
-  npmDepsHash = "sha256-Tntd68OkuQF4sKk0Mgn6fEMSOBNqzqoaHNuBSDJnO3Y=";
+  npmDepsHash = "sha256-Y+Cla55yBeUNx/fFqZm0Hb+FWXu6prtAPB+GS9tspF0=";
   mermaid-extension-version = "~0.0.4";
+  lunr-extension-version = "~1.0.0-alpha.8";
 in
   buildNpmPackage rec {
     inherit pname version modifiedLock originalFiles npmDepsHash;
@@ -26,9 +27,11 @@ in
       # This is to stop tests from being ran, as some of them fail due to trying to query remote repositories
         substituteInPlace package.json --replace \
           '"_mocha"' '""'
-        tmpfile=$(mktemp)
-        ${jq}/bin/jq '.dependencies."@sntke/antora-mermaid-extension" = "${mermaid-extension-version}"' ./package.json > $tmpfile
-        cp $tmpfile package.json
+        tmpfile1=$(mktemp)
+        tmpfile2=$(mktemp)
+        ${jq}/bin/jq '.dependencies."@sntke/antora-mermaid-extension" = "${mermaid-extension-version}"' ./package.json > $tmpfile1
+        ${jq}/bin/jq '.dependencies."@antora/lunr-extension" = "${lunr-extension-version}"' $tmpfile1 > $tmpfile2
+        cp $tmpfile2 package.json
     '';
 
     postInstall = ''
