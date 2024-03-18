@@ -1,3 +1,11 @@
+# how to update
+# 1. nix develop .#package.x86_64-linux.antora
+# 2. unpackPhase
+# 3. cd source
+# 4. patchPhase (will fail)
+# 5. nix develop again, cd source and npm i --package-lock-only
+# 6. cp package-lock in pkgs/antora
+# 7. nix build to get new hash and update hash
 {
   lib,
   buildNpmPackage,
@@ -14,7 +22,7 @@
     hash = "sha256-uGXXp6boS5yYsInSmkI9S0Tn85QGVp/5Fsh1u3G4oPk=";
   };
   modifiedLock = ./package-lock.json;
-  npmDepsHash = "sha256-Y+Cla55yBeUNx/fFqZm0Hb+FWXu6prtAPB+GS9tspF0=";
+  npmDepsHash = "sha256-Y+Cla55yBeUNx/fFqZm0Hb+FWXu6prtAPB+GS9tspF0="; #lib.fakeHash when updating package-lock
   mermaid-extension-version = "~0.0.4";
   lunr-extension-version = "~1.0.0-alpha.8";
 in
