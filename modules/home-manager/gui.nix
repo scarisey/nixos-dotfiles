@@ -16,7 +16,14 @@ in {
       TERMINAL = "alacritty";
     };
 
-    home.packages = with pkgs; [
+    home.packages = with pkgs; let
+      scrcpyDesktopItem = pkgs.makeDesktopItem {
+        name = "scrcpy";
+        desktopName = "Screen copy";
+        exec = "${unstable.scrcpy}/bin/scrcpy --video-codec=h265 --max-fps=60 --no-audio --keyboard=uhid";
+        terminal = true;
+      };
+    in [
       unstable.google-chrome
 
       unstable.vlc
@@ -27,6 +34,8 @@ in {
       xclip
       pavucontrol
       flameshot
+
+      unstable.scrcpy
 
       unstable.authy
 
