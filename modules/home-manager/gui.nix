@@ -1,12 +1,12 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
+{ pkgs
+, lib
+, config
+, ...
 }:
 with lib; let
   cfg = config.scarisey.gui;
-in {
+in
+{
   options.scarisey.gui = {
     enable = mkEnableOption "Common GUI tools";
     obs = mkEnableOption "OBS Studio";
@@ -23,7 +23,8 @@ in {
         exec = "${unstable.scrcpy}/bin/scrcpy --video-codec=h265 --max-fps=60 --no-audio --keyboard=uhid";
         terminal = true;
       };
-    in [
+    in
+    [
       unstable.google-chrome
 
       unstable.vlc
@@ -36,8 +37,6 @@ in {
       flameshot
 
       unstable.scrcpy
-
-      unstable.authy
 
       (mkIf cfg.obs unstable.obs-studio)
     ];
