@@ -15,6 +15,11 @@
       overlays = [(import ./unstable.nix)];
     };
 
+    jdk = final.jdk21;
+    jdk_headless = final.jdk21_headless;
+    jre = final.jdk;
+    jre_headless = final.jdk_headless;
+
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });

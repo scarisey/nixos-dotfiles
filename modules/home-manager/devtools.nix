@@ -41,7 +41,7 @@ in {
             unstable.scala-cli
             unstable.coursier
             maven
-            gradle
+            unstable.gradle
           ]
           ++ optionals (cfg.javascript || cfg.all) [
             nodejs
