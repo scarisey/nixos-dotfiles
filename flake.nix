@@ -10,9 +10,6 @@
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # WSL 2
-    nixos-wsl.url = "github:nix-community/NixOS-WSL";
-    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
     # For unpatched binaries
     nix-alien.url = "github:thiagokokada/nix-alien";
     nix-alien.inputs.nixpkgs.follows = "nixpkgs";

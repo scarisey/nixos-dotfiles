@@ -1,9 +1,9 @@
-{ pkgs
-, stdenv
-, buildFHSEnv
-, ...
-}:
-let
+{
+  pkgs,
+  stdenv,
+  buildFHSEnv,
+  ...
+}: let
   basic-secret = stdenv.mkDerivation {
     pname = "basic-secret";
     version = "0.1";
@@ -25,8 +25,8 @@ let
     '';
   };
 in
-buildFHSEnv {
-  name = "secret";
-  targetPkgs = pkgs: [ basic-secret ];
-  runScript = "basic-secret";
-}
+  buildFHSEnv {
+    name = "secret";
+    targetPkgs = pkgs: [basic-secret];
+    runScript = "basic-secret";
+  }

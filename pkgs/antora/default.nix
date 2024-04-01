@@ -1,56 +1,37 @@
-# how to update
-# 1. nix develop .#package.x86_64-linux.antora
-# 2. unpackPhase
-# 3. cd source
-# 4. patchPhase (will fail)
-# 5. nix develop again, cd source and npm i --package-lock-only
-# 6. cp package-lock in pkgs/antora
-# 7. nix build to get new hash and update hash
 {
   lib,
   buildNpmPackage,
-  fetchFromGitLab,
+  fetchurl,
   jq,
   buildEnv,
 }: let
-  pname = "antora";
-  version = "3.1.7";
-  originalFiles = fetchFromGitLab {
-    owner = pname;
-    repo = pname;
-    rev = "v${version}";
-    hash = "sha256-uGXXp6boS5yYsInSmkI9S0Tn85QGVp/5Fsh1u3G4oPk=";
-  };
-  modifiedLock = ./package-lock.json;
-  npmDepsHash = "sha256-Y+Cla55yBeUNx/fFqZm0Hb+FWXu6prtAPB+GS9tspF0="; #lib.fakeHash when updating package-lock
-  mermaid-extension-version = "~0.0.4";
-  lunr-extension-version = "~1.0.0-alpha.8";
+  source = lib.importJSON ./source.json;
 in
   buildNpmPackage rec {
-    inherit pname version modifiedLock originalFiles npmDepsHash;
-    src = originalFiles;
+    pname = "antora";
+    inherit (source) version;
+    src = fetchurl {
+      url = "https://registry.npmjs.org/antora/-/${source.filename}";
+      hash = source.integrity;
+    };
 
     postPatch = ''
-        cp ${modifiedLock} package-lock.json
-      # This is to stop tests from being ran, as some of them fail due to trying to query remote repositories
-        substituteInPlace package.json --replace \
-          '"_mocha"' '""'
-        tmpfile1=$(mktemp)
-        tmpfile2=$(mktemp)
-        ${jq}/bin/jq '.dependencies."@sntke/antora-mermaid-extension" = "${mermaid-extension-version}"' ./package.json > $tmpfile1
-        ${jq}/bin/jq '.dependencies."@antora/lunr-extension" = "${lunr-extension-version}"' $tmpfile1 > $tmpfile2
-        cp $tmpfile2 package.json
+      ln -s ${./package-lock.json} package-lock.json
     '';
 
-    postInstall = ''
-      mkdir -p $out/bin
-      ln -s $out/lib/node_modules/antora-build/packages/cli/bin/antora $out/bin/antora
-    '';
+    npmDepsHash = source.deps;
+
+    makeCacheWritable = true;
+    dontNpmBuild = true;
+    npmFlags = ["--omit=optional"];
+
+    passthru = {
+      updateScript = ./update.sh;
+    };
 
     meta = with lib; {
       description = "A modular documentation site generator. Designed for users of Asciidoctor.";
       homepage = "https://antora.org";
       license = licenses.mpl20;
-      #    maintainers = [ maintainers.ehllie ]; # copied from Nixpkgs
     };
   }
