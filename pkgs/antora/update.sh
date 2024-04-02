@@ -15,8 +15,8 @@ npm pack antora --json | jq '.[0]|{version,integrity,filename}' >source.json
 bsdtar -x -f "$(jq -r .filename source.json)"
 
 pushd package
-npm i '@sntke/antora-mermaid-extension'
-npm i '@antora/lunr-extension'
+npm i --package-lock-only '@sntke/antora-mermaid-extension'
+npm i --package-lock-only '@antora/lunr-extension'
 npm install --omit=optional --package-lock-only
 popd
 
