@@ -25,5 +25,6 @@
   home.packages = with pkgs; [
     nixgl.nixGLIntel
     keepassxc
+    msgconvert
   ];
 }

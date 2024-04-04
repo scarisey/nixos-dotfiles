@@ -5,6 +5,7 @@
   antora = pkgs.callPackage ./antora {};
   basic-secret = pkgs.callPackage ./basic-secret {};
   linkrec = pkgs.callPackage ./linkrec {};
+  msgconvert = pkgs.callPackage ./msgconvert {};
   scriptExample = pkgs.callPackage ./example {};
   testdebits = pkgs.callPackage ./testdebits {};
 }

@@ -47,7 +47,6 @@ in {
       rclone
       cryfs
       cht-sh
-      perl536Packages.EmailOutlookMessage
       cz-cli
 
       nethogs #network load by process
