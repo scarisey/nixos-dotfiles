@@ -25,5 +25,6 @@
     nixgl.nixGLIntel
     keepassxc
     msgconvert
+    vscode
   ];
 }
