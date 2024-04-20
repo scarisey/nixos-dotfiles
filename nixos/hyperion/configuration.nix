@@ -5,7 +5,13 @@
   inputs,
   outputs,
   ...
-}: {
+}:let
+  adminpassFile =
+    pkgs.writeText "adminpassFile"
+    ''
+      IShouldBeChanged
+    '';
+in {
   imports = [
     ./hardware.nix
     ../common.nix
@@ -19,6 +25,12 @@
   services.jellyfin = {
     enable = true;
     openFirewall = true;
+  };
+  services.nextcloud = {
+    enable = true;
+    hostName = "localhost";
+    config.adminpassFile = "${adminpassFile}";
+    package = pkgs.nextcloud28;
   };
   hardware.opengl = {
     enable = true;
