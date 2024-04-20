@@ -16,6 +16,10 @@
   networking.hostName = "hyperion";
   scarisey.gnome.enable = true;
   scarisey.network.enable = true;
+  services.jellyfin = {
+    enable = true;
+    openFirewall = true;
+  };
   hardware.opengl = {
     enable = true;
     driSupport = true;
