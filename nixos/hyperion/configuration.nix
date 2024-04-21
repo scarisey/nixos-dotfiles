@@ -5,13 +5,6 @@
 , outputs
 , ...
 }:
-let
-  adminpassFile =
-    pkgs.writeText "adminpassFile"
-      ''
-        IShouldBeChanged
-      '';
-in
 {
   imports = [
     ./hardware.nix
@@ -27,12 +20,38 @@ in
     enable = true;
     openFirewall = true;
   };
-  services.nextcloud = {
-    enable = true;
-    hostName = "localhost";
-    config.adminpassFile = "${adminpassFile}";
-    package = pkgs.nextcloud28;
+  #SAMBA
+  services = {
+    avahi = {
+      publish.enable = true;
+      publish.userServices = true;
+      enable = true;
+      openFirewall = true;
+    };
+    samba-wsdd = {
+      enable = true;
+      openFirewall = true;
+    };
+    samba = {
+      #smbpasswd -a someUser
+      package = pkgs.samba4Full;
+      enable = true;
+      openFirewall = true;
+      shares.public = {
+        path = "/home/sylvain/Public";
+        writable = "true";
+        comment = "Hello World!";
+      };
+      extraConfig = ''
+        server smb encrypt = required
+        # ^^ Note: Breaks `smbclient -L <ip/host> -U%` by default, might require the client to set `client min protocol`?
+        server min protocol = SMB3_00
+      '';
+    };
   };
+  environment.systemPackages = with pkgs; [
+    cifs-utils
+  ];
   hardware.opengl = {
     enable = true;
     driSupport = true;
