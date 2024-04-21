@@ -1,17 +1,18 @@
-{
-  lib,
-  config,
-  pkgs,
-  inputs,
-  outputs,
-  ...
-}:let
+{ lib
+, config
+, pkgs
+, inputs
+, outputs
+, ...
+}:
+let
   adminpassFile =
     pkgs.writeText "adminpassFile"
-    ''
-      IShouldBeChanged
-    '';
-in {
+      ''
+        IShouldBeChanged
+      '';
+in
+{
   imports = [
     ./hardware.nix
     ../common.nix
@@ -42,7 +43,7 @@ in {
       vaapiVdpau
       libvdpau-va-gl
     ];
-    extraPackages32 = with pkgs.pkgsi686Linux; [vaapiIntel];
+    extraPackages32 = with pkgs.pkgsi686Linux; [ vaapiIntel ];
   };
   xdg.portal.enable = true;
   services.flatpak.enable = true;
@@ -55,4 +56,10 @@ in {
     alsa.support32Bit = true;
     pulse.enable = true;
   };
+  systemd.sleep.extraConfig = ''
+    AllowSuspend=no
+    AllowHibernation=no
+    AllowHybridSleep=no
+    AllowSuspendThenHibernate=no
+  '';
 }
