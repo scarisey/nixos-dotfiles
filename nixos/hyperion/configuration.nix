@@ -20,7 +20,7 @@
     enable = true;
     openFirewall = true;
   };
-  users.users.jellyfin.extraGroup = ["sylvain"];
+  users.users.jellyfin.extraGroups = ["users"];
   #SAMBA
   services = {
     avahi = {
