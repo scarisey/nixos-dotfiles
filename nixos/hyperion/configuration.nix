@@ -52,6 +52,7 @@
   };
   environment.systemPackages = with pkgs; [
     cifs-utils
+    sshfs
   ];
   hardware.opengl = {
     enable = true;
