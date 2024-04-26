@@ -3,6 +3,7 @@
 {
   # List your module files here
   # my-module = import ./my-module.nix;
+  autoUpdate = import ./autoUpdate.nix;
   gui = import ./gui.nix;
   devtools = import ./devtools.nix;
   myshell = import ./myshell.nix;

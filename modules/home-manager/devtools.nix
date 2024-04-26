@@ -49,6 +49,7 @@ in {
           ]
           ++ optionals (cfg.rust || cfg.all) [
             cargo
+            rustc
           ]
           ++ optionals (cfg.intellij || cfg.all) [
             unstable.jetbrains.idea-community
