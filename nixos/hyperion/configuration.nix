@@ -83,4 +83,9 @@
     AllowHybridSleep=no
     AllowSuspendThenHibernate=no
   '';
+  system.autoUpgrade = {
+    enable = true;
+    flake = "github:scarisey/nixos-dotfiles";
+    dates = "Fri *-*-* 04:00:00";
+  };
 }
