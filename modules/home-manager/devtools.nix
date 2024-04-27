@@ -50,6 +50,8 @@ in {
           ++ optionals (cfg.rust || cfg.all) [
             cargo
             rustc
+            clippy
+            rustfmt
           ]
           ++ optionals (cfg.intellij || cfg.all) [
             unstable.jetbrains.idea-community
