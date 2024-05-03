@@ -52,6 +52,7 @@ in {
             rustc
             clippy
             rustfmt
+            unstable.jetbrains.rust-rover
           ]
           ++ optionals (cfg.intellij || cfg.all) [
             unstable.jetbrains.idea-community
