@@ -48,11 +48,12 @@ in {
             nodePackages."fx"
           ]
           ++ optionals (cfg.rust || cfg.all) [
-            cargo
-            rustc
-            clippy
-            rustfmt
-            unstable.jetbrains.rust-rover
+            unstable.rustup
+            # cargo
+            # rustc
+            # clippy
+            # rustfmt
+            # unstable.jetbrains.rust-rover
           ]
           ++ optionals (cfg.intellij || cfg.all) [
             unstable.jetbrains.idea-community
