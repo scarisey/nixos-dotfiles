@@ -15,9 +15,9 @@ npm pack antora --json | jq '.[0]|{version,integrity,filename}' >source.json
 bsdtar -x -f "$(jq -r .filename source.json)"
 
 pushd package
-npm i --package-lock-only '@sntke/antora-mermaid-extension'
-npm i --package-lock-only '@antora/lunr-extension'
-npm install --omit=optional --package-lock-only
+npm i '@sntke/antora-mermaid-extension'
+npm i '@antora/lunr-extension'
+npm install --omit=optional
 popd
 
 DEPS="$(prefetch-npm-deps package/package-lock.json)"
@@ -25,4 +25,4 @@ jq ".deps = \"$DEPS\"" source.json | sponge source.json
 
 popd
 
-cp -t . -- "$TMPDIR/source.json" "$TMPDIR/package/package-lock.json"
+cp -t . -- "$TMPDIR/source.json" "$TMPDIR/package/package-lock.json" "${TMPDIR}/package/package.json"
