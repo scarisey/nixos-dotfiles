@@ -15,6 +15,7 @@ function _usage() {
 	echo "USAGE"
 	echo "${SCRIPTNAME} prez [args for revealjs]"
 	echo "${SCRIPTNAME} html [args for asciidoctor]"
+	echo "${SCRIPTNAME} pdf [args for asciidoctor]"
 	exit 1
 }
 
@@ -22,6 +23,7 @@ function _checkCommand() {
 	case ${1:-''} in
 	prez) ;;
 	html) ;;
+	pdf) ;;
 	*)
 		_usage
 		exit 1
@@ -35,6 +37,10 @@ function prez() {
 
 function html() {
 	asciidoctor ${ASCIIDOCTOR_OPTS_WITH_IMAGE} $@
+}
+
+function pdf() {
+	asciidoctor-pdf ${ASCIIDOCTOR_OPTS_WITH_IMAGE} $@
 }
 
 _checkCommand $@
