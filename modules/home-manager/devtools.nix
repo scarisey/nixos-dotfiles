@@ -1,19 +1,20 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
+{ pkgs
+, lib
+, config
+, ...
 }:
 with lib; let
   # Shorter name to access final settings a
   # user of devtools.nix module HAS ACTUALLY SET.
   # cfg is a typical convention.
   cfg = config.scarisey.devtools;
-in {
+in
+{
   options.scarisey.devtools = {
     enable = mkEnableOption "Collection of development tools";
-    all = mkEnableOption "All tools installed";
+    all = mkEnableOption "All tools installed (no IDE)";
     intellij = mkEnableOption "Include Intellij Idea community edition";
+    vscode = mkEnableOption "Include VSCode";
     jvm = mkEnableOption "JVM dev tools";
     javascript = mkEnableOption "Javascript dev tools";
     rust = mkEnableOption "Rust dev tools";
@@ -21,9 +22,10 @@ in {
     protobuf = mkEnableOption "Protobuf tools";
     antora = mkEnableOption "Antora";
   };
-  config = let
-    npmGlobalDir = "$HOME/.npm-global";
-  in
+  config =
+    let
+      npmGlobalDir = "$HOME/.npm-global";
+    in
     mkIf cfg.enable (mkMerge [
       {
         home.packages = with pkgs;
@@ -49,14 +51,12 @@ in {
           ]
           ++ optionals (cfg.rust || cfg.all) [
             unstable.rustup
-            # cargo
-            # rustc
-            # clippy
-            # rustfmt
-            # unstable.jetbrains.rust-rover
           ]
-          ++ optionals (cfg.intellij || cfg.all) [
+          ++ optionals (cfg.intellij) [
             unstable.jetbrains.idea-community
+          ]
+          ++ optionals (cfg.vscode) [
+            unstable.vscode-fhs
           ]
           ++ optionals (cfg.go || cfg.all) [
             go
@@ -69,7 +69,7 @@ in {
           ];
       }
       (mkIf (cfg.javascript || cfg.all) {
-        home.activation.npmSetPrefix = hm.dag.entryAfter ["reloadSystemd"] "$DRY_RUN_CMD ${config.home.path}/bin/npm $VERBOSE_ARG set prefix ${npmGlobalDir}"; #then npm -g install should work
+        home.activation.npmSetPrefix = hm.dag.entryAfter [ "reloadSystemd" ] "$DRY_RUN_CMD ${config.home.path}/bin/npm $VERBOSE_ARG set prefix ${npmGlobalDir}"; #then npm -g install should work
       })
 
       (mkIf (cfg.jvm || cfg.all) {

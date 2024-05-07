@@ -1,8 +1,7 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
+{ pkgs
+, lib
+, config
+, ...
 }: {
   imports = [
     ../common.nix
@@ -13,6 +12,8 @@
   scarisey.gui.obs = true;
   scarisey.devtools.enable = true;
   scarisey.devtools.all = true;
+  scarisey.devtools.vscode = true;
+  scarisey.devtools.intellij = true;
   scarisey.gnome.enable = true;
   scarisey.quickemu.enable = true;
 
