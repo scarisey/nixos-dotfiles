@@ -1,26 +1,29 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
+{ pkgs
+, config
+, lib
+, ...
 }:
 with lib; let
   cfg = config.scarisey.myshell;
-in {
+in
+{
   options.scarisey.myshell = {
     enable = mkEnableOption "My shell defaults";
   };
   config = mkIf cfg.enable {
     fonts.fontconfig.enable = true;
     home.packages = with pkgs; [
-      (nerdfonts.override {fonts = ["FiraCode" "FiraMono" "DroidSansMono" "Hack" "Hasklig" "Meslo" "UbuntuMono"];})
+      (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" "DroidSansMono" "Hack" "Hasklig" "Meslo" "UbuntuMono" ]; })
 
       git
       git-lfs
       curl
       dos2unix
       screen
-      ranger
+
+      ffmpegthumbnailer #pictures preview in yazi
+      unar #archive preview in yazi
+
       thefuck
       peco #querying input
       fd #better find
@@ -68,6 +71,7 @@ in {
       dotfiles = "git --git-dir $GITDIR/dotfiles/ --work-tree=$HOME";
       initDotfiles = "f(){ mkdir -p $GITDIR || true; git clone --bare $1 $GITDIR/dotfiles; dotfiles config status.showUntrackedFiles no; }; f";
       vi = "nvim";
+      ranger = "yazi";
       #bat
       cat = "bat";
       #eza
@@ -96,6 +100,11 @@ in {
       gitpurge = ''git branch --merged |grep -E -v "(^\*|main)"|xargs git branch -d'';
 
       retry = ''f(){while true;do "$@" && break;sleep 1;done};f'';
+    };
+
+    programs.yazi = {
+      enable = true;
+      enableZshIntegration = true;
     };
 
     programs.zsh = {
@@ -181,7 +190,7 @@ in {
     };
     programs.vim = {
       enable = true;
-      plugins = with pkgs.vimPlugins; [vim-airline vim-airline-themes dracula-vim vim-surround];
+      plugins = with pkgs.vimPlugins; [ vim-airline vim-airline-themes dracula-vim vim-surround ];
       extraConfig = "${builtins.readFile ./vim/vimrc}";
     };
 
