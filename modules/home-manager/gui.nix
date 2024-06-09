@@ -16,16 +16,9 @@ in {
       TERMINAL = "alacritty";
     };
 
-    home.packages = with pkgs; let
-      scrcpyDesktopItem = pkgs.makeDesktopItem {
-        name = "scrcpy";
-        desktopName = "Screen copy";
-        exec = "${unstable.scrcpy}/bin/scrcpy --video-codec=h265 --max-fps=60 --no-audio --keyboard=uhid";
-        terminal = true;
-      };
-    in [
-      unstable.google-chrome
+    programs.firefox.enable = true;
 
+    home.packages = with pkgs; [
       unstable.vlc
 
       alacritty
