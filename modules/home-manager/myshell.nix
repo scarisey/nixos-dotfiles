@@ -45,6 +45,7 @@ in
       btop
       powertop
       poppler_utils #pdf conversions
+      imagemagick #image to pdf with convert cli
       ttygif
       gifsicle
       rclone
