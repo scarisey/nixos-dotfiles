@@ -30,7 +30,7 @@ in
       bat
       eza
       jq
-      yq
+      yq-go
       neovim
       nil #  nix LSP
       ripgrep #recursive search fs for a regex
