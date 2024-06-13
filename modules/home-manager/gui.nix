@@ -1,12 +1,12 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
+{ pkgs
+, lib
+, config
+, ...
 }:
 with lib; let
   cfg = config.scarisey.gui;
-in {
+in
+{
   options.scarisey.gui = {
     enable = mkEnableOption "Common GUI tools";
     obs = mkEnableOption "OBS Studio";
@@ -33,8 +33,8 @@ in {
       (mkIf cfg.obs unstable.obs-studio)
     ];
 
-    home.file.".alacritty.yml" = {
-      source = ./alacritty/alacritty.yml;
+    home.file.".alacritty.toml" = {
+      source = ./alacritty/alacritty.toml;
     };
   };
 }
