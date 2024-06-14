@@ -21,8 +21,8 @@ in {
         # Enable the X11 windowing system.
         enable = true;
         # Configure keymap in X11
-        layout = "fr";
-        xkbVariant = "azerty";
+        xkb.layout = "fr";
+        xkb.variant = "azerty";
 
         desktopManager = {
           xterm.enable = false;

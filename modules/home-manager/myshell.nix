@@ -112,7 +112,7 @@ in
       #https://rycee.gitlab.io/home-manager/options.html#opt-programs.zsh.enable
       enable = true;
       enableCompletion = true;
-      enableAutosuggestions = true;
+      autosuggestion.enable = true;
       initExtra = ''
         eval $(thefuck --alias)
         source $HOME/.customzsh.rc &> /dev/null|| true
