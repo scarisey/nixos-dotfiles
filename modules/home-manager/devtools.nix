@@ -53,7 +53,7 @@ in
             unstable.rustup
           ]
           ++ optionals (cfg.intellij) [
-            unstable.jetbrains.idea-community
+            jetbrains.idea-community
           ]
           ++ optionals (cfg.vscode) [
             unstable.vscode-fhs
