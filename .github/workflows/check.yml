@@ -16,7 +16,7 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - uses: DeterminateSystems/nix-installer-action@v7
+      - uses: DeterminateSystems/nix-installer-action@v12
       - name: Check
         run: |
           nix flake check
