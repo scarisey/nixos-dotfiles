@@ -22,7 +22,7 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@v12
       - name: Update flake inputs
         run: |
-          nix flake update --commit-lock-file --commit-lockfile-summary "build(flake.lock): automatic update"
+          nix flake update --commit-lock-file
       - name: Update Antora custom pkgs
         run: |
           pushd pkgs/antora
