@@ -1,12 +1,12 @@
-{ pkgs
-, lib
-, config
-, ...
+{
+  pkgs,
+  lib,
+  config,
+  ...
 }:
 with lib; let
   cfg = config.scarisey.gui;
-in
-{
+in {
   options.scarisey.gui = {
     enable = mkEnableOption "Common GUI tools";
     obs = mkEnableOption "OBS Studio";

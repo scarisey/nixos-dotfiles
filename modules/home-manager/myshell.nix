@@ -1,19 +1,19 @@
-{ pkgs
-, config
-, lib
-, ...
+{
+  pkgs,
+  config,
+  lib,
+  ...
 }:
 with lib; let
   cfg = config.scarisey.myshell;
-in
-{
+in {
   options.scarisey.myshell = {
     enable = mkEnableOption "My shell defaults";
   };
   config = mkIf cfg.enable {
     fonts.fontconfig.enable = true;
     home.packages = with pkgs; [
-      (nerdfonts.override { fonts = [ "FiraCode" "FiraMono" "DroidSansMono" "Hack" "Hasklig" "Meslo" "UbuntuMono" ]; })
+      (nerdfonts.override {fonts = ["FiraCode" "FiraMono" "DroidSansMono" "Hack" "Hasklig" "Meslo" "UbuntuMono"];})
 
       git
       git-lfs
@@ -52,6 +52,11 @@ in
       cryfs
       cht-sh
       cz-cli
+
+      #sops
+      sops
+      age
+      ssh-to-age
 
       nethogs #network load by process
       nload #network load by interface
@@ -191,7 +196,7 @@ in
     };
     programs.vim = {
       enable = true;
-      plugins = with pkgs.vimPlugins; [ vim-airline vim-airline-themes dracula-vim vim-surround ];
+      plugins = with pkgs.vimPlugins; [vim-airline vim-airline-themes dracula-vim vim-surround];
       extraConfig = "${builtins.readFile ./vim/vimrc}";
     };
 

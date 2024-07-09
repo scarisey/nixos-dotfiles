@@ -1,12 +1,12 @@
-{ pkgs
-, lib
-, config
-, ...
+{
+  pkgs,
+  lib,
+  config,
+  ...
 }:
 with lib; let
   cfg = config.scarisey.gnome;
-in
-{
+in {
   options.scarisey.gnome = {
     enable = mkEnableOption "My gnome config";
   };
