@@ -7,5 +7,6 @@
   linkrec = pkgs.callPackage ./linkrec {};
   msgconvert = pkgs.callPackage ./msgconvert {};
   scriptExample = pkgs.callPackage ./example {};
+  sops-latest = pkgs.callPackage ./sops {};
   testdebits = pkgs.callPackage ./testdebits {};
 }

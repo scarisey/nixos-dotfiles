@@ -30,6 +30,11 @@ jobs:
           popd
           git add pkgs/antora
           git commit -m "build(antora):automatic update" || true
+      - name: Update Sops custom pkgs
+        run: |
+          nix run nixpkgs#nix-update -- sops-latest --flake
+          git add pkgs/sops
+          git commit -m "build(sops):automatic update" || true
       - name: Build dry run the titan config
         run: |
           nix build --dry-run .#nixosConfigurations.titan.config.system.build.toplevel && nix build --dry-run .\#homeConfigurations.sylvain@titan.activationPackage
