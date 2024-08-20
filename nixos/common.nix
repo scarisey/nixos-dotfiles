@@ -1,10 +1,9 @@
-{
-  lib,
-  config,
-  pkgs,
-  inputs,
-  outputs,
-  ...
+{ lib
+, config
+, pkgs
+, inputs
+, outputs
+, ...
 }: {
   imports = builtins.attrValues outputs.nixosModules;
   nixpkgs = {
@@ -18,7 +17,7 @@
     };
   };
   nix = {
-    registry = lib.mapAttrs (_: value: {flake = value;}) inputs;
+    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
     nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
     settings = {
       experimental-features = "nix-command flakes";
@@ -47,11 +46,12 @@
     shell = pkgs.zsh;
     isNormalUser = true;
     description = "sylvain";
-    extraGroups = ["networkmanager" "wheel" "docker" "libvirtd"];
+    extraGroups = [ "networkmanager" "wheel" "docker" "libvirtd" ];
   };
   environment.systemPackages = with pkgs; [
     vim
     wget
+    cachix
   ];
   programs.zsh.enable = true;
   services.openssh = lib.mkDefault {
