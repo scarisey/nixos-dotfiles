@@ -50,8 +50,11 @@ jobs:
       - name: Build the titan config
         run: |
           nix build --accept-flake-config .#nixosConfigurations.titan.config.system.build.toplevel && nix build --accept-flake-config .\#homeConfigurations.sylvain@titan.activationPackage
-      # - name: Push changes to remote
-      #   run: |
-      #     git remote remove origin
-      #     git remote add origin https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-      #     git push --set-upstream origin main
+      - name: Build the lscarisey config
+        run: |
+          nix build --accept-flake-config .\#homeConfigurations.sylvain@lscarisey.activationPackage
+      - name: Push changes to remote
+        run: |
+          git remote remove origin
+          git remote add origin https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git push --set-upstream origin main
