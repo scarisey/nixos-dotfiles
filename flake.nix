@@ -36,6 +36,7 @@
     in
     rec {
       inherit lib';
+      lib = nixpkgs.lib;
       defaultPackage.x86_64-linux = home-manager.defaultPackage.x86_64-linux;
       packages = forAllSystems (
         system:
@@ -78,18 +79,18 @@
       );
 
       homeConfigurations = forUsers (
-        user: path:
-          home-manager.lib.homeManagerConfiguration {
-            pkgs = import nixpkgs {
-              system = "x86_64-linux";
-              overlays = [ nixgl.overlay ];
-            };
-            extraSpecialArgs = { inherit inputs outputs; };
-            modules = [ path ];
-          }
+        { user, system, path }:
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+            inherit system;
+            overlays = [ nixgl.overlay ];
+          };
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [ path ];
+        }
       );
 
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
     };
 
   nixConfig = {

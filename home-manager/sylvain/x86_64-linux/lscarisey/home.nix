@@ -1,11 +1,10 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
+{ pkgs
+, lib
+, config
+, ...
 }: {
   imports = [
-    ../common.nix
+    ../../common.nix
   ];
 
   targets.genericLinux.enable = true;
