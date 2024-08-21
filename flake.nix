@@ -16,6 +16,10 @@
     #For Non Nixos systems
     nixgl.url = "github:guibou/nixGL";
     nixgl.inputs.nixpkgs.follows = "nixpkgs";
+
+    #testing Cosmic DE
+    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+    nixos-cosmic.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -96,9 +100,11 @@
   nixConfig = {
     extra-substituters = [
       "https://nix-community.cachix.org"
+      "https://cosmic.cachix.org/"
     ];
     extra-trusted-public-keys = [
       "scarisey-public.cachix.org-1:kabqlCM0Wwd3iOh+C62WQg7vUO7vX3JbKKraSmxr2n8="
+      "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE="
     ];
   };
 }

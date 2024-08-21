@@ -1,24 +1,29 @@
-{
-  lib,
-  config,
-  pkgs,
-  inputs,
-  outputs,
-  ...
+{ lib
+, config
+, pkgs
+, inputs
+, outputs
+, ...
 }: {
   imports = [
     ./hardware.nix
     ../common.nix
+    inputs.nixos-cosmic.nixosModules.default
   ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "titan";
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
   scarisey.network.enable = true;
   scarisey.network.bridges.enable = true;
   scarisey.qemu.enable = true;
   scarisey.gnome.enable = true;
+  services.desktopManager.cosmic = {
+    enable = true;
+    xwayland.enable = false;
+  };
+  services.displayManager.cosmic-greeter.enable = true;
   hardware.opengl = {
     enable = true;
     driSupport = true;
