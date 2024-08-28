@@ -144,7 +144,6 @@ in {
           "fzf"
           "zsh-interactive-cd"
           "z"
-          "ssh-agent"
         ];
       };
     };
