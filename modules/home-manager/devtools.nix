@@ -1,15 +1,15 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
+{ pkgs
+, lib
+, config
+, ...
 }:
 with lib; let
   # Shorter name to access final settings a
   # user of devtools.nix module HAS ACTUALLY SET.
   # cfg is a typical convention.
   cfg = config.scarisey.devtools;
-in {
+in
+{
   options.scarisey.devtools = {
     enable = mkEnableOption "Collection of development tools";
     all = mkEnableOption "All tools installed (no IDE)";
@@ -22,9 +22,10 @@ in {
     protobuf = mkEnableOption "Protobuf tools";
     antora = mkEnableOption "Antora";
   };
-  config = let
-    npmGlobalDir = "$HOME/.npm-global";
-  in
+  config =
+    let
+      npmGlobalDir = "$HOME/.npm-global";
+    in
     mkIf cfg.enable (mkMerge [
       {
         home.packages = with pkgs;
@@ -35,6 +36,8 @@ in {
             #lua
             lua
             luarocks
+            #github cli
+            gh
           ]
           ++ optionals (cfg.jvm || cfg.all) [
             jdk
@@ -68,7 +71,7 @@ in {
           ];
       }
       (mkIf (cfg.javascript || cfg.all) {
-        home.activation.npmSetPrefix = hm.dag.entryAfter ["reloadSystemd"] "$DRY_RUN_CMD ${config.home.path}/bin/npm $VERBOSE_ARG set prefix ${npmGlobalDir}"; #then npm -g install should work
+        home.activation.npmSetPrefix = hm.dag.entryAfter [ "reloadSystemd" ] "$DRY_RUN_CMD ${config.home.path}/bin/npm $VERBOSE_ARG set prefix ${npmGlobalDir}"; #then npm -g install should work
       })
 
       (mkIf (cfg.jvm || cfg.all) {

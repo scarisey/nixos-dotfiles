@@ -50,6 +50,9 @@ jobs:
       - name: Build the titan config
         run: |
           nix build --accept-flake-config .#nixosConfigurations.titan.config.system.build.toplevel && nix build --accept-flake-config .\#homeConfigurations.sylvain@titan.activationPackage
+      - name: Build the hyperion config
+        run: |
+          nix build --accept-flake-config .#nixosConfigurations.hyperion.config.system.build.toplevel && nix build --accept-flake-config .\#homeConfigurations.sylvain@hyperion.activationPackage
       - name: Build the lscarisey config
         run: |
           nix build --accept-flake-config .\#homeConfigurations.sylvain@lscarisey.activationPackage
