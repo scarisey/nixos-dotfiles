@@ -50,4 +50,9 @@
   environment.systemPackages = with pkgs; [
     samba
   ];
+  networking.firewall = {
+    allowedTCPPorts = [ 139 145 5357 ];
+    allowedUDPPorts = [ 137 138 3702 ];
+    connectionTrackingModules = [ "netbios_sn" ];
+  };
 }
