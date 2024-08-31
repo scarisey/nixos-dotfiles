@@ -35,6 +35,7 @@
   };
   #SAMBA
   services = {
+    gvfs.enable = true;
     avahi = {
       publish.enable = true;
       publish.userServices = true;

@@ -46,4 +46,8 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
+  services.gvfs.enable = true; #for samba
+  environment.systemPackages = with pkgs; [
+    samba
+  ];
 }
