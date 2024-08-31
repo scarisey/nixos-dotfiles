@@ -54,15 +54,12 @@
     cachix
   ];
   programs.zsh.enable = true;
-  services.openssh = lib.mkDefault {
+  services.openssh = {
     enable = true;
     settings = {
       PermitRootLogin = "no";
       PasswordAuthentication = false;
     };
-    extraConfig = ''
-      HashKnownHosts yes
-    '';
   };
 
   system.stateVersion = "23.05";
