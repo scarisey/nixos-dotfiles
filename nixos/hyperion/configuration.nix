@@ -10,28 +10,16 @@
     ../common.nix
   ];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  networking.hostName = "hyperion";
   scarisey.network.enable = true;
   scarisey.qemu.enable = true;
   scarisey.gnome.enable = true;
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-    extraPackages = with pkgs; [
-      intel-media-driver # LIBVA_DRIVER_NAME=iHD
-      vaapiIntel # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
-      vaapiVdpau
-      libvdpau-va-gl
-    ];
-    extraPackages32 = with pkgs.pkgsi686Linux; [ vaapiIntel ];
-  };
-  xdg.portal.enable = true;
   services.jellyfin = {
     enable = true;
     openFirewall = true;
+  };
+  scarisey.vpn = {
+    enable = true;
+    confPath = "/var/lib/protonvpn/hyperion.conf";
   };
   #SAMBA
   services = {
@@ -75,6 +63,22 @@
       '';
     };
   };
+  environment.systemPackages = with pkgs; [
+    qbittorrent
+  ];
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+    extraPackages = with pkgs; [
+      intel-media-driver # LIBVA_DRIVER_NAME=iHD
+      vaapiIntel # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
+    extraPackages32 = with pkgs.pkgsi686Linux; [ vaapiIntel ];
+  };
+  xdg.portal.enable = true;
   services.printing.enable = true;
   sound.enable = true;
   hardware.pulseaudio.enable = false;
@@ -99,4 +103,7 @@
       "--accept-flake-config"
     ];
   };
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  networking.hostName = "hyperion";
 }
