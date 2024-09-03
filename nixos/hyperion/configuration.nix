@@ -18,7 +18,7 @@
     openFirewall = true;
   };
   scarisey.vpn = {
-    enable = true;
+    enable = false;
     confPath = "/var/lib/protonvpn/hyperion.conf";
   };
   #SAMBA
@@ -66,6 +66,11 @@
   environment.systemPackages = with pkgs; [
     qbittorrent
   ];
+  networking.firewall = {
+    allowedTCPPorts = [ 139 145 5357 8080 ];
+    allowedUDPPorts = [ 137 138 3702 ];
+    connectionTrackingModules = [ "netbios_sn" ];
+  };
   hardware.opengl = {
     enable = true;
     driSupport = true;
