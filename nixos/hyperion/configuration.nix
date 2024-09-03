@@ -1,9 +1,10 @@
-{ lib
-, config
-, pkgs
-, inputs
-, outputs
-, ...
+{
+  lib,
+  config,
+  pkgs,
+  inputs,
+  outputs,
+  ...
 }: {
   imports = [
     ./hardware.nix
@@ -67,9 +68,9 @@
     qbittorrent
   ];
   networking.firewall = {
-    allowedTCPPorts = [ 139 145 5357 8080 ];
-    allowedUDPPorts = [ 137 138 3702 ];
-    connectionTrackingModules = [ "netbios_sn" ];
+    allowedTCPPorts = [139 145 5357 8080];
+    allowedUDPPorts = [137 138 3702];
+    connectionTrackingModules = ["netbios_sn"];
   };
   hardware.opengl = {
     enable = true;
@@ -81,7 +82,7 @@
       vaapiVdpau
       libvdpau-va-gl
     ];
-    extraPackages32 = with pkgs.pkgsi686Linux; [ vaapiIntel ];
+    extraPackages32 = with pkgs.pkgsi686Linux; [vaapiIntel];
   };
   xdg.portal.enable = true;
   services.printing.enable = true;

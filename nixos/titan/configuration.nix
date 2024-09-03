@@ -1,9 +1,10 @@
-{ lib
-, config
-, pkgs
-, inputs
-, outputs
-, ...
+{
+  lib,
+  config,
+  pkgs,
+  inputs,
+  outputs,
+  ...
 }: {
   imports = [
     ./hardware.nix
@@ -13,7 +14,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "titan";
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = ["nvidia"];
   scarisey.network.enable = true;
   scarisey.qemu.enable = true;
   scarisey.gnome.enable = true;
@@ -51,8 +52,8 @@
     samba
   ];
   networking.firewall = {
-    allowedTCPPorts = [ 139 145 5357 ];
-    allowedUDPPorts = [ 137 138 3702 ];
-    connectionTrackingModules = [ "netbios_sn" ];
+    allowedTCPPorts = [139 145 5357];
+    allowedUDPPorts = [137 138 3702];
+    connectionTrackingModules = ["netbios_sn"];
   };
 }

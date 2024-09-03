@@ -1,12 +1,12 @@
-{ pkgs
-, lib
-, config
-, ...
+{
+  pkgs,
+  lib,
+  config,
+  ...
 }:
 with lib; let
   cfg = config.scarisey.vpn;
-in
-{
+in {
   options.scarisey.vpn = {
     enable = mkEnableOption "VPN config.";
     confPath = mkOption {
