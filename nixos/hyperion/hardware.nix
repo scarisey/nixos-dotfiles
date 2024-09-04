@@ -25,6 +25,15 @@
     fsType = "vfat";
   };
 
+  fileSystems."/mnt/medias" = {
+    device = "/dev/disk/by-id/wwn-0x50014ee2b2025ca7-part1";
+    fsType = "ntfs3";
+    options = [
+      "users"
+      "nofail"
+      "x-gvfs-show"
+    ];
+  };
   swapDevices = [];
 
   networking.useDHCP = lib.mkDefault true;
