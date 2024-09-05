@@ -22,9 +22,8 @@
     enable = false;
     confPath = "/var/lib/protonvpn/hyperion.conf";
   };
-  services.guacamole-server = {
-    enable = true;
-  };
+  #remote desktop
+  services.gnome.gnome-remote-desktop.enable = true;
   #SAMBA
   services = {
     gvfs.enable = true;
@@ -69,10 +68,9 @@
   };
   environment.systemPackages = with pkgs; [
     qbittorrent
-    tigervnc
   ];
   networking.firewall = {
-    allowedTCPPorts = [139 145 5357 8080 4822]; #SAMBA QBITTORENT GUACAMOLE
+    allowedTCPPorts = [139 145 5357 8080 3389]; #SAMBA QBITTORENT RDP
     allowedUDPPorts = [137 138 3702];
     connectionTrackingModules = ["netbios_sn"];
   };
