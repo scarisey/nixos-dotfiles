@@ -195,7 +195,7 @@ in {
     };
     programs.vim = {
       enable = true;
-      plugins = with pkgs.vimPlugins; [vim-airline vim-airline-themes dracula-vim vim-surround];
+      plugins = with pkgs.vimPlugins; [vim-airline vim-airline-themes everforest vim-surround];
       extraConfig = "${builtins.readFile ./vim/vimrc}";
     };
 

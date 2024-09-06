@@ -26,8 +26,8 @@ let g:netrw_liststyle= 3
 let g:netrw_banner = 0
 let g:netrw_browse_split = 4
 let g:netrw_winsize = 25
-let g:dracula_colorterm = 0
-colorscheme dracula
+set background=dark
+colorscheme everforest
 " add yaml stuffs
 au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
@@ -45,18 +45,6 @@ augroup END
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'minimalist'
 let g:airline#extensions#tabline#enabled = 1
-let t:is_transparent = 0
-hi Normal guibg=NONE ctermbg=NONE
-function! Toggle_transparent_background()
-  if t:is_transparent == 0
-    hi Normal guibg=#111111 ctermbg=black
-    let t:is_transparent = 1
-  else
-    hi Normal guibg=NONE ctermbg=NONE
-    let t:is_transparent = 0
-  endif
-endfunction
-nnoremap <C-x><C-t> :call Toggle_transparent_background()<CR>
 " spell checking
 function! ToggleSpellLang()
     " toggle between en and fr

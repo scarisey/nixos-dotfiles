@@ -41,7 +41,7 @@ return {
         "folke/which-key.nvim",
         opts = {
           defaults = {
-            ["<leader>mm"] = { name = "metals actions" },
+             { "<leader>mm", group = "metals actions" },
           },
         },
       },

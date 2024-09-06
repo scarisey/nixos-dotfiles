@@ -13,7 +13,7 @@ in {
   };
   config = mkIf cfg.enable {
     home.sessionVariables = {
-      TERMINAL = "alacritty";
+      TERMINAL = "kitty";
     };
 
     programs.firefox.enable = true;
@@ -21,6 +21,7 @@ in {
     home.packages = with pkgs; [
       unstable.vlc
 
+      unstable.kitty
       alacritty
       neovide
 
@@ -35,6 +36,13 @@ in {
 
     home.file.".alacritty.toml" = {
       source = ./alacritty/alacritty.toml;
+    };
+
+    home.file.".config/kitty/kitty.conf" = {
+      source = ./kitty/kitty.conf;
+    };
+    home.file.".config/kitty/nord-theme.conf" = {
+      source = ./kitty/nord-theme.conf;
     };
   };
 }
