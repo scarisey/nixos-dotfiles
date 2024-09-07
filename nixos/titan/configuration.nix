@@ -51,8 +51,6 @@
   services.gvfs.enable = true; #for samba
   environment.systemPackages = with pkgs; [
     samba
-    picard
-    amberol
   ];
   networking.firewall = {
     allowedTCPPorts = [139 145 5357];

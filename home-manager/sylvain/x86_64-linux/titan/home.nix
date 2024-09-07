@@ -21,5 +21,7 @@
   home.packages = with pkgs; [
     nix-alien
     protonvpn-gui
+    picard
+    feishin
   ];
 }
