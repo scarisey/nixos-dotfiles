@@ -14,10 +14,6 @@
   scarisey.network.enable = true;
   scarisey.qemu.enable = true;
   scarisey.gnome.enable = true;
-  services.jellyfin = {
-    enable = true;
-    openFirewall = true;
-  };
   services.plex = {
     enable = true;
     openFirewall = true;
