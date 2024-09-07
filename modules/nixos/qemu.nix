@@ -1,3 +1,4 @@
+#https://nixos.wiki/wiki/Virt-manager
 {
   pkgs,
   lib,
@@ -12,9 +13,6 @@ in {
   };
   config = mkIf cfg.enable {
     virtualisation.libvirtd.enable = true;
-    environment.systemPackages = with pkgs.unstable; [
-      qemu
-      virt-manager
-    ];
+    programs.virt-manager.enable = true;
   };
 }

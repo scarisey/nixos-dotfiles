@@ -15,10 +15,6 @@ in {
       unstable.quickemu
       unstable.quickgui
     ];
-
-    home.file."quickemu/ubuntu-22.04.conf" = {
-      source = ./quickemu/ubuntu-22.04.conf;
-    };
     dconf.settings = {
       "org/virt-manager/virt-manager/connections" = {
         autoconnect = ["qemu:///system"];
