@@ -28,7 +28,7 @@
     open = true;
     nvidiaSettings = true;
     forceFullCompositionPipeline = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
   xdg.portal.enable = true;
   services.plex = {
