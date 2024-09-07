@@ -18,6 +18,11 @@
     enable = true;
     openFirewall = true;
   };
+  services.plex = {
+    enable = true;
+    openFirewall = true;
+  };
+  users.users.plex.extraGroups = ["users"];
   scarisey.vpn = {
     enable = false;
     confPath = "/var/lib/protonvpn/hyperion.conf";
