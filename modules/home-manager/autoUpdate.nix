@@ -1,16 +1,16 @@
-{ pkgs
-, lib
-, config
-, inputs
-, ...
+{
+  pkgs,
+  lib,
+  config,
+  inputs,
+  ...
 }:
 with lib; let
   # Shorter name to access final settings a
   # user of devtools.nix module HAS ACTUALLY SET.
   # cfg is a typical convention.
   cfg = config.scarisey.autoUpdate;
-in
-{
+in {
   options.scarisey.autoUpdate = {
     enable = mkEnableOption "Collection of development tools";
     dates = mkOption {
@@ -31,7 +31,7 @@ in
       timers.home-manager-auto-upgrade = {
         Unit.Description = "Home Manager upgrade timer";
 
-        Install.WantedBy = [ "timers.target" ];
+        Install.WantedBy = ["timers.target"];
 
         Timer = {
           OnCalendar = cfg.dates;
@@ -45,10 +45,10 @@ in
 
         Service.ExecStart =
           toString
-            (pkgs.writeShellScript "home-manager-auto-upgrade" ''
-              echo "Upgrade Home Manager"
-              ${inputs.home-manager.packages.x86_64-linux.home-manager}/bin/home-manager switch --flake ${cfg.flake}
-            '');
+          (pkgs.writeShellScript "home-manager-auto-upgrade" ''
+            echo "Upgrade Home Manager"
+            ${inputs.home-manager.packages.x86_64-linux.home-manager}/bin/home-manager switch --flake ${cfg.flake}
+          '');
       };
     };
   };
