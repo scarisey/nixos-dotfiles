@@ -17,6 +17,7 @@
   services.xserver.videoDrivers = ["nvidia"];
   scarisey.bootanimation.enable = true;
   scarisey.network.enable = true;
+  scarisey.network.systemd.enable = true;
   scarisey.qemu.enable = true;
   scarisey.gnome.enable = true;
   hardware.opengl = {
