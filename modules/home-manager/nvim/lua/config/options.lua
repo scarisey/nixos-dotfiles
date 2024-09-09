@@ -5,7 +5,7 @@
 local opt = vim.opt
 
 opt.relativenumber = false
-vim.cmd("syntax off")
+vim.cmd("syntax on")
 vim.cmd("set termguicolors")
 opt.guifont = "Hack Nerd Font Mono:h11"
 opt.titlestring = "%{substitute(getcwd(), $HOME, '~', '')}"
