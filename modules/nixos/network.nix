@@ -16,7 +16,7 @@ in {
       services.resolved = {
         enable = true;
         dnssec = "true";
-        domains = [ "~." ];
+        domains = ["~."];
         fallbackDns = [
           "8.8.4.4"
           "1.0.0.1"
@@ -32,7 +32,6 @@ in {
     }
 
     (mkIf (!cfg.systemd.enable) {
-
       networking.enableIPv6 = false;
       networking.networkmanager.enable = true;
       # These options are unnecessary when managing DNS ourselves
@@ -62,7 +61,7 @@ in {
           };
           "40-br0" = {
             matchConfig.Name = "br0";
-            bridgeConfig={};
+            bridgeConfig = {};
             networkConfig = {
               Address = "192.168.1.229/24";
               Gateway = "192.168.1.1";
