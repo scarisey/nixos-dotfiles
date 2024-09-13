@@ -22,6 +22,7 @@ nixos-install --flake .#hostname
 
 ```
 sudo nixos-rebuild switch --flake .#hostname
+nix --accept-flake-config run . -- switch --flake .
 ```
 
 ## Apply configurations
@@ -30,6 +31,7 @@ NixOS system configuration:
 
 ```
 sudo nixos-rebuild switch --flake .
+nix --accept-flake-config run . -- switch --flake .
 ```
 
 Home manager configuration:

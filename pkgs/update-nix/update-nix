@@ -1,0 +1,25 @@
+#!/usr/bin/env zsh
+
+set -euo pipefail
+
+SCRIPTNAME=$(basename "$0")
+RUNDIR=$(dirname "$(realpath $0)")
+CURRENTDIR=$(pwd)
+
+if test -d $GITDIR/dotfiles/; then
+  git --git-dir $GITDIR/dotfiles/ --work-tree=$HOME pull
+else
+  echo 'No custom dotfiles found (call initDotfiles)'
+fi
+
+if test -d $GITDIR/nixos-dotfiles; then
+  cd ${GITDIR}/nixos-dotfiles
+  if command -v nixos-rebuild &>/dev/null;then
+    sudo nixos-rebuild switch --flake .
+  fi
+  nix --accept-flake-config run . -- switch --flake .
+  cd $CURRENTDIR
+else
+  echo "Your flake config should be in $GITDIR/nixos-dotfiles"
+  exit 1
+fi
