@@ -12,10 +12,8 @@
 
     # For unpatched binaries
     nix-alien.url = "github:thiagokokada/nix-alien";
-    nix-alien.inputs.nixpkgs.follows = "nixpkgs";
     #For Non Nixos systems
     nixgl.url = "github:guibou/nixGL";
-    nixgl.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {

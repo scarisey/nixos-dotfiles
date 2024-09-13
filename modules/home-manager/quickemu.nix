@@ -12,8 +12,8 @@ in {
   };
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      unstable.quickemu
-      unstable.quickgui
+      quickemu
+      quickgui
     ];
     dconf.settings = {
       "org/virt-manager/virt-manager/connections" = {
