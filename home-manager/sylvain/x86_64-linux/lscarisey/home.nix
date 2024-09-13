@@ -26,5 +26,6 @@
     keepassxc
     msgconvert
     vscode
+    unstable.jetbrains-toolbox
   ];
 }
