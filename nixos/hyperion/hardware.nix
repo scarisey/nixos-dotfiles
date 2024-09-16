@@ -26,10 +26,10 @@
   };
 
   fileSystems."/mnt/medias" = {
-    device = "/dev/disk/by-id/wwn-0x50014ee2b2025ca7-part1";
-    fsType = "ntfs3";
+    device = "/dev/disk/by-id/wwn-0x500a07510ce1ab68-part1";
+    fsType = "ext4";
     options = [
-      "users"
+      "defaults"
       "nofail"
       "x-gvfs-show"
     ];
