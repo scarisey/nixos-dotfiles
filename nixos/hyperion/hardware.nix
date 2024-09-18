@@ -26,7 +26,7 @@
   };
 
   fileSystems."/mnt/medias" = {
-    device = "/dev/disk/by-id/wwn-0x500a07510ce1ab68-part1";
+    device = "/dev/disk/by-id/usb-SABRENT_SABRENT_DD5641988396B-0:0-part1";
     fsType = "ext4";
     options = [
       "defaults"
