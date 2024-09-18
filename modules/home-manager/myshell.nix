@@ -32,6 +32,7 @@ in {
       jq
       yq-go
       neovim
+      nvimpager
       nil #  nix LSP
       ripgrep #recursive search fs for a regex
       neofetch
@@ -71,7 +72,8 @@ in {
 
     home.sessionVariables = {
       GITDIR = "$HOME/git";
-      EDITOR = "vim";
+      EDITOR = "nvim";
+      VISUAL = "nvim";
     };
 
     home.shellAliases = {
@@ -121,6 +123,8 @@ in {
       autosuggestion.enable = true;
       initExtra = ''
         eval $(thefuck --alias)
+        export PAGER="nvimpager -p -- -c 'lua nvimpager.maps=false' "
+        export MANPAGER="nvimpager -p -- -c 'lua nvimpager.maps=false' "
         source $HOME/.customzsh.rc &> /dev/null|| true
         export PATH=$PATH:$HOME/.local/bin/
       '';
