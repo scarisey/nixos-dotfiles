@@ -91,7 +91,7 @@
   };
 
   nixConfig = {
-    extra-trusted-substituters = [
+    extra-substituters = [
       "https://nix-community.cachix.org"
       "https://scarisey-public.cachix.org"
     ];
