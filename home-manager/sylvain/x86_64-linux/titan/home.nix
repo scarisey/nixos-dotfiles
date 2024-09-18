@@ -23,5 +23,6 @@
     protonvpn-gui
     picard
     feishin
+    unstable.jetbrains-toolbox
   ];
 }
