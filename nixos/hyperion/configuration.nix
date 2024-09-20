@@ -20,8 +20,8 @@
   };
   users.users.plex.extraGroups = ["users"];
   scarisey.vpn = {
-    enable = false;
-    confPath = "/var/lib/protonvpn/hyperion.conf";
+    enable = true;
+    confPath = "/etc/vpn/config";
   };
   #remote desktop
   services.gnome.gnome-remote-desktop.enable = true;
