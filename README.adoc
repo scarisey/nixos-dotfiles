@@ -45,3 +45,9 @@ or
 ```
 nix run . -- switch --flake .
 ```
+
+## Accept nix flake config
+
+```
+nix run nixpkgs#cachix -- use scarisey-public
+```
