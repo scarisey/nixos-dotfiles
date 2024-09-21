@@ -22,6 +22,7 @@
   scarisey.vpn = {
     enable = true;
     confPath = "/etc/vpn/config";
+    openFirewall = true;
   };
   #remote desktop
   services.gnome.gnome-remote-desktop.enable = true;

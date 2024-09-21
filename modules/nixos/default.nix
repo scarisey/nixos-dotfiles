@@ -9,5 +9,5 @@
   distrobox = import ./distrobox.nix;
   qemu = import ./qemu.nix;
   network = import ./network.nix;
-  protonvpn = import ./protonvpn.nix;
+  vpn = import ./vpn.nix;
 }
