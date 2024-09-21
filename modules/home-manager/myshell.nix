@@ -67,7 +67,6 @@ in {
       linkrec
       adoc
       basic-secret
-      update-nix
     ];
 
     home.sessionVariables = {

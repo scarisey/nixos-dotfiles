@@ -10,5 +10,4 @@
   sops-latest = pkgs.callPackage ./sops {};
   testdebits = pkgs.callPackage ./testdebits {};
   openport = pkgs.callPackage ./openport {};
-  update-nix = pkgs.callPackage ./update-nix {};
 }
