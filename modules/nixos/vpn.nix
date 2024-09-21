@@ -25,20 +25,23 @@ in {
     };
   };
 
-  config =
-    mkIf cfg.enable {
-      networking.wg-quick.interfaces.wg0 = {
-        autostart = true;
-        configFile = cfg.confPath;
-      };
-      environment.systemPackages = with pkgs; [
-        openport
-      ];
-    }
-    // mkIf cfg.openFirewall {
-      networking.firewall = {
-        allowedTCPPorts = [cfg.port];
-        allowedUDPPorts = [cfg.port];
-      };
-    };
+  config = mkIf cfg.enable (
+    mkMerge [
+      {
+        networking.wg-quick.interfaces.wg0 = {
+          autostart = true;
+          configFile = cfg.confPath;
+        };
+        environment.systemPackages = with pkgs; [
+          openport
+        ];
+      }
+
+      (mkIf cfg.openFirewall {
+        networking.firewall = {
+          allowedUDPPorts = [cfg.port];
+        };
+      })
+    ]
+  );
 }
