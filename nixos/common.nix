@@ -23,6 +23,7 @@
     settings = {
       experimental-features = "nix-command flakes";
       auto-optimise-store = true;
+      trusted-users = [ "root" "sylvain" ];
     };
     gc = {
       automatic = true;
