@@ -12,7 +12,7 @@
   sourceFiles = fs.difference ./. (fs.maybeMissing ./result);
 in
   stdenv.mkDerivation rec {
-    pname = "linkrec";
+    pname = "update-dir";
     version = "1.0";
 
     src = fs.toSource {
@@ -24,15 +24,15 @@ in
     buildInputs = [bash coreutils findutils gnused];
 
     postInstall = ''
-      wrapProgram $out/bin/linkrec \
+      wrapProgram $out/bin/update-dir \
         --set PATH ${lib.makeBinPath buildInputs}
     '';
 
     installPhase = ''
       runHook preInstall
       mkdir -p $out/bin
-      cp linkrec $out/bin/linkrec
-      chmod a+x $out/bin/linkrec
+      cp update-dir $out/bin/update-dir
+      chmod a+x $out/bin/update-dir
       runHook postInstall
     '';
   }

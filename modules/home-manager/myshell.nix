@@ -64,7 +64,7 @@ in {
       nmap #scan network - nmap -sn 192.168.1.128/24
       testdebits
 
-      linkrec
+      update-dir
       adoc
       basic-secret
     ];
