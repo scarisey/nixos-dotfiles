@@ -17,7 +17,6 @@
     enable = true;
     all = true;
   };
-  scarisey.quickemu.enable = true;
   scarisey.cloud.all = true;
   scarisey.cloud.enable = true;
 
