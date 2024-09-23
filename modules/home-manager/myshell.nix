@@ -218,5 +218,13 @@ in {
       source = ./nvim;
       recursive = true;
     };
+
+    sops = {
+      age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
+      defaultSopsFile = ../../secrets.yaml;
+      secrets."private_git_config/config".path = "${config.home.homeDirectory}/.private.gitconfig";
+      secrets."private_git_config/user".path = "${config.home.homeDirectory}/.private.gituser";
+      secrets.private_ssh_config.path = "${config.home.homeDirectory}/.ssh/config";
+    };
   };
 }

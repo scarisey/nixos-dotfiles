@@ -14,6 +14,9 @@
     nix-alien.url = "github:thiagokokada/nix-alien";
     #For Non Nixos systems
     nixgl.url = "github:guibou/nixGL";
+
+    #For secrets encryption
+    sops-nix.url = "github:Mic92/sops-nix";
   };
 
   outputs = {

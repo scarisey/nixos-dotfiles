@@ -6,7 +6,9 @@
   inputs,
   ...
 }: {
-  imports = builtins.attrValues outputs.homeManagerModules;
+  imports =
+    builtins.attrValues outputs.homeManagerModules
+    ++ [inputs.sops-nix.homeManagerModules.sops];
 
   nixpkgs = {
     overlays =
