@@ -6,7 +6,7 @@
   outputs,
   ...
 }: {
-  imports = builtins.attrValues outputs.nixosModules;
+  imports = builtins.attrValues outputs.nixosModules ++ [ inputs.sops-nix.nixosModules.sops ];
   nixpkgs = {
     overlays =
       (builtins.attrValues outputs.overlays)

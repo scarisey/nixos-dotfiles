@@ -1,9 +1,11 @@
 keys:
   - &sylvain age1gvpuhzxqww0nzew24jhhg6vfj70whqydqv8jdf8dlyfl9hudsdesunlg4l
   - &sylvain_titan age1p60eunhppay73pkauhmkt828h2pzgcf4vsda9wx9zwrcjjzd6erqhnu4nw
+  - &sylvain_hyperion age1wfarphz9sjsq6ndnkz7ypysyfrej6xkl6p04d4rfeny8j5vrrdds4hyewc
 creation_rules:
   - path_regex: secrets.yaml
     key_groups:
     - age:
       - *sylvain
       - *sylvain_titan
+      - *sylvain_hyperion

@@ -11,6 +11,13 @@
     ../common.nix
   ];
 
+  sops = {
+    defaultSopsFile = ../../secrets.yaml;
+    age.keyFile = "/home/sylvain/.config/sops/age/keys.txt";
+    secrets."hyperion/vpn" = {};
+  };
+  systemd.services.wg-quick-wg0.after = [ "sops-nix.service" ];
+
   scarisey.network.enable = true;
   scarisey.qemu.enable = true;
   scarisey.gnome.enable = true;
@@ -21,7 +28,7 @@
   users.users.plex.extraGroups = ["users"];
   scarisey.vpn = {
     enable = true;
-    confPath = "/etc/vpn/config";
+    confPath = "/run/secrets/hyperion/vpn";
     openFirewall = true;
   };
   #remote desktop
