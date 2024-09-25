@@ -31,7 +31,7 @@ in {
       eza
       jq
       yq-go
-      neovim
+      unstable.neovim
       nvimpager
       nil #  nix LSP
       ripgrep #recursive search fs for a regex
