@@ -22,7 +22,5 @@
     nix-alien
     protonvpn-gui
     picard
-    feishin
-    unstable.jetbrains-toolbox
   ];
 }

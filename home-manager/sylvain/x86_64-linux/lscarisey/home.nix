@@ -16,6 +16,7 @@
   scarisey.devtools = {
     enable = true;
     all = true;
+    intellij = true;
   };
   scarisey.cloud.all = true;
   scarisey.cloud.enable = true;
@@ -25,6 +26,5 @@
     keepassxc
     msgconvert
     vscode
-    unstable.jetbrains-toolbox
   ];
 }

@@ -13,7 +13,7 @@ in {
   options.scarisey.devtools = {
     enable = mkEnableOption "Collection of development tools";
     all = mkEnableOption "All tools installed (no IDE)";
-    intellij = mkEnableOption "Include Intellij Idea community edition";
+    intellij = mkEnableOption "Include Intellij Toolbox";
     vscode = mkEnableOption "Include VSCode";
     jvm = mkEnableOption "JVM dev tools";
     javascript = mkEnableOption "Javascript dev tools";
@@ -54,7 +54,7 @@ in {
             unstable.rustup
           ]
           ++ optionals (cfg.intellij) [
-            jetbrains.idea-community
+            unstable.jetbrains-toolbox
           ]
           ++ optionals (cfg.vscode) [
             unstable.vscode-fhs
