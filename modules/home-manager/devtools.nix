@@ -15,6 +15,7 @@ in {
     all = mkEnableOption "All tools installed (no IDE)";
     intellij = mkEnableOption "Include Intellij Toolbox";
     vscode = mkEnableOption "Include VSCode";
+    genymotion = mkEnableOption "Fast Android Emulator";
     jvm = mkEnableOption "JVM dev tools";
     javascript = mkEnableOption "Javascript dev tools";
     rust = mkEnableOption "Rust dev tools";
@@ -58,6 +59,9 @@ in {
           ]
           ++ optionals (cfg.vscode) [
             unstable.vscode-fhs
+          ]
+          ++ optionals (cfg.genymotion) [
+            unstable.genymotion
           ]
           ++ optionals (cfg.go || cfg.all) [
             go

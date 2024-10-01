@@ -15,6 +15,7 @@
   scarisey.devtools.all = true;
   scarisey.devtools.vscode = true;
   scarisey.devtools.intellij = true;
+  scarisey.devtools.genymotion = true;
   scarisey.gnome.enable = true;
   scarisey.quickemu.enable = true;
 
