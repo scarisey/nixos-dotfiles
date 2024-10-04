@@ -65,6 +65,11 @@
         writeable = "yes";
         path = "home/sylvain/private";
       };
+      shares.musique = {
+        browseable = "yes";
+        writeable = "no";
+        path = "/mnt/medias/Musique";
+      };
       extraConfig = ''
         server smb encrypt = desired
         # ^^ Note: Breaks `smbclient -L <ip/host> -U%` by default, might require the client to set `client min protocol`?
