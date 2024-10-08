@@ -16,7 +16,7 @@
     age.keyFile = "/home/sylvain/.config/sops/age/keys.txt";
     secrets."hyperion/vpn" = {};
   };
-  systemd.services.wg-quick-wg0.after = [ "sops-nix.service" ];
+  systemd.services.wg-quick-wg0.after = ["sops-nix.service"];
 
   scarisey.network.enable = true;
   scarisey.qemu.enable = true;

@@ -17,6 +17,9 @@
 
     #For secrets encryption
     sops-nix.url = "github:Mic92/sops-nix";
+
+    #Apply same theme everywhere
+    stylix.url = "github:danth/stylix";
   };
 
   outputs = {
