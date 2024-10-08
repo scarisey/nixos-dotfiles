@@ -20,11 +20,7 @@
   scarisey.network.systemd.enable = true;
   scarisey.qemu.enable = true;
   scarisey.gnome.enable = true;
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-  };
+  hardware.graphics.enable = true;
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = false;
@@ -40,7 +36,6 @@
   };
   services.flatpak.enable = true;
   services.printing.enable = true;
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {

@@ -28,28 +28,25 @@ in {
         };
       };
       programs.dconf.enable = true;
-      environment.gnome.excludePackages =
-        (with pkgs; [
-          gnome-photos
-          gnome-tour
-          gedit
-        ])
-        ++ (with pkgs.gnome; [
-          cheese # webcam tool
-          gnome-music
-          epiphany # web browser
-          geary # email reader
-          gnome-characters
-          tali # poker game
-          iagno # go game
-          hitori # sudoku game
-          atomix # puzzle game
-          yelp # Help view
-          gnome-contacts
-          gnome-initial-setup
-        ]);
+      environment.gnome.excludePackages = with pkgs; [
+        gnome-photos
+        gnome-tour
+        gedit
+        cheese # webcam tool
+        gnome-music
+        epiphany # web browser
+        geary # email reader
+        gnome-characters
+        tali # poker game
+        iagno # go game
+        hitori # sudoku game
+        atomix # puzzle game
+        yelp # Help view
+        gnome-contacts
+        gnome-initial-setup
+      ];
       environment.systemPackages = with pkgs; [
-        gnome.gnome-tweaks
+        gnome-tweaks
       ];
     };
 }

@@ -52,32 +52,34 @@
       package = pkgs.samba4Full;
       enable = true;
       openFirewall = true;
-      shares.public = {
-        browseable = "yes";
-        "read only" = "yes";
-        "guest ok" = "yes";
-        path = "/data/Public";
-        comment = "Hello World!";
-        public = "yes";
+      settings = {
+        global = {
+          "server smb encrypt" = "desired";
+          # ^^ Note: Breaks `smbclient -L <ip/host> -U%` by default, might require the client to set `client min protocol`?
+          "server min protocol" = "SMB3_00";
+          "security" = "user";
+          "map to guest" = "bad user";
+          "guest account" = "nobody";
+        };
+        public = {
+          browseable = "yes";
+          "read only" = "yes";
+          "guest ok" = "yes";
+          path = "/data/Public";
+          comment = "Hello World!";
+          public = "yes";
+        };
+        private = {
+          browseable = "yes";
+          writeable = "yes";
+          path = "home/sylvain/private";
+        };
+        musique = {
+          browseable = "yes";
+          writeable = "no";
+          path = "/mnt/medias/Musique";
+        };
       };
-      shares.private = {
-        browseable = "yes";
-        writeable = "yes";
-        path = "home/sylvain/private";
-      };
-      shares.musique = {
-        browseable = "yes";
-        writeable = "no";
-        path = "/mnt/medias/Musique";
-      };
-      extraConfig = ''
-        server smb encrypt = desired
-        # ^^ Note: Breaks `smbclient -L <ip/host> -U%` by default, might require the client to set `client min protocol`?
-        server min protocol = SMB3_00
-        security = user
-        map to guest = bad user
-        guest account = nobody
-      '';
     };
   };
   environment.systemPackages = with pkgs; [
@@ -88,10 +90,8 @@
     allowedUDPPorts = [137 138 3702];
     connectionTrackingModules = ["netbios_sn"];
   };
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
     extraPackages = with pkgs; [
       intel-media-driver # LIBVA_DRIVER_NAME=iHD
       vaapiIntel # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
@@ -102,7 +102,6 @@
   };
   xdg.portal.enable = true;
   services.printing.enable = true;
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {

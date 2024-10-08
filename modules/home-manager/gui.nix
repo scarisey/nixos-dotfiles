@@ -19,9 +19,9 @@ in {
     programs.firefox.enable = true;
 
     home.packages = with pkgs; [
-      unstable.vlc
+      vlc
 
-      unstable.kitty
+      kitty
       alacritty
       neovide
 
@@ -29,9 +29,9 @@ in {
       pavucontrol
       flameshot
 
-      unstable.scrcpy
+      scrcpy
 
-      (mkIf cfg.obs unstable.obs-studio)
+      (mkIf cfg.obs obs-studio)
     ];
 
     home.file.".alacritty.toml" = {

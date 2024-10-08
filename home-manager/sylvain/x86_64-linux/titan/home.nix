@@ -17,7 +17,6 @@
   scarisey.devtools.intellij = true;
   scarisey.devtools.genymotion = true;
   scarisey.gnome.enable = true;
-  scarisey.quickemu.enable = true;
 
   home.packages = with pkgs; [
     nix-alien

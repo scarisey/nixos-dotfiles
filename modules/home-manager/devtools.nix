@@ -41,27 +41,27 @@ in {
           ]
           ++ optionals (cfg.jvm || cfg.all) [
             jdk
-            unstable.sbt
-            unstable.scala-cli
-            unstable.coursier
+            sbt
+            scala-cli
+            coursier
             maven
-            unstable.gradle
+            gradle
           ]
           ++ optionals (cfg.javascript || cfg.all) [
             nodejs
             nodePackages."fx"
           ]
           ++ optionals (cfg.rust || cfg.all) [
-            unstable.rustup
+            rustup
           ]
           ++ optionals (cfg.intellij) [
-            unstable.jetbrains-toolbox
+            jetbrains-toolbox
           ]
           ++ optionals (cfg.vscode) [
-            unstable.vscode-fhs
+            vscode-fhs
           ]
           ++ optionals (cfg.genymotion) [
-            unstable.genymotion
+            genymotion
           ]
           ++ optionals (cfg.go || cfg.all) [
             go

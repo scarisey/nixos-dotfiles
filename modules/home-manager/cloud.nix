@@ -19,12 +19,12 @@ in {
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      (mkIf (cfg.all || cfg.k9s) unstable.k9s)
-      (mkIf (cfg.all || cfg.kubectl) unstable.kubectl)
-      (mkIf (cfg.all || cfg.kubectl) unstable.kubelogin)
-      (mkIf (cfg.all || cfg.helm) unstable.kubernetes-helm)
+      (mkIf (cfg.all || cfg.k9s) k9s)
+      (mkIf (cfg.all || cfg.kubectl) kubectl)
+      (mkIf (cfg.all || cfg.kubectl) kubelogin)
+      (mkIf (cfg.all || cfg.helm) kubernetes-helm)
       (mkIf (cfg.all || cfg.azure) azure-cli)
-      (mkIf (cfg.all || cfg.kcat) unstable.kcat)
+      (mkIf (cfg.all || cfg.kcat) kcat)
     ];
   };
 }
