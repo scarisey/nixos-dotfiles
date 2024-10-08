@@ -24,8 +24,7 @@
     picard
   ];
   stylix.image = pkgs.fetchurl {
-    url = "https://github.com/NixOS/nixos-artwork/blob/ea1384e183f556a94df85c7aa1dcd411f5a69646/wallpapers/nixos-wallpaper-catppuccin-mocha.png?raw=true";
-    hash = "sha256-fmKFYw2gYAYFjOv4lr8IkXPtZfE1+88yKQ4vjEcax1s=";
+    url = "https://www.pixelstalk.net/wp-content/uploads/image10/Fall-Desktop-Wallpaper-2K-with-a-hiking-trail-through-a-forest-in-autumn-leaves-crunching-underfoot.jpg";
+    hash = "sha256-G60ahkOYLwhnFoxsQYdiuhaCNfZ8HF8Sx8P66ptFGrQ=";
   };
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 }
