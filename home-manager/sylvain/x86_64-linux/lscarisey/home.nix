@@ -1,7 +1,5 @@
 {
   pkgs,
-  lib,
-  config,
   ...
 }: {
   imports = [
@@ -25,7 +23,6 @@
     nixgl.nixGLIntel
     keepassxc
     msgconvert
-    vscode
   ];
 
   stylix = {

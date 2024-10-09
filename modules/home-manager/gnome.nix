@@ -1,5 +1,4 @@
 {
-  pkgs,
   lib,
   config,
   ...
@@ -15,6 +14,12 @@ in {
       "org/gnome/shell" = {
         disable-user-extensions = false;
       };
+    };
+
+    qt = {
+      enable = true;
+      platformTheme.name = "adwaita";
+      style.name = "adwaita-dark";
     };
   };
 }

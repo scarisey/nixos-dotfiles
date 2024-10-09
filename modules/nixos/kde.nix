@@ -17,13 +17,13 @@ in {
       # Configure keymap in X11
       xkb.layout = "fr";
       xkb.variant = "azerty";
+    };
+    services = {
       displayManager = {
         sddm.enable = true;
+        sddm.wayland.enable = true;
       };
-      desktopManager = {
-        xterm.enable = false;
-        plasma5.enable = true;
-      };
+      desktopManager.plasma6.enable = true;
     };
     programs.dconf.enable = true; #gnome compat
     environment.systemPackages = with pkgs; [
@@ -32,7 +32,7 @@ in {
       plasma5Packages.kalk
       libsForQt5.qtstyleplugin-kvantum
       yakuake
-      gnome.adwaita-icon-theme
+      adwaita-icon-theme
     ];
   };
 }

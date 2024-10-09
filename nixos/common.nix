@@ -48,7 +48,7 @@
     shell = pkgs.zsh;
     isNormalUser = true;
     description = "sylvain";
-    extraGroups = ["networkmanager" "wheel" "docker" "libvirtd"];
+    extraGroups = ["networkmanager" "wheel" "docker" "libvirtd" "kvm"];
   };
   environment.systemPackages = with pkgs; [
     vim

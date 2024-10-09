@@ -1,9 +1,6 @@
 {
-  lib,
   config,
   pkgs,
-  inputs,
-  outputs,
   ...
 }: {
   imports = [
@@ -15,7 +12,6 @@
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "titan";
   services.xserver.videoDrivers = ["nvidia"];
-  scarisey.bootanimation.enable = true;
   scarisey.network.enable = true;
   scarisey.network.systemd.enable = true;
   scarisey.qemu.enable = true;
@@ -30,10 +26,6 @@
     package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
   xdg.portal.enable = true;
-  services.plex = {
-    enable = false;
-    openFirewall = true;
-  };
   services.flatpak.enable = true;
   services.printing.enable = true;
   hardware.pulseaudio.enable = false;

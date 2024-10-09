@@ -35,7 +35,7 @@
     lib' = import ./lib {lib = nixpkgs.lib;};
     forHosts = lib'.forHosts ./nixos;
     forUsers = lib'.forUsers ./home-manager;
-  in rec {
+  in {
     inherit lib';
     lib = nixpkgs.lib;
     defaultPackage.x86_64-linux = home-manager.defaultPackage.x86_64-linux;
@@ -44,7 +44,7 @@
         overlays = [
           (import ./overlays {inherit inputs;}).modifications
         ];
-        pkgs = nixpkgs.legacyPackages.${system};
+          pkgs = import nixpkgs {inherit system overlays;};
       in
         import ./pkgs {inherit pkgs;}
     );

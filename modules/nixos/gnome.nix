@@ -21,7 +21,7 @@ in {
         xkb.variant = "azerty";
         displayManager = {
           gdm.enable = true;
-          gdm.wayland = false;
+          gdm.wayland = true;
         };
         desktopManager = {
           gnome.enable = true;

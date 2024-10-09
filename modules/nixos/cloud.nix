@@ -1,12 +1,10 @@
 {
-  pkgs,
   lib,
   config,
   ...
 }:
 with lib; let
   cfg = config.scarisey.cloud;
-  pkgIf = pred: package: optionals (cfg.all || pred) [package];
 in {
   options.scarisey.cloud = {
     enable = mkEnableOption "My cloud config";
