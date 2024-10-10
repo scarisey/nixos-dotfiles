@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ../../common.nix
   ];
@@ -12,6 +9,7 @@
   scarisey.devtools.enable = true;
   scarisey.devtools.all = true;
   scarisey.devtools.intellij = true;
+  scarisey.devtools.android = true;
   scarisey.gnome.enable = true;
 
   home.packages = with pkgs; [

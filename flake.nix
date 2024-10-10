@@ -19,6 +19,10 @@
 
     #Apply same theme everywhere
     stylix.url = "github:danth/stylix";
+
+    #Android SDK
+    android-nixpkgs.url = "github:tadfisher/android-nixpkgs";
+    android-nixpkgs.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
@@ -44,7 +48,7 @@
         overlays = [
           (import ./overlays {inherit inputs;}).modifications
         ];
-          pkgs = import nixpkgs {inherit system overlays;};
+        pkgs = import nixpkgs {inherit system overlays;};
       in
         import ./pkgs {inherit pkgs;}
     );

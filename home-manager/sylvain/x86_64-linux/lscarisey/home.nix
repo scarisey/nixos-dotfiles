@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ../../common.nix
   ];
@@ -15,6 +12,7 @@
     enable = true;
     all = true;
     intellij = true;
+    android = true;
   };
   scarisey.cloud.all = true;
   scarisey.cloud.enable = true;
@@ -34,7 +32,7 @@
       fzf.enable = true;
       k9s.enable = true;
       kitty.enable = true;
-      neovim.enable = true;#will not work now
+      neovim.enable = true; #will not work now
       vim.enable = true;
       yazi.enable = true;
     };
