@@ -5,13 +5,13 @@
 }: {
   imports =
     builtins.attrValues outputs.homeManagerModules
-    ++ [inputs.sops-nix.homeManagerModules.sops inputs.stylix.homeManagerModules.stylix];
+    ++ [inputs.sops-nix.homeManagerModules.sops inputs.stylix.homeManagerModules.stylix inputs.android-nixpkgs.hmModule];
 
   nixpkgs = {
     overlays =
       (builtins.attrValues outputs.overlays)
       ++ [
-        inputs.nix-alien.overlays.default
+        inputs.nix-alien.overlays.default inputs.android-nixpkgs.overlays.default
       ];
     config = {
       allowUnfree = true;

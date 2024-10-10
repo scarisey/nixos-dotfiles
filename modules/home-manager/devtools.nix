@@ -21,12 +21,14 @@ in {
     go = mkEnableOption "Go dev tools";
     protobuf = mkEnableOption "Protobuf tools";
     antora = mkEnableOption "Antora";
+    android = mkEnableOption "Android";
   };
   config = let
     npmGlobalDir = "$HOME/.npm-global";
   in
     mkIf cfg.enable (mkMerge [
       {
+        scarisey.android.enable = cfg.android;
         home.packages = with pkgs;
           [
             #c
