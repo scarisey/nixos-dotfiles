@@ -1,13 +1,11 @@
 return {
-
-    { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
-    { "navarasu/onedark.nvim", name = "onedark", priority = 1000 },
-    { "sainnhe/gruvbox-material", priority = 1000},
-        {
-            "LazyVim/LazyVim",
-            opts = {
-                colorscheme = "onedark",
-                style = "deep"
-            },
-        }
+  {
+    "tinted-theming/base16-vim",
+  },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "base16-shadesmear-dark",
+    },
+  },
 }
