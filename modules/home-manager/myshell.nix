@@ -98,11 +98,11 @@ in {
       cht = "cht.sh";
 
       #nvim
-      cleanNvim = ''
-        rm -Rf ~/.local/share/nvim
-        rm -Rf ~/.local/state/nvim
-        rm -Rf ~/.cache/nvim
-      '';
+      # cleanNvim = ''
+      #   rm -Rf ~/.local/share/nvim
+      #   rm -Rf ~/.local/state/nvim
+      #   rm -Rf ~/.cache/nvim
+      # '';
 
       #git
       gitpurge = ''git branch --merged |grep -E -v "(^\*|main)"|xargs git branch -d'';
@@ -206,18 +206,10 @@ in {
     home.file.".gruvbox.tmuxtheme" = {
       source = ./tmux/gruvbox.tmuxtheme;
     };
-    home.file.".config/ranger/rc.conf" = {
-      source = ./ranger/rc.conf;
-    };
 
     home.file.".gitmessage".source = ./git/gitmessage;
     home.file.".gitconfig".source = ./git/gitconfig;
     home.file."git/.gitignore".source = ./git/gitignore;
-
-    home.file.".config/nvim" = {
-      source = ./nvim;
-      recursive = true;
-    };
 
     sops = {
       age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
