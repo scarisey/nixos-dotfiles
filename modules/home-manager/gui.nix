@@ -47,8 +47,8 @@ in {
         hide_window_decorations = true;
         tab_bar_style = "powerline";
         tab_powerline_styled = "angled";
-        background_opacity = "0.95";
-        dynamic_background_opacity = true;
+        # background_opacity = "0.95";
+        # dynamic_background_opacity = true;
         confirm_os_window_close = 0;
 
         font_size = 11;
