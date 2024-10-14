@@ -15,17 +15,21 @@ in {
     android-sdk.enable = true;
 
     # Optional; default path is "~/.local/share/android".
-    android-sdk.path = "${config.home.homeDirectory}/.android/sdk";
+    android-sdk.path = "${config.home.homeDirectory}/Android/Sdk";
 
     #List available packages: nix flake show github:tadfisher/android-nixpkgs
     android-sdk.packages = sdk:
       with sdk; [
         build-tools-35-0-0
+        build-tools-34-0-0
         cmdline-tools-latest
         emulator
         platform-tools
         platforms-android-35
+        platforms-android-34
         sources-android-35
+        sources-android-34
+        system-images-android-34-google-apis-playstore-x86-64
       ];
 
     home.packages = [
