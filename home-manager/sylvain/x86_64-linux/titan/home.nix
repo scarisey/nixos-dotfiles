@@ -18,7 +18,8 @@
     picard
   ];
   stylix.image = pkgs.fetchurl {
-    url = "https://www.pixelstalk.net/wp-content/uploads/image10/Fall-Desktop-Wallpaper-2K-with-a-hiking-trail-through-a-forest-in-autumn-leaves-crunching-underfoot.jpg";
-    hash = "sha256-G60ahkOYLwhnFoxsQYdiuhaCNfZ8HF8Sx8P66ptFGrQ=";
+    url = "https://bitbucket.org/SCarSly/wallpapers/raw/c15754dfdbb687804f38e2e39d6bd86734de2269/pexels-eberhardgross-730981.jpg";
+    hash = "sha256-HH+RVs8g+lF+E5XHXDXOR03vi1c8uivQ517uvbrQ7dA=";
+# nix-hash --type sha256 --to-sri $(nix-prefetch-url [URL])
   };
 }
