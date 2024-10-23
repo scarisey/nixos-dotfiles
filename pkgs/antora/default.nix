@@ -7,7 +7,7 @@
 }: let
   source = lib.importJSON ./source.json;
 in
-  buildNpmPackage rec {
+  buildNpmPackage {
     pname = "antora";
     inherit (source) version;
     src = fetchurl {
@@ -28,9 +28,7 @@ in
     dontNpmInstall = false;
     npmFlags = ["--omit=optional"];
 
-    passthru = {
-      updateScript = ./update.sh;
-    };
+    passthru.updateScript = ./update.sh;
 
     meta = with lib; {
       description = "A modular documentation site generator. Designed for users of Asciidoctor.";
