@@ -39,6 +39,8 @@ in {
             luarocks
             #github cli
             gh
+            #made by cachix templates for dev environments
+            devenv
           ]
           ++ optionals (cfg.jvm || cfg.all) [
             jdk
