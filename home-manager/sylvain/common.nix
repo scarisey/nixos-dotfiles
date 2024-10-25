@@ -11,7 +11,8 @@
     overlays =
       (builtins.attrValues outputs.overlays)
       ++ [
-        inputs.nix-alien.overlays.default inputs.android-nixpkgs.overlays.default
+        inputs.nix-alien.overlays.default
+        inputs.android-nixpkgs.overlays.default
       ];
     config = {
       allowUnfree = true;
