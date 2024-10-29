@@ -12,6 +12,10 @@
     jre = final.jdk;
     jre_headless = final.jdk_headless;
 
+    stable = import inputs.nixpkgs-stable {
+      system = final.system;
+      config.allowUnfree = true;
+    };
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });
