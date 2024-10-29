@@ -23,7 +23,7 @@ in {
       (mkIf (cfg.all || cfg.kubectl) kubectl)
       (mkIf (cfg.all || cfg.kubectl) kubelogin)
       (mkIf (cfg.all || cfg.helm) kubernetes-helm)
-      (mkIf (cfg.all || cfg.azure) azure-cli)
+      (mkIf (cfg.all || cfg.azure) stable.azure-cli)
       (mkIf (cfg.all || cfg.kcat) kcat)
     ];
   };
