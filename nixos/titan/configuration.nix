@@ -16,6 +16,7 @@
   scarisey.network.systemd.enable = true;
   scarisey.qemu.enable = true;
   scarisey.gnome.enable = true;
+  virtualisation.waydroid.enable = true;
   hardware.graphics.enable = true;
   hardware.nvidia = {
     modesetting.enable = true;
