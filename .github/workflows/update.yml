@@ -32,6 +32,12 @@ jobs:
         with:
           name: scarisey-public
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+      - name: Prepare update branch
+        run: |
+          git remote remove origin
+          git remote add origin https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git checkout -b ci/auto_update
+          gri branch --set-upstream-to=origin/ci/auto_update
       - name: Update flake inputs
         run: |
           nix flake update --commit-lock-file --accept-flake-config
@@ -47,17 +53,6 @@ jobs:
           nix run nixpkgs#nix-update -- sops-latest --flake
           git add pkgs/sops
           git commit -m "build(sops):automatic update" || true
-      - name: Build the titan config
-        run: |
-          nix build --accept-flake-config .#nixosConfigurations.titan.config.system.build.toplevel && nix build --accept-flake-config .\#homeConfigurations.sylvain@titan.activationPackage
-      - name: Build the hyperion config
-        run: |
-          nix build --accept-flake-config .#nixosConfigurations.hyperion.config.system.build.toplevel && nix build --accept-flake-config .\#homeConfigurations.sylvain@hyperion.activationPackage
-      - name: Build the lscarisey config
-        run: |
-          nix build --accept-flake-config .\#homeConfigurations.sylvain@lscarisey.activationPackage
       - name: Push changes to remote
         run: |
-          git remote remove origin
-          git remote add origin https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          git push --set-upstream origin main
+          git push --force --set-upstream origin ci/auto_update
