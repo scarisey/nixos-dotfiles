@@ -1,6 +1,9 @@
 name: "Nix flake check"
 on:
-  push
+  push:
+    branches:
+     - '**'
+     - '!main'
 
 jobs:
   update:
