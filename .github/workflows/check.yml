@@ -1,8 +1,6 @@
 name: "Nix flake check"
 on:
-  push:
-    branches:
-      - "**"
+  push
 
 jobs:
   update:
@@ -14,6 +12,7 @@ jobs:
       NIX_CONFIG: "experimental-features = nix-command flakes"
     permissions:
       contents: write
+      checks: write
     steps:
       - uses: actions/checkout@v4
       - name: mount Nix store on larger partition
@@ -38,3 +37,13 @@ jobs:
       - name: Build the lscarisey config
         run: |
           nix build --accept-flake-config .\#homeConfigurations.sylvain@lscarisey.activationPackage
+      - name: Check OK
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/scarisey/nixos-dotfiles/check-runs \
+            -f "name=check_ok" -f "head_sha=$(git rev-parse HEAD)" -f "status=completed" -f "conclusion=success"
