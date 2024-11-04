@@ -72,6 +72,11 @@
           writeable = "no";
           path = "/mnt/medias/Musique";
         };
+        downloads = {
+          browseable = "yes";
+          writeable = "no";
+          path = "/mnt/medias/Downloads";
+        };
       };
     };
   };
