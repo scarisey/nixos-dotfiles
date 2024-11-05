@@ -43,12 +43,11 @@ in {
       enable = true;
       settings = {
         scrollback_pager = "nvimpager -p -- -c 'lua nvimpager.maps=false'";
+        scrollback_pager_history_size = 128;
         enable_audio_bell = false;
         hide_window_decorations = true;
-        tab_bar_style = "powerline";
-        tab_powerline_styled = "angled";
-        # background_opacity = "0.95";
-        # dynamic_background_opacity = true;
+        tab_bar_style = "custom";
+        tab_bar_edge = "top";
         confirm_os_window_close = 0;
 
         font_size = 11;
@@ -68,6 +67,8 @@ in {
         "shift+up" = "move_window down";
       };
     };
+
+    xdg.configFile."kitty/tab_bar.py".source = ./kitty/tab_bar.py;
 
     stylix = {
       enable = true;
