@@ -216,6 +216,9 @@ in {
       source = ./nvim;
       recursive = true;
     };
+    home.activation.lazyvim = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      run test -f ~/.config/nvim/lazyvim.json || cp ~/.config/nvim/lazyvim.orig ~/.config/nvim/lazyvim.json
+    '';
 
     sops = {
       age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
