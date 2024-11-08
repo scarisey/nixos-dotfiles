@@ -55,7 +55,7 @@ jobs:
           git commit -m "build(sops):automatic update" || true
       - name: Push changes to remote
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_CI }}
         run: |
           git push --force --set-upstream origin ci/auto_update
           gh pr list --search "CI:Auto Update in:title" --json url -q '.[0].url'|xargs gh pr ready || \
