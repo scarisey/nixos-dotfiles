@@ -1,9 +1,10 @@
 name: "Nix flake check"
 on:
+  workflow_dispatch:
   push:
     branches:
-     - '**'
-     - '!main'
+      - "**"
+      - "!main"
 
 jobs:
   update:
@@ -40,9 +41,16 @@ jobs:
       - name: Build the lscarisey config
         run: |
           nix build --accept-flake-config .\#homeConfigurations.sylvain@lscarisey.activationPackage
+      - name: Generate a token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
       - name: Check OK
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           gh api \
             --method POST \
