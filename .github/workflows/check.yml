@@ -1,9 +1,10 @@
 name: "Nix flake check"
 on:
+  workflow_dispatch:
   push:
     branches:
-     - '**'
-     - '!main'
+      - "**"
+      - "!main"
 
 jobs:
   update:

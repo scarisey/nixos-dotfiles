@@ -16,6 +16,7 @@ jobs:
       GIT_COMMITTER_NAME: github-actions[bot]
       GIT_COMMITTER_EMAIL: github-actions[bot]@users.noreply.github.com
     permissions:
+      actions: write
       contents: write
       pull-requests: write
     steps:
@@ -32,7 +33,7 @@ jobs:
       - uses: cachix/cachix-action@v15
         with:
           name: scarisey-public
-          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Prepare update branch
         run: |
           git remote remove origin
@@ -60,3 +61,4 @@ jobs:
           git push --force --set-upstream origin ci/auto_update
           gh pr list --search "CI:Auto Update in:title" --json url -q '.[0].url'|xargs gh pr ready || \
           gh pr create --title "CI:Auto Update" --body "Automatic update from CI"
+          gh workflow run 78068488 --ref 'ci/auto_update'
