@@ -18,8 +18,8 @@
     picard
   ];
   stylix.image = pkgs.fetchurl {
-    url = "https://bitbucket.org/SCarSly/wallpapers/raw/c15754dfdbb687804f38e2e39d6bd86734de2269/pexels-eberhardgross-730981.jpg";
-    hash = "sha256-HH+RVs8g+lF+E5XHXDXOR03vi1c8uivQ517uvbrQ7dA=";
+    url = "https://bitbucket.org/SCarSly/wallpapers/raw/5e25a4ad3232623df88b9fcbbcee1d76429dd919/pexels-francesco-ungaro-1525041.jpg";
+    hash = "sha256-gC2WjdoK3lQ2sbP4zoNHdkdZ+E0dR3yiTobBzpV9yzU=";
     # nix-hash --type sha256 --to-sri $(nix-prefetch-url [URL])
   };
 }
