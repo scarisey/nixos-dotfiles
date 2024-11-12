@@ -14,7 +14,8 @@
   services.xserver.videoDrivers = ["nvidia"];
   scarisey.network.enable = true;
   scarisey.qemu.enable = true;
-  scarisey.gnome.enable = true;
+  scarisey.gnome.enable = false;
+  scarisey.kde.enable = true;
   virtualisation.waydroid.enable = true;
   hardware.graphics.enable = true;
   hardware.nvidia = {

@@ -10,7 +10,8 @@
   scarisey.devtools.all = true;
   scarisey.devtools.intellij = true;
   scarisey.devtools.android = true;
-  scarisey.gnome.enable = true;
+  scarisey.gnome.enable = false;
+  scarisey.kde.enable = true;
 
   home.packages = with pkgs; [
     nix-alien
