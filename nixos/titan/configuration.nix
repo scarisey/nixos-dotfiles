@@ -13,7 +13,6 @@
   networking.hostName = "titan";
   services.xserver.videoDrivers = ["nvidia"];
   scarisey.network.enable = true;
-  scarisey.network.systemd.enable = true;
   scarisey.qemu.enable = true;
   scarisey.gnome.enable = true;
   virtualisation.waydroid.enable = true;
