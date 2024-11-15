@@ -39,6 +39,8 @@ in {
             luarocks
             #github cli
             gh
+            #gitlab cli
+            glab
             #made by cachix templates for dev environments
             devenv
           ]
