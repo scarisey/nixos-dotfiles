@@ -217,7 +217,7 @@ in {
       recursive = true;
     };
     home.activation.lazyvim = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      run test -f ~/.config/nvim/lazyvim.json || cp ~/.config/nvim/lazyvim.orig ~/.config/nvim/lazyvim.json
+      run test -f ~/.config/nvim/lazyvim.json || cp ~/.config/nvim/lazyvim.orig ~/.config/nvim/lazyvim.json && chmod a+w ~/.config/nvim/lazyvim.json
     '';
 
     sops = {
