@@ -361,11 +361,11 @@
         "systems": "systems_2"
       },
       "locked": {
-        "lastModified": 1732052011,
-        "narHash": "sha256-4VOVuN4e4XiAPWpNHJ67JtorMm9MH/N/aWZDFpMbgTk=",
+        "lastModified": 1732053172,
+        "narHash": "sha256-oKYz5sRxkmKSAqN6qLMUR5iJ6ecZPsKXilMOkfwtIWM=",
         "owner": "scarisey",
         "repo": "git-prune",
-        "rev": "f738415d0403704b6cfe2886d2b60afea005cd74",
+        "rev": "4cc21440bd8737dfd4aada5191dce521dbe6af51",
         "type": "github"
       },
       "original": {
