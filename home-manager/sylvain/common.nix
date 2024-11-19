@@ -13,6 +13,7 @@
       ++ [
         inputs.nix-alien.overlays.default
         inputs.android-nixpkgs.overlays.default
+        inputs.git-prune.overlays.default
       ];
     config = {
       allowUnfree = true;

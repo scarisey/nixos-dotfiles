@@ -67,6 +67,7 @@ in {
       update-dir
       adoc
       basic-secret
+      git-prune
     ];
 
     home.sessionVariables = {
@@ -105,7 +106,6 @@ in {
       '';
 
       #git
-      gitpurge = ''git branch --merged |grep -E -v "(^\*|main)"|xargs git branch -d'';
       git-release-notes = ''git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h %s"'';
 
       retry = ''f(){while true;do "$@" && break;sleep 1;done};f'';
