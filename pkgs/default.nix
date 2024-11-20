@@ -4,6 +4,7 @@
   adoc = pkgs.callPackage ./adoc {};
   antora = pkgs.callPackage ./antora {};
   basic-secret = pkgs.callPackage ./basic-secret {};
+  git-prune = pkgs.callPackage ./git-prune {};
   msgconvert = pkgs.callPackage ./msgconvert {};
   scriptExample = pkgs.callPackage ./example {};
   sops-latest = pkgs.callPackage ./sops {};

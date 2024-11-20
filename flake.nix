@@ -25,8 +25,6 @@
     android-nixpkgs.url = "github:tadfisher/android-nixpkgs";
     android-nixpkgs.inputs.nixpkgs.follows = "nixpkgs";
 
-    #minor utilities
-    git-prune.url = "github:scarisey/git-prune";
   };
 
   outputs = {
