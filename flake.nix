@@ -97,6 +97,13 @@
         }
     );
 
+    templates = {
+      kotlin-app = {
+        path = ./templates/kotlin-app;
+        description = "Kotlin/Gradle simple app";
+      };
+    };
+
     formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
   };
 
