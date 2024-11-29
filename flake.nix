@@ -18,7 +18,7 @@
     sops-nix.url = "github:Mic92/sops-nix";
 
     #Apply same theme everywhere
-    stylix.url = "github:danth/stylix";
+    stylix.url = "github:danth/stylix/b667a340730dd3d0596083aa7c949eef01367c62";
 
     #Android SDK
     android-nixpkgs.url = "github:tadfisher/android-nixpkgs";
