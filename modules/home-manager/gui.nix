@@ -24,7 +24,7 @@ in {
 
       kitty
       alacritty
-      # neovide
+      wezterm
 
       xclip
       pavucontrol
@@ -37,6 +37,10 @@ in {
 
     home.file.".alacritty.toml" = {
       source = ./alacritty/alacritty.toml;
+    };
+
+    home.file.".wezterm.lua" = {
+      source = ./wezterm/werterm.lua;
     };
 
     programs.kitty = lib.mkForce {

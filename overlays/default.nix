@@ -12,6 +12,8 @@
     jre = final.jdk;
     jre_headless = final.jdk_headless;
 
+    wezterm = inputs.wezterm.packages.${final.system}.default;
+
     # stable = import inputs.nixpkgs-stable {
     #   system = final.system;
     #   config.allowUnfree = true;

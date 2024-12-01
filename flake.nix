@@ -24,6 +24,9 @@
     android-nixpkgs.url = "github:tadfisher/android-nixpkgs";
     android-nixpkgs.inputs.nixpkgs.follows = "nixpkgs";
 
+    #Wezterm
+    wezterm.url = "github:wez/wezterm/4906789a6d61da58f73b95f89b59c41af60e0f3b?dir=nix";
+
   };
 
   outputs = {
