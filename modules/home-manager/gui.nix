@@ -24,7 +24,7 @@ in {
 
       kitty
       alacritty
-      # neovide
+      neovide
 
       xclip
       pavucontrol
