@@ -169,14 +169,14 @@ in {
     programs.tmux = {
       enable = true;
       prefix = "C-a";
-      terminal = "xterm-kitty";
+      terminal = "xterm-truecolor";
       clock24 = true;
       customPaneNavigationAndResize = true;
       escapeTime = 10;
       historyLimit = 100000;
       mouse = true;
       extraConfig = ''
-        set -as terminal-features ",kitty*:RGB"
+        set -as terminal-features ",kitty*:RGB,alacritty*:RGB"
         source-file "$HOME/.gruvbox.tmuxtheme"
         # vim-like pane resizing
         bind -r C-k resize-pane -U
