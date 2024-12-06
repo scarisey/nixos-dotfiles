@@ -7,7 +7,6 @@
   git-prune = pkgs.callPackage ./git-prune {};
   msgconvert = pkgs.callPackage ./msgconvert {};
   scriptExample = pkgs.callPackage ./example {};
-  sops-latest = pkgs.callPackage ./sops {};
   testdebits = pkgs.callPackage ./testdebits {};
   openport = pkgs.callPackage ./openport {};
   update-dir = pkgs.callPackage ./update-dir {};

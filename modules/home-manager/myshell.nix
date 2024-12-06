@@ -55,7 +55,7 @@ in {
       cz-cli
 
       #sops
-      sops-latest
+      sops
       age
       ssh-to-age
 
