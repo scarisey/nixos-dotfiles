@@ -49,11 +49,6 @@ jobs:
           popd
           git add pkgs/antora
           git commit -m "build(antora):automatic update" || true
-      - name: Update Sops custom pkgs
-        run: |
-          nix run nixpkgs#nix-update -- sops-latest --flake
-          git add pkgs/sops
-          git commit -m "build(sops):automatic update" || true
       - name: Push changes to remote
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
