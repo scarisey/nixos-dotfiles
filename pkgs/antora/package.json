@@ -1,6 +1,6 @@
 {
   "name": "antora",
-  "version": "3.1.9",
+  "version": "3.1.10",
   "description": "A meta package for Antora that installs both the CLI and site generator.",
   "license": "MPL-2.0",
   "author": "OpenDevise Inc. (https://opendevise.com)",
@@ -9,7 +9,10 @@
     "Sarah White <sarah@opendevise.com>"
   ],
   "homepage": "https://antora.org",
-  "repository": "gitlab:antora/antora",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/antora/antora.git"
+  },
   "bugs": {
     "url": "https://gitlab.com/antora/antora/issues"
   },
@@ -17,9 +20,9 @@
     "antora": "bin/antora"
   },
   "dependencies": {
-    "@antora/cli": "3.1.9",
+    "@antora/cli": "3.1.10",
     "@antora/lunr-extension": "^1.0.0-alpha.8",
-    "@antora/site-generator": "3.1.9",
+    "@antora/site-generator": "3.1.10",
     "@sntke/antora-mermaid-extension": "^0.0.6"
   },
   "engines": {
