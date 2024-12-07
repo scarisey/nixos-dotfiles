@@ -2,16 +2,15 @@
   imports = [
     ./hardware.nix
     ../common.nix
+    ./samba.nix
+    ./network.nix
   ];
 
-  sops = {
-    defaultSopsFile = ../../secrets.yaml;
-    age.keyFile = "/home/sylvain/.config/sops/age/keys.txt";
-    secrets."hyperion/vpn" = {};
-  };
-  systemd.services.wg-quick-wg0.after = ["sops-nix.service"];
+  environment.systemPackages = with pkgs; [
+    qbittorrent
+    smartmontools
+  ];
 
-  scarisey.network.enable = true;
   scarisey.qemu.enable = true;
   scarisey.gnome.enable = true;
   services.plex = {
@@ -19,76 +18,6 @@
     openFirewall = true;
   };
   users.users.plex.extraGroups = ["users"];
-  scarisey.vpn = {
-    enable = true;
-    confPath = "/run/secrets/hyperion/vpn";
-    openFirewall = true;
-  };
-  #remote desktop
-  services.gnome.gnome-remote-desktop.enable = true;
-  #SAMBA
-  services = {
-    gvfs.enable = true;
-    avahi = {
-      publish.enable = true;
-      publish.userServices = true;
-      enable = true;
-      openFirewall = true;
-    };
-    samba-wsdd = {
-      enable = true;
-      openFirewall = true;
-    };
-    samba = {
-      #For a user called my_userto be authenticated on the samba server, you must add their password using
-      #smbpasswd -a someUser
-      package = pkgs.samba4Full;
-      enable = true;
-      openFirewall = true;
-      settings = {
-        global = {
-          "server smb encrypt" = "desired";
-          # ^^ Note: Breaks `smbclient -L <ip/host> -U%` by default, might require the client to set `client min protocol`?
-          "server min protocol" = "SMB3_00";
-          "security" = "user";
-          "map to guest" = "bad user";
-          "guest account" = "nobody";
-        };
-        public = {
-          browseable = "yes";
-          "read only" = "yes";
-          "guest ok" = "yes";
-          path = "/data/Public";
-          comment = "Hello World!";
-          public = "yes";
-        };
-        private = {
-          browseable = "yes";
-          writeable = "yes";
-          path = "home/sylvain/private";
-        };
-        musique = {
-          browseable = "yes";
-          writeable = "no";
-          path = "/mnt/medias/Musique";
-        };
-        downloads = {
-          browseable = "yes";
-          writeable = "no";
-          path = "/mnt/medias/Downloads";
-        };
-      };
-    };
-  };
-  environment.systemPackages = with pkgs; [
-    qbittorrent
-    smartmontools
-  ];
-  networking.firewall = {
-    allowedTCPPorts = [139 145 5357 8080 3389]; #SAMBA QBITTORENT RDP
-    allowedUDPPorts = [137 138 3702];
-    connectionTrackingModules = ["netbios_sn"];
-  };
 
   services.smartd = {
     enable = true;
@@ -98,7 +27,6 @@
       }
     ];
   };
-
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
@@ -136,4 +64,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "hyperion";
+  sops = {
+    defaultSopsFile = ../../secrets.yaml;
+    age.keyFile = "/home/sylvain/.config/sops/age/keys.txt";
+    secrets."hyperion/vpn" = {};
+  };
 }
