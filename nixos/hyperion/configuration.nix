@@ -82,6 +82,7 @@
   };
   environment.systemPackages = with pkgs; [
     qbittorrent
+    smartmontools
   ];
   networking.firewall = {
     allowedTCPPorts = [139 145 5357 8080 3389]; #SAMBA QBITTORENT RDP
