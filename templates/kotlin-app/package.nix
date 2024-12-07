@@ -7,38 +7,40 @@
   name,
   version,
   ...
-}:let 
+}: let
   self = stdenv.mkDerivation (finalAttrs: {
-  pname = name;
-  inherit version;
+    pname = name;
+    inherit version;
 
-  src = ./.;
-  nativeBuildInputs = [ gradle makeWrapper ];
+    src = ./.;
+    nativeBuildInputs = [gradle makeWrapper];
 
-  #write deps.json with : nix build .\#packages.x86_64-linux.default.mitmCache.updateScript && ./result
-  mitmCache = gradle.fetchDeps {
-    pkg = self;
-    data = ./deps.json;
-  };
+    #write deps.json with : nix build .\#packages.x86_64-linux.default.mitmCache.updateScript && ./result
+    mitmCache = gradle.fetchDeps {
+      pkg = self;
+      data = ./deps.json;
+    };
 
-  __darwinAllowLocalNetworking = true;
+    __darwinAllowLocalNetworking = true;
 
-  gradleFlags = [ "-Dfile.encoding=utf-8" ];
+    gradleFlags = ["-Dfile.encoding=utf-8"];
 
-  gradleBuildTask = "shadowJar";
+    gradleBuildTask = "shadowJar";
 
-  doCheck = false;#true for gradle test
+    doCheck = false; #true for gradle test
 
-  installPhase = ''
-    mkdir -p $out/{bin,share/${name}}
-    cp app/build/libs/app.jar $out/share/${name}/
+    installPhase = ''
+      mkdir -p $out/{bin,share/${name}}
+      cp app/build/libs/app.jar $out/share/${name}/
 
-    makeWrapper ${jre_minimal}/bin/java $out/bin/${name} \
-      --add-flags "-jar $out/share/${name}/app.jar"
-  '';
+      makeWrapper ${jre_minimal}/bin/java $out/bin/${name} \
+        --add-flags "-jar $out/share/${name}/app.jar"
+    '';
 
-  meta.sourceProvenance = with lib.sourceTypes; [
-    fromSource
-    binaryBytecode # mitm cache
-  ];
-}); in self
+    meta.sourceProvenance = with lib.sourceTypes; [
+      fromSource
+      binaryBytecode # mitm cache
+    ];
+  });
+in
+  self
