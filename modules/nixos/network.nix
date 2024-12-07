@@ -19,6 +19,5 @@ in {
       ];
       programs.mtr.enable = true; #improved traceroute+ping to detect packet loss
     }
-
   ]);
 }

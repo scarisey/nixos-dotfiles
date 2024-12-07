@@ -23,7 +23,6 @@
     #Android SDK
     android-nixpkgs.url = "github:tadfisher/android-nixpkgs";
     android-nixpkgs.inputs.nixpkgs.follows = "nixpkgs";
-
   };
 
   outputs = {
