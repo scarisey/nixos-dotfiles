@@ -88,6 +88,16 @@
     allowedUDPPorts = [137 138 3702];
     connectionTrackingModules = ["netbios_sn"];
   };
+
+  services.smartd = {
+    enable = true;
+    devices = [
+      {
+        device = "/dev/sda";
+      }
+    ];
+  };
+
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
