@@ -18,6 +18,11 @@
     openFirewall = true;
   };
   users.users.plex.extraGroups = ["users"];
+  services.cockpit = {
+    enable = true;
+    openFirewall = true;
+    port = 9090;
+  };
 
   services.smartd = {
     enable = true;
