@@ -9,7 +9,7 @@
   services.gnome.gnome-remote-desktop.enable = true;
 
   networking.firewall = {
-    allowedTCPPorts = [139 145 5357 8080 3389]; #SAMBA QBITTORENT RDP
+    allowedTCPPorts = [139 145 5357 8080 3389 19999]; #SAMBA QBITTORENT RDP NETDATA
     allowedUDPPorts = [137 138 3702];
     connectionTrackingModules = ["netbios_sn"];
   };

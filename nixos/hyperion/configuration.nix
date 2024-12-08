@@ -18,10 +18,17 @@
     openFirewall = true;
   };
   users.users.plex.extraGroups = ["users"];
-  services.cockpit = {
+  services.netdata = {
     enable = true;
-    openFirewall = true;
-    port = 9090;
+    package = pkgs.netdata.override {
+      withCloudUi = true;
+    };
+    config.global = {
+      "memory mode" = "ram";
+      "debug log" = "none";
+      "access log" = "none";
+      "error log" = "syslog";
+    };
   };
 
   services.smartd = {
