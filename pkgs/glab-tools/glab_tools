@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+SCRIPTNAME=$(basename "$0")
+
+function _usage() {
+  echo "USAGE"
+  echo "${SCRIPTNAME} fetch_all [group_id]"
+  exit 1
+}
+
+function _checkCommand() {
+  case ${1:-''} in
+  fetch_all) ;;
+  *)
+    _usage
+    exit 1
+    ;;
+  esac
+}
+
+function _checkArg() {
+  if [ -z ${1:-''} ]; then
+    _usage
+    exit 1
+  fi
+}
+
+function fetch_all() {
+  _checkArg $1
+  projects=$(mktemp)
+  remotes=$(mktemp)
+  glab api groups/$1/projects -X GET -f simple=true -f include_subgroups=true -f per_page=100 --paginate >$projects
+  cat $projects | jq -r '.[]|.ssh_url_to_repo' >$remotes
+  parallel ghq get {} <$remotes
+}
+
+_checkCommand $@
+$@
