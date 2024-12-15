@@ -20,6 +20,7 @@
     nixgl.nixGLIntel
     keepassxc
     msgconvert
+    glab-tools
   ];
 
   stylix = {

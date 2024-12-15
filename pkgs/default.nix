@@ -5,6 +5,7 @@
   antora = pkgs.callPackage ./antora {};
   basic-secret = pkgs.callPackage ./basic-secret {};
   git-prune = pkgs.callPackage ./git-prune {};
+  glab-tools = pkgs.callPackage ./glab-tools {};
   msgconvert = pkgs.callPackage ./msgconvert {};
   scriptExample = pkgs.callPackage ./example {};
   testdebits = pkgs.callPackage ./testdebits {};
