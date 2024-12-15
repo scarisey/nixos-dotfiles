@@ -6,8 +6,8 @@
   basic-secret = pkgs.callPackage ./basic-secret {};
   git-prune = pkgs.callPackage ./git-prune {};
   msgconvert = pkgs.callPackage ./msgconvert {};
+  openport = pkgs.callPackage ./openport {};
   scriptExample = pkgs.callPackage ./example {};
   testdebits = pkgs.callPackage ./testdebits {};
-  openport = pkgs.callPackage ./openport {};
   update-dir = pkgs.callPackage ./update-dir {};
 }
