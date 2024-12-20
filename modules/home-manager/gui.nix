@@ -19,9 +19,10 @@ in {
           TERMINAL = "kitty";
         };
 
-        programs.firefox.enable = true;
 
         home.packages = with pkgs; [
+          opera
+
           vlc
           amberol
 
