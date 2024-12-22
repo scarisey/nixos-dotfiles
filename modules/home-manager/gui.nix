@@ -22,6 +22,7 @@ in {
 
         home.packages = with pkgs; [
           opera
+          firefox
 
           vlc
           amberol
