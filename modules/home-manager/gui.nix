@@ -44,6 +44,10 @@ in {
           source = ./alacritty/alacritty.toml;
         };
 
+        home.file.".config/ghostty/config" = {
+          source = ./ghostty/config;
+        };
+
         programs.kitty = lib.mkForce {
           enable = true;
           settings = {

@@ -1,0 +1,7 @@
+theme = Arthur
+font-family = MesloLGS Nerd Font Mono
+font-size = 10
+background-blur-radius = 20
+mouse-hide-while-typing = true
+window-decoration = false
+# keybind = global:cmd+/=toggle_quick_terminal
