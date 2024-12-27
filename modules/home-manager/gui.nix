@@ -19,7 +19,6 @@ in {
           TERMINAL = "kitty";
         };
 
-
         home.packages = with pkgs; [
           opera
           firefox
@@ -27,6 +26,7 @@ in {
           vlc
           amberol
 
+          ghostty
           kitty
           alacritty
           neovide
