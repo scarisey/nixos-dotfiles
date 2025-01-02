@@ -15,10 +15,6 @@ in {
   config = mkIf cfg.enable (
     mkMerge [
       {
-        home.sessionVariables = {
-          TERMINAL = "kitty";
-        };
-
         home.packages = with pkgs; [
           opera
           firefox
