@@ -8,7 +8,4 @@
   glab-tools = pkgs.callPackage ./glab-tools {};
   msgconvert = pkgs.callPackage ./msgconvert {};
   scriptExample = pkgs.callPackage ./example {};
-  testdebits = pkgs.callPackage ./testdebits {};
-  openport = pkgs.callPackage ./openport {};
-  update-dir = pkgs.callPackage ./update-dir {};
 }

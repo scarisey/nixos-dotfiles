@@ -32,9 +32,6 @@ in {
           autostart = true;
           configFile = cfg.confPath;
         };
-        environment.systemPackages = with pkgs; [
-          openport
-        ];
       }
 
       (mkIf cfg.openFirewall {
