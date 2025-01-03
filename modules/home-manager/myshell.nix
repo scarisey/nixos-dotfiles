@@ -63,9 +63,7 @@ in {
       nload #network load by interface
       nmap #scan network - nmap -sn 192.168.1.128/24
       #agressive scan - sudo nmap -O --osscan-guess -sS 192.168.1.128/24
-      testdebits
 
-      update-dir
       adoc
       basic-secret
       git-prune
