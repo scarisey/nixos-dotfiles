@@ -5,6 +5,7 @@
   makeWrapper,
   coreutils,
   asciidoctor-with-extensions,
+  d2,
   ...
 }: let
   fs = lib.fileset; #check https://nix.dev/tutorials/file-sets
@@ -20,13 +21,14 @@ in
     };
 
     nativeBuildInputs = [makeWrapper];
-    buildInputs = [bash coreutils asciidoctor-with-extensions];
+    buildInputs = [bash coreutils asciidoctor-with-extensions d2];
 
     postInstall = ''
       wrapProgram $out/bin/adoc \
         --set PATH ${lib.makeBinPath [
         coreutils
         asciidoctor-with-extensions
+        d2
       ]}
     '';
 
