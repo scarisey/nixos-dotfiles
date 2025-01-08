@@ -6,10 +6,10 @@ SCRIPTNAME=$(basename "$0")
 RUNDIR=$(dirname "$(realpath $0)")
 CURRENTDIR=$(pwd)
 
-REVEALJS_THEME="white"
 REVEALJS_CDN=https://cdn.jsdelivr.net/npm/reveal.js@4.1.2
-ASCIIDOCTOR_OPTS_WITH_IMAGE="-a data-uri -r asciidoctor-diagram"
-ASCIIDOCTOR_OPTS_REVEALJS="-a revealjs_theme=${REVEALJS_THEME} -a revealjsdir=${REVEALJS_CDN} -a revealjs_slideNumber=h.v -a revealjs_mouseWheel=true -a revealjs_transition=fade"
+HIGHLIGHTJSDIR=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build
+ASCIIDOCTOR_OPTS_WITH_IMAGE="-a data-uri -a highlightjsdir=${HIGHLIGHTJSDIR} -r asciidoctor-diagram"
+ASCIIDOCTOR_OPTS_REVEALJS="-a revealjsdir=${REVEALJS_CDN} -a revealjs_slideNumber=h.v -a revealjs_mouseWheel=true -a revealjs_transition=fade"
 
 function _usage() {
   echo "USAGE"
