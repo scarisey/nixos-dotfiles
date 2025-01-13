@@ -13,6 +13,8 @@
   scarisey.qemu.enable = true;
   scarisey.gnome.enable = true;
   virtualisation.waydroid.enable = true;
+  services.tlp.enable = true; #battery care
+  services.power-profiles-daemon.enable = false; #since tlp is enabled
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
