@@ -15,6 +15,7 @@
   scarisey.network.enable = true;
   scarisey.qemu.enable = true;
   scarisey.gnome.enable = true;
+  services.ollama.enable = true;
   virtualisation.waydroid.enable = true;
   hardware.graphics.enable = true;
   hardware.nvidia = {
