@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   stdenv,
   buildFHSEnv,
@@ -29,4 +30,5 @@ in
     name = "secret";
     targetPkgs = pkgs: [basic-secret];
     runScript = "basic-secret";
+    platforms = lib.platforms."x86_64-linux";
   }
