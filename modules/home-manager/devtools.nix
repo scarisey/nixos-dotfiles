@@ -51,6 +51,7 @@ in {
             coursier
             maven
             gradle
+            mcs
           ]
           ++ optionals (cfg.javascript || cfg.all) [
             nodejs
