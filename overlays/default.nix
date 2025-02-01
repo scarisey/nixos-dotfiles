@@ -6,6 +6,5 @@
     jdk_headless = final.jdk21_headless;
     jre = final.jdk;
     jre_headless = final.jdk_headless;
-
   };
 }

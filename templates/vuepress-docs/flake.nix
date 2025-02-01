@@ -23,7 +23,7 @@
       }: {
         devenv.shells.default = {
           languages.javascript = {
-            enable=true;
+            enable = true;
             npm = {
               enable = true;
               install.enable = true;

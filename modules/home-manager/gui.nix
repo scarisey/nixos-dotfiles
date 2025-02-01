@@ -38,7 +38,6 @@ in {
         home.file.".config/ghostty/config" = {
           source = ./ghostty/config;
         };
-
       }
 
       (mkIf (cfg.stylix) {
