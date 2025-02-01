@@ -15,7 +15,10 @@
   scarisey.network.enable = true;
   scarisey.qemu.enable = true;
   scarisey.gnome.enable = true;
-  services.ollama.enable = true;
+  services.ollama = {
+    enable = true;
+    acceleration = "cuda";
+  };
   virtualisation.waydroid.enable = true;
   hardware.graphics.enable = true;
   hardware.nvidia = {
