@@ -15,6 +15,7 @@ in {
     helm = mkEnableOption "helm";
     azure = mkEnableOption "az cli";
     kcat = mkEnableOption "kafka cat";
+    dive = mkEnableOption "Deep dive into your docker image";
   };
 
   config = mkIf cfg.enable {
@@ -25,6 +26,7 @@ in {
       (mkIf (cfg.all || cfg.helm) kubernetes-helm)
       (mkIf (cfg.all || cfg.azure) azure-cli)
       (mkIf (cfg.all || cfg.kcat) kcat)
+      (mkIf (cfg.all || cfg.dive) dive)
     ];
   };
 }
