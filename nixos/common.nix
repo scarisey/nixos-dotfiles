@@ -24,6 +24,11 @@
       experimental-features = "nix-command flakes";
       auto-optimise-store = true;
       trusted-users = ["root" "sylvain"];
+      extra-sandbox-paths = [
+        "/dev/nvidia0"
+        "/dev/nvidiactl"
+        "/dev/nvidia-uvm"
+      ];
     };
     gc = {
       automatic = true;

@@ -12,6 +12,10 @@
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "titan";
   services.xserver.videoDrivers = ["nvidia"];
+  services.tabby = {
+    enable = true;
+    acceleration = "cuda";
+  };
   scarisey.network.enable = true;
   scarisey.qemu.enable = true;
   scarisey.gnome.enable = true;
