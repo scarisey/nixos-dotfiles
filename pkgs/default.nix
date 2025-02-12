@@ -6,6 +6,7 @@
   basic-secret = pkgs.callPackage ./basic-secret {};
   git-prune = pkgs.callPackage ./git-prune {};
   glab-tools = pkgs.callPackage ./glab-tools {};
+  graalvm-21 = pkgs.callPackage ./graalvm-21 {};
   mcs = pkgs.callPackage ./mcs {};
   msgconvert = pkgs.callPackage ./msgconvert {};
   scriptExample = pkgs.callPackage ./example {};
