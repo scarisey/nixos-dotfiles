@@ -5,7 +5,7 @@
 }: {
   imports =
     builtins.attrValues outputs.homeManagerModules
-    ++ [inputs.sops-nix.homeManagerModules.sops inputs.stylix.homeManagerModules.stylix inputs.android-nixpkgs.hmModule];
+    ++ [inputs.sops-nix.homeManagerModules.sops inputs.android-nixpkgs.hmModule];
 
   nixpkgs = {
     overlays =
