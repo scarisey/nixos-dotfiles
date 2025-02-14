@@ -32,13 +32,19 @@ jobs:
         with:
           name: scarisey-public
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-      - name: Build the titan config
+      - name: Build the Nixos titan config
         run: |
-          nix build --accept-flake-config .#nixosConfigurations.titan.config.system.build.toplevel && nix build --accept-flake-config .\#homeConfigurations.sylvain@titan.activationPackage
-      - name: Build the hyperion config
+          nix build --accept-flake-config .#nixosConfigurations.titan.config.system.build.toplevel
+      - name: Build the Home Manager titan config
         run: |
-          nix build --accept-flake-config .#nixosConfigurations.hyperion.config.system.build.toplevel && nix build --accept-flake-config .\#homeConfigurations.sylvain@hyperion.activationPackage
-      - name: Build the lscarisey config
+          nix build --accept-flake-config .\#homeConfigurations.sylvain@titan.activationPackage
+      - name: Build the Nixos hyperion config
+        run: |
+          nix build --accept-flake-config .#nixosConfigurations.hyperion.config.system.build.toplevel
+      - name: Build the Home Manager hyperion config
+        run: |
+          nix build --accept-flake-config .\#homeConfigurations.sylvain@hyperion.activationPackage
+      - name: Build the Home Manager lscarisey config
         run: |
           nix build --accept-flake-config .\#homeConfigurations.sylvain@lscarisey.activationPackage
       - name: Generate a token
