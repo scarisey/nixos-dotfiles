@@ -7,27 +7,20 @@
 
     # Home manager
     home-manager.url = "github:nix-community/home-manager/release-24.11";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # For unpatched binaries
-    nix-alien.url = "github:thiagokokada/nix-alien";
+    nix-alien.url = "github:thiagokokada/nix-alien/7e687663d2054fa1708284bd42731c6be62b1667";#specific since python build bug
     #For Non Nixos systems
     nixgl.url = "github:guibou/nixGL";
 
     #For secrets encryption
     sops-nix.url = "github:Mic92/sops-nix";
 
-    #Apply same theme everywhere
-    stylix.url = "github:danth/stylix/b667a340730dd3d0596083aa7c949eef01367c62";
-
     #Android SDK
     android-nixpkgs.url = "github:tadfisher/android-nixpkgs";
-    android-nixpkgs.inputs.nixpkgs.follows = "nixpkgs";
 
     #ghostty terminal
-    ghostty = {
-      url = "github:ghostty-org/ghostty";
-    };
+    ghostty.url = "github:ghostty-org/ghostty";
   };
 
   outputs = {
