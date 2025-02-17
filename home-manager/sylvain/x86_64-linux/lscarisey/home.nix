@@ -21,4 +21,9 @@
     msgconvert
     glab-tools
   ];
+
+  home.file.".local/bin/firewall.sh" = {
+    source = ./firewall.sh;
+    executable = true;
+  };
 }
