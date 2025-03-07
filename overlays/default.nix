@@ -1,5 +1,8 @@
 {inputs, ...}: {
-  additions = final: prev: import ../pkgs {pkgs = final;} // {ghostty = inputs.ghostty.packages.${final.system}.default;};
+  additions = final: prev: import ../pkgs {pkgs = final;} // {
+    ghostty = inputs.ghostty.packages.${final.system}.default;
+    superfile = inputs.superfile.packages.${final.system}.default;
+  };
 
   modifications = final: prev: {
     jdk = final.jdk21;

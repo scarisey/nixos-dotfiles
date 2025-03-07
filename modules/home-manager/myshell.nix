@@ -53,6 +53,7 @@ in {
       cryfs
       cht-sh
       cz-cli
+      superfile #alternative to yazi
 
       #sops
       sops

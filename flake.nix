@@ -21,6 +21,9 @@
 
     #ghostty terminal
     ghostty.url = "github:ghostty-org/ghostty";
+
+    #superfile
+    superfile.url = "github:yorukot/superfile";
   };
 
   outputs = {
