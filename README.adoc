@@ -15,3 +15,20 @@ nix --accept-flake-config run . -- switch --flake .
 #OR
 home-manager switch --flake .
 ```
+
+## SOPS
+
+### Generate key
+
+```
+mkdir -p ~/.config/sops/age
+age-keygen -o ~/.config/sops/age/keys.txt
+```
+
+### Update sops
+
+Add public key to .sops.yaml then update secrets.yaml with a computer that can already decrypt secrets.
+
+```
+sops updatekeys secrets.yaml
+```
