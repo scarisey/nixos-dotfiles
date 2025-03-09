@@ -1,53 +1,17 @@
 # NixOS dotfiles
 
 
-## No git ?
+## Fresh install
 
 ```
 nix-shell -p git
 git clone https://github.com/scarisey/nixos-dotfiles.git
 cd nixos-dotfiles
 nix-shell ##the shell.nix file will activate flake feature
-```
-
-## Fresh install
-
-  * On live CD
-
-```
-nixos-install --flake .#hostname 
-```
-
-  * On NixOS
-
-```
+sudo cachix use scarisey-public #benefits from cache - you maybe have to do some extra steps indicated by cachix
+sudo cachix use nix-community
 sudo nixos-rebuild switch --flake .#hostname
 nix --accept-flake-config run . -- switch --flake .
-```
-
-## Apply configurations
-
-NixOS system configuration:
-
-```
-sudo nixos-rebuild switch --flake .
-nix --accept-flake-config run . -- switch --flake .
-```
-
-Home manager configuration:
-
-```
+#OR
 home-manager switch --flake .
-```
-
-or
-
-```
-nix run . -- switch --flake .
-```
-
-## Accept nix flake config
-
-```
-nix run nixpkgs#cachix -- use scarisey-public
 ```
