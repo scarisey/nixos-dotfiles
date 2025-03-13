@@ -11,6 +11,7 @@
   scarisey.devtools = {
     enable = true;
     all = true;
+    vscode = true;
   };
   scarisey.cloud.all = true;
   scarisey.cloud.enable = true;
