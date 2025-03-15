@@ -8,6 +8,7 @@
   scarisey.gui.obs = true;
   scarisey.devtools.enable = true;
   scarisey.devtools.all = true;
+  scarisey.devtools.vscode = true;
   scarisey.devtools.intellij = true;
   scarisey.devtools.android = true;
   scarisey.gnome.enable = true;
