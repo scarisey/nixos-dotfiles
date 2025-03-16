@@ -74,5 +74,6 @@
     defaultSopsFile = ../../secrets.yaml;
     age.keyFile = "/home/sylvain/.config/sops/age/keys.txt";
     secrets."hyperion/vpn" = {};
+    secrets."hyperion/samba/freebox" = {};
   };
 }
