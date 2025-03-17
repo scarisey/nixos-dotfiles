@@ -9,5 +9,6 @@
   graalvm-21 = pkgs.callPackage ./graalvm-21 {};
   mcs = pkgs.callPackage ./mcs {};
   msgconvert = pkgs.callPackage ./msgconvert {};
+  openport = pkgs.callPackage ./openport {};
   scriptExample = pkgs.callPackage ./example {};
 }
