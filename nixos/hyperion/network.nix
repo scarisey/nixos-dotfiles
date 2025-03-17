@@ -16,5 +16,5 @@
     connectionTrackingModules = ["netbios_sn"];
   };
 
-  environment.systemPackages = [ pkgs.gnome.gnome-remote-desktop ];
+  environment.systemPackages = [pkgs.gnome.gnome-remote-desktop];
 }

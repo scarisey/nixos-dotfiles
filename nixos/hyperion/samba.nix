@@ -1,4 +1,8 @@
-{pkgs,config, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   services = {
     gvfs.enable = true;
     avahi = {
@@ -39,7 +43,7 @@
   };
 
   #mount shares
-  environment.systemPackages = [ pkgs.cifs-utils ];
+  environment.systemPackages = [pkgs.cifs-utils];
   fileSystems."/mnt/freebox" = {
     device = "//192.168.1.254/Volume 1024Go 1/";
     fsType = "cifs";
