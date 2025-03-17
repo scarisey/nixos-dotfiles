@@ -5,6 +5,7 @@
     ./samba.nix
     ./network.nix
     ./proxy.nix
+    ./gh-runner.nix
   ];
 
   environment.systemPackages = with pkgs; [
