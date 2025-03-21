@@ -4,6 +4,7 @@
     ../common.nix
     ./samba.nix
     ./network.nix
+    ./proxy.nix
   ];
 
   environment.systemPackages = with pkgs; [

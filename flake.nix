@@ -9,7 +9,7 @@
     home-manager.url = "github:nix-community/home-manager/release-24.11";
 
     # For unpatched binaries
-    nix-alien.url = "github:thiagokokada/nix-alien/7e687663d2054fa1708284bd42731c6be62b1667";#specific since python build bug
+    nix-alien.url = "github:thiagokokada/nix-alien/7e687663d2054fa1708284bd42731c6be62b1667"; #specific since python build bug
     #For Non Nixos systems
     nixgl.url = "github:guibou/nixGL";
 
