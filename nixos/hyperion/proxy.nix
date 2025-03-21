@@ -1,61 +1,69 @@
 {config, ...}: let
-  domain = "hyperion.carisey.dev";
+  rootDomain = "carisey.dev";
+  plexDomain = "plex-hyperion.${rootDomain}";
   email = "sylvain@carisey.dev";
 in {
   services.nginx = {
     enable = true;
-    virtualHosts.${domain} = {
+
+    appendHttpConfig = ''
+      limit_conn_zone $binary_remote_addr zone=conn_limit_per_ip:10m;
+      limit_req_zone $binary_remote_addr zone=req_limit_per_ip:10m rate=10r/s;
+    '';
+
+    recommendedGzipSettings = true;
+    recommendedOptimisation = true;
+    recommendedProxySettings = true;
+    recommendedTlsSettings = true;
+
+    # Only allow PFS-enabled ciphers with AES256
+    sslCiphers = "AES256+EECDH:AES256+EDH:!aNULL";
+
+    virtualHosts.${rootDomain} = {
       listen = [
         {
-          addr = "127.0.0.1";
-          port = 8080;
-        }
-        {
-          addr = "127.0.0.1";
-          port = 8443;
-          ssl = true;
-        }
-        {
-          addr = "[::1]";
-          port = 8080;
-        }
-        {
-          addr = "[::1]";
+          addr = "192.168.1.79";
           port = 8443;
           ssl = true;
         }
       ];
       http2 = true;
-      useACMEHost = domain;
+      useACMEHost = rootDomain;
       forceSSL = true;
       locations."/" = {
-        return = "200 '<html><body>Hello world!</body></html>'";
+        return = "200 '<html><body>It works</body></html>'";
         extraConfig = ''
           default_type text/html;
+          #basic ddos protection
+          limit_req zone=req_limit_per_ip;
+          limit_conn conn_limit_per_ip 2;
         '';
       };
-      locations."/plex" = {
+    };
+
+    virtualHosts.${plexDomain} = {
+      listen = [
+        {
+          addr = "192.168.1.79";
+          port = 8080;
+        }
+        {
+          addr = "192.168.1.79";
+          port = 8443;
+          ssl = true;
+        }
+      ];
+      http2 = true;
+      useACMEHost = plexDomain;
+      forceSSL = true;
+      locations."/" = {
         proxyPass = "http://127.0.0.1:32400/";
+        proxyWebsockets = true;
         extraConfig = ''
           send_timeout 100m;
-          ssl_stapling on;
-          ssl_stapling_verify on;
-          ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-          ssl_prefer_server_ciphers on;
-          ssl_ciphers 'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:ECDHE-RSA-DES-CBC3-SHA:ECDHE-ECDSA-DES-CBC3-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA';
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Forwarded-Proto $scheme;
-          proxy_set_header Host $server_addr;
-          proxy_set_header Referer $server_addr;
-          proxy_set_header Origin $server_addr;
-          gzip on;
-          gzip_vary on;
-          gzip_min_length 1000;
-          gzip_proxied any;
-          gzip_types text/plain text/css text/xml application/xml text/javascript application/x-javascript image/svg+xml;
           gzip_disable "MSIE [1-6]\.";
           client_max_body_size 100M;
+          proxy_buffering off;
           proxy_set_header X-Plex-Client-Identifier $http_x_plex_client_identifier;
           proxy_set_header X-Plex-Device $http_x_plex_device;
           proxy_set_header X-Plex-Device-Name $http_x_plex_device_name;
@@ -68,11 +76,6 @@ in {
           proxy_set_header X-Plex-Provides $http_x_plex_provides;
           proxy_set_header X-Plex-Device-Vendor $http_x_plex_device_vendor;
           proxy_set_header X-Plex-Model $http_x_plex_model;
-          proxy_http_version 1.1;
-          proxy_set_header Upgrade $http_upgrade;
-          proxy_set_header Connection "upgrade";
-          proxy_redirect off;
-          proxy_buffering off;
         '';
       };
     };
@@ -82,11 +85,24 @@ in {
   security.acme.acceptTerms = true;
   security.acme.defaults.email = email;
 
-  security.acme.certs.${domain} = {
-    inherit domain;
+  security.acme.certs.${rootDomain} = {
+    domain = rootDomain;
     dnsProvider = "ionos";
     dnsPropagationCheck = true;
     #check https://go-acme.github.io/lego/dns/
-    credentialsFile = "/var/ionos/token";
+    environmentFile = "/var/ionos/token";
+    group = "nginx";
+  };
+  security.acme.certs.${plexDomain} = {
+    domain = plexDomain;
+    dnsProvider = "ionos";
+    dnsPropagationCheck = true;
+    #check https://go-acme.github.io/lego/dns/
+    environmentFile = "/var/ionos/token";
+    group = "nginx";
+  };
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [8080 8443];
   };
 }
