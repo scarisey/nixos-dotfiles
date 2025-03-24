@@ -29,6 +29,10 @@
           "security" = "user";
           "map to guest" = "bad user";
           "guest account" = "nobody";
+          "local master" = "yes";
+          "preferred master" = "yes";
+          "domain master" = "yes";
+          "os level" = "255";
         };
         public = {
           browseable = "yes";
