@@ -15,6 +15,7 @@
   scarisey.qemu.enable = true;
   scarisey.gnome.enable = true;
   scarisey.gnome.wayland = false;
+  services.fail2ban.enable = true;
   services.plex = {
     enable = true;
     openFirewall = true;
