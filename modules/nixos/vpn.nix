@@ -32,6 +32,7 @@ in {
           autostart = true;
           configFile = cfg.confPath;
         };
+        systemd.services.wg-quick-wg0.after = ["sops-nix.service"];
       }
 
       (mkIf cfg.openFirewall {

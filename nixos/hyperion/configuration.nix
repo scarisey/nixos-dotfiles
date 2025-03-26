@@ -5,6 +5,7 @@
     ./samba.nix
     ./network.nix
     ./proxy.nix
+    ./zoneminder.nix
   ];
 
   environment.systemPackages = with pkgs; [
