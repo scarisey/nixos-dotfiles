@@ -1,8 +1,7 @@
 {pkgs, ...}: {
   scarisey.network.enable = true;
-  systemd.services.wg-quick-wg0.after = ["sops-nix.service"];
   scarisey.vpn = {
-    enable = true;
+    enable = false;
     confPath = "/run/secrets/hyperion/vpn";
     openFirewall = true;
   };
