@@ -110,10 +110,12 @@
 
   nixConfig = {
     extra-substituters = [
-      "https://nix-community.cachix.org"
-      "https://scarisey-public.cachix.org"
+      "https://nix-community.cachix.org?priority=31"
+      "https://nixcache-hyperion.carisey.dev?priority=32"
+      "https://scarisey-public.cachix.org?priority=33"
     ];
     extra-trusted-public-keys = [
+      "nixcache-hyperion.carisey.dev:C66uhMLuDbigm4eT4rHYCuHAjZPGWageYWOaz6QC22s="
       "scarisey-public.cachix.org-1:kabqlCM0Wwd3iOh+C62WQg7vUO7vX3JbKKraSmxr2n8="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
