@@ -1,6 +1,7 @@
 {config, ...}: let
   rootDomain = "carisey.dev";
   plexDomain = "plex-hyperion.${rootDomain}";
+  nixcacheDomain = "nixcache-hyperion.${rootDomain}";
   email = "sylvain@carisey.dev";
 in {
   services.nginx = {
@@ -79,6 +80,19 @@ in {
         '';
       };
     };
+    virtualHosts.${nixcacheDomain} = {
+      listen = [
+        {
+          addr = "192.168.1.79";
+          port = 8443;
+          ssl = true;
+        }
+      ];
+      http2 = true;
+      useACMEHost = nixcacheDomain;
+      forceSSL = true;
+      locations."/".proxyPass = "http://${config.services.nix-serve.bindAddress}:${toString config.services.nix-serve.port}";
+    };
   };
   users.users.nginx.extraGroups = ["acme"];
 
@@ -97,7 +111,14 @@ in {
     domain = plexDomain;
     dnsProvider = "ionos";
     dnsPropagationCheck = true;
-    #check https://go-acme.github.io/lego/dns/
+    environmentFile = "/var/ionos/token";
+    group = "nginx";
+  };
+
+  security.acme.certs.${nixcacheDomain} = {
+    domain = nixcacheDomain;
+    dnsProvider = "ionos";
+    dnsPropagationCheck = true;
     environmentFile = "/var/ionos/token";
     group = "nginx";
   };
