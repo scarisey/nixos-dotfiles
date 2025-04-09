@@ -2,8 +2,9 @@
   imports = [
     ./hardware.nix
     ../common.nix
-    ./samba.nix
+    ./grafana.nix
     ./network.nix
+    ./samba.nix
     ./proxy.nix
     ./zoneminder.nix
   ];
@@ -82,5 +83,7 @@
     age.keyFile = "/home/sylvain/.config/sops/age/keys.txt";
     secrets."hyperion/vpn" = {};
     secrets."hyperion/samba/freebox" = {};
+    secrets."hyperion/grafana/init_passwd" = {mode="0440";group="grafana";};
+    secrets."hyperion/grafana/init_secret" = {mode="0440";group="grafana";};
   };
 }

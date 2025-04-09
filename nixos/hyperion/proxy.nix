@@ -2,6 +2,7 @@
   rootDomain = "carisey.dev";
   plexDomain = "plex-hyperion.${rootDomain}";
   nixcacheDomain = "nixcache-hyperion.${rootDomain}";
+  grafanaDomain = "grafana-hyperion.${rootDomain}";
   email = "sylvain@carisey.dev";
 in {
   services.nginx = {
@@ -93,6 +94,19 @@ in {
       forceSSL = true;
       locations."/".proxyPass = "http://${config.services.nix-serve.bindAddress}:${toString config.services.nix-serve.port}";
     };
+    virtualHosts.${grafanaDomain} = {
+      listen = [
+        {
+          addr = "192.168.1.79";
+          port = 3000;
+          ssl = true;
+        }
+      ];
+      http2 = true;
+      useACMEHost = grafanaDomain;
+      forceSSL = true;
+      locations."/".proxyPass = "${config.services.grafana.settings.server.root_url}";
+    };
   };
   users.users.nginx.extraGroups = ["acme"];
 
@@ -117,6 +131,14 @@ in {
 
   security.acme.certs.${nixcacheDomain} = {
     domain = nixcacheDomain;
+    dnsProvider = "ionos";
+    dnsPropagationCheck = true;
+    environmentFile = "/var/ionos/token";
+    group = "nginx";
+  };
+
+  security.acme.certs.${grafanaDomain} = {
+    domain = grafanaDomain;
     dnsProvider = "ionos";
     dnsPropagationCheck = true;
     environmentFile = "/var/ionos/token";
