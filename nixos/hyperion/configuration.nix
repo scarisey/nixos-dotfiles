@@ -2,8 +2,11 @@
   imports = [
     ./hardware.nix
     ../common.nix
-    ./samba.nix
+    ./fail2ban.nix
+    ./grafana.nix
     ./network.nix
+    ./prometheus.nix
+    ./samba.nix
     ./proxy.nix
     ./zoneminder.nix
   ];
@@ -20,7 +23,6 @@
   scarisey.qemu.enable = true;
   scarisey.gnome.enable = true;
   scarisey.gnome.wayland = false;
-  services.fail2ban.enable = true;
   services.plex = {
     enable = true;
     openFirewall = true;
@@ -82,5 +84,13 @@
     age.keyFile = "/home/sylvain/.config/sops/age/keys.txt";
     secrets."hyperion/vpn" = {};
     secrets."hyperion/samba/freebox" = {};
+    secrets."hyperion/grafana/init_passwd" = {
+      mode = "0440";
+      group = "grafana";
+    };
+    secrets."hyperion/grafana/init_secret" = {
+      mode = "0440";
+      group = "grafana";
+    };
   };
 }
