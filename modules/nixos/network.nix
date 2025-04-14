@@ -8,6 +8,13 @@ with lib; let
   cfg = config.scarisey.network;
 in {
   options.scarisey.network.enable = mkEnableOption "Network settings";
+  options.scarisey.network.settings = lib.mkOption {
+    type = lib.types.attrs;
+    default = {};
+    description = ''
+      Keep any key value pair you want in config.scarisey.network.settings.
+    '';
+  };
 
   config = mkIf cfg.enable (mkMerge [
     {

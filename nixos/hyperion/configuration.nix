@@ -1,38 +1,26 @@
 {pkgs, ...}: {
   imports = [
     ./hardware.nix
+    ./blocky.nix
     ../common.nix
-    ./fail2ban.nix
     ./grafana.nix
     ./network.nix
+    ./postgresql.nix
     ./prometheus.nix
     ./samba.nix
     ./proxy.nix
-    ./zoneminder.nix
   ];
 
   environment.systemPackages = with pkgs; [
     qbittorrent
     smartmontools
   ];
-  services.nix-serve = {
-    enable = true;
-    package = pkgs.nix-serve-ng;
-    secretKeyFile = "/var/nix-serve/cache-priv-key.pem";
-  };
   scarisey.qemu.enable = true;
   scarisey.gnome.enable = true;
   scarisey.gnome.wayland = false;
-  services.plex = {
-    enable = true;
-    openFirewall = true;
-  };
+  services.fail2ban.enable = true;
+  services.plex.enable = true;
   users.users.plex.extraGroups = ["users"];
-  services.cockpit = {
-    enable = true;
-    openFirewall = true;
-    port = 9090;
-  };
 
   services.smartd = {
     enable = true;
@@ -82,7 +70,6 @@
   sops = {
     defaultSopsFile = ../../secrets.yaml;
     age.keyFile = "/home/sylvain/.config/sops/age/keys.txt";
-    secrets."hyperion/vpn" = {};
     secrets."hyperion/samba/freebox" = {};
     secrets."hyperion/grafana/init_passwd" = {
       mode = "0440";
@@ -91,6 +78,14 @@
     secrets."hyperion/grafana/init_secret" = {
       mode = "0440";
       group = "grafana";
+    };
+    secrets."hyperion/pgadmin/init_passwd" = {
+      mode = "0440";
+      group = "pgadmin";
+    };
+    secrets."hyperion/postgresql/init_script" = {
+      mode = "0440";
+      group = "postgres";
     };
   };
 }
