@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   imports = [
     ./hardware.nix
+    ./blocky.nix
     ../common.nix
     ./fail2ban.nix
     ./grafana.nix
