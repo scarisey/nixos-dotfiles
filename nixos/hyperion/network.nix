@@ -1,17 +1,35 @@
-{pkgs, ...}: {
-  scarisey.network.enable = true;
-  scarisey.vpn = {
-    enable = false;
-    confPath = "/run/secrets/hyperion/vpn";
-    openFirewall = true;
+{
+  pkgs,
+  config,
+  ...
+}: let
+  rootDomain = "carisey.dev";
+  internalDomain = "internal.${rootDomain}";
+in {
+  scarisey.network = {
+    enable = true;
+    settings = {
+      email = "sylvain@carisey.dev";
+      hyperion = {
+        ipv4 = "192.168.1.79";
+        ipv6 = "fe80::291b:a25b:4e6d:5a84";
+        domains = {
+          root = "carisey.dev";
+          internal = "internal.${rootDomain}";
+          wildcardInternal = "*.${internalDomain}";
+          pgadmin = "pgadmin.${internalDomain}";
+          plex = "plex-hyperion.${rootDomain}";
+          grafana = "grafana-hyperion.${rootDomain}";
+          frigate = "frigate.${internalDomain}";
+        };
+      };
+    };
   };
   services.gnome.gnome-remote-desktop.enable = true;
   services.xrdp.enable = true;
   services.xrdp.defaultWindowManager = "${pkgs.gnome-session}/bin/gnome-session";
   services.xrdp.openFirewall = true;
   networking.firewall = {
-    allowedTCPPorts = [139 145 5357 8080 3389]; #SAMBA QBITTORENT RDP
-    allowedUDPPorts = [137 138 3702];
     connectionTrackingModules = ["netbios_sn"];
   };
 

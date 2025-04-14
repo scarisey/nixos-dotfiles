@@ -1,9 +1,10 @@
 {config, ...}: let
-  rootDomain = "carisey.dev";
-  plexDomain = "plex-hyperion.${rootDomain}";
-  nixcacheDomain = "nixcache-hyperion.${rootDomain}";
-  grafanaDomain = "grafana-hyperion.${rootDomain}";
-  email = "sylvain@carisey.dev";
+  domains = config.scarisey.network.settings.hyperion.domains;
+  ipv4 = config.scarisey.network.settings.hyperion.ipv4;
+  ipv6 = config.scarisey.network.settings.hyperion.ipv6;
+
+  localSslPort = 443;
+  remoteSslPort = 8443;
 
   declareCerts = domain: {
     inherit domain;
@@ -11,24 +12,45 @@
     dnsProvider = "ionos";
     dnsPropagationCheck = true;
     environmentFile = "/var/ionos/token";
-    group = "nginx";
+    group = "acme";
   };
 
-  declareVirtualHostDefaults = domain: {
-    listen = [
+  ifLocalListen = localOnly:
+    [
       {
-        addr = "192.168.1.79";
-        port = 8443; #NAT 443 to 8443
+        addr = ipv4;
+        port = localSslPort;
         ssl = true;
       }
-    ];
+    ]
+    ++ (
+      if localOnly
+      then []
+      else [
+        {
+          addr = ipv4;
+          port = remoteSslPort;
+          ssl = true;
+        }
+      ]
+    );
+
+  declareVirtualHostDefaults = {
+    domain,
+    localOnly ? false,
+  }: {
+    listen = ifLocalListen localOnly;
     http2 = true;
-    useACMEHost = domain;
+    useACMEHost =
+      if localOnly
+      then domains.internal
+      else domain;
     forceSSL = true;
   };
 in {
   services.nginx = {
     enable = true;
+    statusPage = true;
 
     appendHttpConfig = ''
       limit_conn_zone $binary_remote_addr zone=conn_limit_per_ip:10m;
@@ -43,8 +65,8 @@ in {
     # Only allow PFS-enabled ciphers with AES256
     sslCiphers = "AES256+EECDH:AES256+EDH:!aNULL";
 
-    virtualHosts.${rootDomain} =
-      declareVirtualHostDefaults rootDomain
+    virtualHosts.${domains.root} =
+      declareVirtualHostDefaults {domain = domains.root;}
       // {
         locations."/" = {
           return = "200 '<html><body>It works</body></html>'";
@@ -57,8 +79,22 @@ in {
         };
       };
 
-    virtualHosts.${plexDomain} =
-      declareVirtualHostDefaults plexDomain
+    virtualHosts.${domains.internal} =
+      declareVirtualHostDefaults {domain = domains.internal;}
+      // {
+        locations."/" = {
+          return = "200 '<html><body>It works</body></html>'";
+          extraConfig = ''
+            default_type text/html;
+            #basic ddos protection
+            limit_req zone=req_limit_per_ip;
+            limit_conn conn_limit_per_ip 2;
+          '';
+        };
+      };
+
+    virtualHosts.${domains.plex} =
+      declareVirtualHostDefaults {domain = domains.plex;}
       // {
         locations."/" = {
           proxyPass = "http://127.0.0.1:32400/";
@@ -83,29 +119,33 @@ in {
           '';
         };
       };
-    virtualHosts.${nixcacheDomain} =
-      declareVirtualHostDefaults nixcacheDomain
-      // {
-        locations."/".proxyPass = "http://${config.services.nix-serve.bindAddress}:${toString config.services.nix-serve.port}";
-      };
-    virtualHosts.${grafanaDomain} =
-      declareVirtualHostDefaults grafanaDomain
+    virtualHosts.${domains.grafana} =
+      declareVirtualHostDefaults {domain = domains.grafana;}
       // {
         locations."/".proxyPass = "http://${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}";
+      };
+
+    virtualHosts.${domains.pgadmin} =
+      declareVirtualHostDefaults {
+        domain = domains.pgadmin;
+        localOnly = true;
+      }
+      // {
+        locations."/".proxyPass = "http://localhost:${toString config.services.pgadmin.port}";
       };
   };
   users.users.nginx.extraGroups = ["acme"];
 
   security.acme.acceptTerms = true;
-  security.acme.defaults.email = email;
+  security.acme.defaults.email = config.scarisey.network.settings.email;
 
-  security.acme.certs.${rootDomain} = declareCerts rootDomain;
-  security.acme.certs.${plexDomain} = declareCerts plexDomain;
-  security.acme.certs.${nixcacheDomain} = declareCerts nixcacheDomain;
-  security.acme.certs.${grafanaDomain} = declareCerts grafanaDomain;
+  security.acme.certs.${domains.root} = declareCerts domains.root;
+  security.acme.certs.${domains.internal} = declareCerts domains.wildcardInternal;
+  security.acme.certs.${domains.plex} = declareCerts domains.plex;
+  security.acme.certs.${domains.grafana} = declareCerts domains.grafana;
 
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [8080 8443];
+    allowedTCPPorts = [localSslPort remoteSslPort];
   };
 }

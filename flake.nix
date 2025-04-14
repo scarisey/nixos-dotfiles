@@ -96,17 +96,6 @@
         }
     );
 
-    templates = {
-      kotlin-app = {
-        path = ./templates/kotlin-app;
-        description = "Kotlin/Gradle simple app";
-      };
-      vuepress-docs = {
-        path = ./templates/vuepress-docs;
-        description = "Vuepress docs";
-      };
-    };
-
     formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
   };
 
