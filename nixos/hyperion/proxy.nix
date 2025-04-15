@@ -28,6 +28,7 @@
 in {
   services.nginx = {
     enable = true;
+    statusPage = true;
 
     appendHttpConfig = ''
       limit_conn_zone $binary_remote_addr zone=conn_limit_per_ip:10m;
