@@ -113,8 +113,8 @@
   nixConfig = {
     extra-substituters = [
       "https://nix-community.cachix.org?priority=31"
-      "https://nixcache-hyperion.carisey.dev?priority=32"
-      "https://scarisey-public.cachix.org?priority=33"
+      "https://scarisey-public.cachix.org?priority=32"
+      "https://nixcache-hyperion.carisey.dev?priority=33"
     ];
     extra-trusted-public-keys = [
       "nixcache-hyperion.carisey.dev:C66uhMLuDbigm4eT4rHYCuHAjZPGWageYWOaz6QC22s="
