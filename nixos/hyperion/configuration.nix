@@ -16,11 +16,6 @@
     qbittorrent
     smartmontools
   ];
-  services.nix-serve = {
-    enable = true;
-    package = pkgs.nix-serve-ng;
-    secretKeyFile = "/var/nix-serve/cache-priv-key.pem";
-  };
   scarisey.qemu.enable = true;
   scarisey.gnome.enable = true;
   scarisey.gnome.wayland = false;

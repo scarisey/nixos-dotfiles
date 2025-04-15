@@ -1,7 +1,6 @@
 {config, ...}: let
   rootDomain = "carisey.dev";
   plexDomain = "plex-hyperion.${rootDomain}";
-  nixcacheDomain = "nixcache-hyperion.${rootDomain}";
   grafanaDomain = "grafana-hyperion.${rootDomain}";
   email = "sylvain@carisey.dev";
 
@@ -83,11 +82,6 @@ in {
           '';
         };
       };
-    virtualHosts.${nixcacheDomain} =
-      declareVirtualHostDefaults nixcacheDomain
-      // {
-        locations."/".proxyPass = "http://${config.services.nix-serve.bindAddress}:${toString config.services.nix-serve.port}";
-      };
     virtualHosts.${grafanaDomain} =
       declareVirtualHostDefaults grafanaDomain
       // {
@@ -101,7 +95,6 @@ in {
 
   security.acme.certs.${rootDomain} = declareCerts rootDomain;
   security.acme.certs.${plexDomain} = declareCerts plexDomain;
-  security.acme.certs.${nixcacheDomain} = declareCerts nixcacheDomain;
   security.acme.certs.${grafanaDomain} = declareCerts grafanaDomain;
 
   networking.firewall = {
