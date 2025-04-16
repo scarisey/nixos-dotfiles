@@ -1,7 +1,10 @@
 {config, ...}: let
   rootDomain = "carisey.dev";
+  internalDomain = "internal.${rootDomain}";
+  wildcardInternalDomain = "*.${internalDomain}";
   plexDomain = "plex-hyperion.${rootDomain}";
   grafanaDomain = "grafana-hyperion.${rootDomain}";
+  zoneminderDomain = "zoneminder-hyperion.${internalDomain}";
   email = "sylvain@carisey.dev";
 
   declareCerts = domain: {
@@ -13,16 +16,38 @@
     group = "nginx";
   };
 
-  declareVirtualHostDefaults = domain: {
-    listen = [
+  ifLocalListen = localOnly:
+    if localOnly
+    then [
       {
         addr = "192.168.1.79";
-        port = 8443; #NAT 443 to 8443
+        port = 443;
+        ssl = true;
+      }
+    ]
+    else [
+      {
+        addr = "192.168.1.79";
+        port = 443;
+        ssl = true;
+      }
+      {
+        addr = "192.168.1.79";
+        port = 8443;
         ssl = true;
       }
     ];
+
+  declareVirtualHostDefaults = {
+    domain,
+    localOnly ? false,
+  }: {
+    listen = ifLocalListen localOnly;
     http2 = true;
-    useACMEHost = domain;
+    useACMEHost =
+      if localOnly
+      then internalDomain
+      else domain;
     forceSSL = true;
   };
 in {
@@ -44,7 +69,21 @@ in {
     sslCiphers = "AES256+EECDH:AES256+EDH:!aNULL";
 
     virtualHosts.${rootDomain} =
-      declareVirtualHostDefaults rootDomain
+      declareVirtualHostDefaults {domain = rootDomain;}
+      // {
+        locations."/" = {
+          return = "200 '<html><body>It works</body></html>'";
+          extraConfig = ''
+            default_type text/html;
+            #basic ddos protection
+            limit_req zone=req_limit_per_ip;
+            limit_conn conn_limit_per_ip 2;
+          '';
+        };
+      };
+
+    virtualHosts.${internalDomain} =
+      declareVirtualHostDefaults {domain = internalDomain;}
       // {
         locations."/" = {
           return = "200 '<html><body>It works</body></html>'";
@@ -58,7 +97,7 @@ in {
       };
 
     virtualHosts.${plexDomain} =
-      declareVirtualHostDefaults plexDomain
+      declareVirtualHostDefaults {domain = plexDomain;}
       // {
         locations."/" = {
           proxyPass = "http://127.0.0.1:32400/";
@@ -84,9 +123,18 @@ in {
         };
       };
     virtualHosts.${grafanaDomain} =
-      declareVirtualHostDefaults grafanaDomain
+      declareVirtualHostDefaults {domain = grafanaDomain;}
       // {
         locations."/".proxyPass = "http://${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}";
+      };
+
+    virtualHosts.${zoneminderDomain} =
+      declareVirtualHostDefaults {
+        domain = zoneminderDomain;
+        localOnly = true;
+      }
+      // {
+        locations."/".proxyPass = "http://${config.services.zoneminder.hostname}:${toString config.services.zoneminder.port}";
       };
   };
   users.users.nginx.extraGroups = ["acme"];
@@ -95,11 +143,12 @@ in {
   security.acme.defaults.email = email;
 
   security.acme.certs.${rootDomain} = declareCerts rootDomain;
+  security.acme.certs.${internalDomain} = declareCerts wildcardInternalDomain;
   security.acme.certs.${plexDomain} = declareCerts plexDomain;
   security.acme.certs.${grafanaDomain} = declareCerts grafanaDomain;
 
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [8080 8443];
+    allowedTCPPorts = [443 8443];
   };
 }

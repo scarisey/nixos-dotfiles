@@ -1,7 +1,6 @@
 {...}: {
   services.zoneminder = {
     enable = true;
-    openFirewall = true;
     webserver = "nginx";
     hostname = "localhost";
     port = 8085;
