@@ -16,7 +16,6 @@
         "plex-hyperion.carisey.dev" = "192.168.1.79";
         "grafana-hyperion.carisey.dev" = "192.168.1.79";
         "zoneminder-hyperion.internal.carisey.dev" = "192.168.1.79";
-        "cockpit-hyperion.internal.carisey.dev" = "192.168.1.79";
       };
 
       blocking = {
