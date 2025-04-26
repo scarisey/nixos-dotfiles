@@ -21,11 +21,10 @@
     authentication = ''
       # TYPE  DATABASE        USER            ADDRESS                 METHOD
       local   all             all                                     peer
+      host    all             all             127.0.0.1/32            scram-sha-256
     '';
 
-    settings = let
-      credsDir = "/run/credentials/postgresql.service";
-    in {
+    settings = {
       listen_addresses = "localhost";
       password_encryption = "scram-sha-256";
       log_connections = true;
