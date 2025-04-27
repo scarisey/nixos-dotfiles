@@ -1,9 +1,11 @@
 {pkgs, ...}: {
   imports = [
     ./hardware.nix
+    ./alloy.nix
     ./blocky.nix
     ../common.nix
     ./grafana.nix
+    ./loki.nix
     ./network.nix
     ./postgresql.nix
     ./prometheus.nix

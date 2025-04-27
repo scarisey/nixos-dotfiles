@@ -65,6 +65,22 @@ in {
     # Only allow PFS-enabled ciphers with AES256
     sslCiphers = "AES256+EECDH:AES256+EDH:!aNULL";
 
+    virtualHosts."localhost" = {
+      listen = [
+        {
+          addr = "127.0.0.1";
+          port = 9113;
+        }
+      ];
+      locations."/nginx_status" = {
+        extraConfig = ''
+          stub_status;
+          allow 127.0.0.1;
+          deny all;
+        '';
+      };
+    };
+
     virtualHosts.${domains.root} =
       declareVirtualHostDefaults {domain = domains.root;}
       // {
