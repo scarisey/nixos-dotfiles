@@ -47,6 +47,6 @@
     enable = true;
     port = 9102;
     listenAddress = "127.0.0.1";
-    scrapeUri = "http://localhost/nginx_status";
+    scrapeUri = "http://localhost:9113/nginx_status";
   };
 }
