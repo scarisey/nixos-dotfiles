@@ -1,4 +1,4 @@
-{ ...}: {
+{...}: {
   services.loki = {
     enable = true;
 
@@ -14,7 +14,8 @@
         path_prefix = "/var/lib/loki";
         storage = {
           filesystem = {
-            directory = "/var/lib/loki/chunks";
+            chunks_directory = "/var/lib/loki/chunks";
+            rules_directory = "/var/lib/loki/rules_chunks";
           };
         };
         replication_factor = 1;

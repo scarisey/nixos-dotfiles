@@ -13,15 +13,12 @@
 
     local.file_match "nginx_logs" {
       path_targets = [
-        "/var/log/nginx/*.log",
+        {"__path__" = "/var/log/nginx/json_access.log"},
       ]
     }
 
     loki.source.file "nginx" {
       targets    = local.file_match.nginx_logs.targets
-      labels     = {
-        job = "nginx"
-      }
       forward_to = [loki.write.local.receiver]
     }
   '';
