@@ -31,6 +31,11 @@
             type = "prometheus";
             url = "http://${config.services.prometheus.listenAddress}:${toString config.services.prometheus.port}";
           }
+          {
+            name = "Loki";
+            type = "loki";
+            url = "http://localhost:${toString config.services.loki.configuration.server.http_listen_port}";
+          }
         ];
       };
     };
