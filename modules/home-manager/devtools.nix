@@ -22,6 +22,13 @@ in {
     protobuf = mkEnableOption "Protobuf tools";
     antora = mkEnableOption "Antora";
     android = mkEnableOption "Android";
+    nixgl = {
+      enable = mkEnableOption "Enable NixGL wrappers";
+      defaultWrapper = mkOption {
+        type = lib.types.enum (builtins.attrNames config.lib.nixGL.wrappers);
+        default = "mesa";
+      };
+    };
   };
   config = let
     npmGlobalDir = "$HOME/.npm-global";
@@ -61,10 +68,10 @@ in {
             rustup
           ]
           ++ optionals (cfg.intellij) [
-            jetbrains-toolbox
+            (config.lib.nixGL.wrap jetbrains-toolbox)
           ]
           ++ optionals (cfg.vscode) [
-            vscode-fhs
+            (config.lib.nixGL.wrap vscode-fhs)
           ]
           ++ optionals (cfg.go || cfg.all) [
             go
