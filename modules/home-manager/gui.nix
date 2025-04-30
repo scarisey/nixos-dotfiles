@@ -44,6 +44,10 @@ in {
         home.file.".config/ghostty/config" = {
           source = ./ghostty/config;
         };
+
+        home.shellAliases = {
+          nvd = "f(){neovide --frame none \${1:-$(pwd)} &> /dev/null &};f";
+        };
       }
       (mkIf cfg.nixgl.enable {
         nixGL.packages = inputs.nixgl.packages;
