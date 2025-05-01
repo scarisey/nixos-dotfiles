@@ -14,6 +14,7 @@
               "${config.services.prometheus.exporters.node.listenAddress}:${toString config.services.prometheus.exporters.node.port}"
               "${config.services.prometheus.exporters.process.listenAddress}:${toString config.services.prometheus.exporters.process.port}"
               "${config.services.prometheus.exporters.nginx.listenAddress}:${toString config.services.prometheus.exporters.nginx.port}"
+              "127.0.0.1:${toString config.services.prometheus.exporters.postgres.port}"
               "127.0.0.1:${toString config.services.blocky.settings.ports.http}"
             ];
           }
@@ -48,5 +49,11 @@
     port = 9102;
     listenAddress = "127.0.0.1";
     scrapeUri = "http://localhost:9113/nginx_status";
+  };
+
+  services.prometheus.exporters.postgres = {
+    enable = true;
+    port = 9103;
+    runAsLocalSuperUser = true;
   };
 }
