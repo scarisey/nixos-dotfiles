@@ -14,12 +14,8 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    qbittorrent
     smartmontools
   ];
-  scarisey.qemu.enable = true;
-  scarisey.gnome.enable = true;
-  scarisey.gnome.wayland = false;
   services.fail2ban.enable = true;
   services.plex.enable = true;
   users.users.plex.extraGroups = ["users"];
@@ -42,8 +38,6 @@
     ];
     extraPackages32 = with pkgs.pkgsi686Linux; [vaapiIntel];
   };
-  xdg.portal.enable = true;
-  services.printing.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {

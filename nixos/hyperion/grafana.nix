@@ -4,7 +4,7 @@
     settings = {
       log.level = "info";
       server = {
-        root_url = "https://grafana-hyperion.carisey.dev";
+        root_url = "https://${config.scarisey.network.settings.hyperion.domains.grafana}";
         http_addr = "127.0.0.1";
         http_port = 3000;
         enable_gzip = true;
