@@ -1,4 +1,4 @@
-{config, ...}: {
+{config,pkgs, ...}: {
   services.alloy.enable = true;
   # services.alloy.extraFlags = [
   #   "--server.http.listen-addr=127.0.0.1:9200"
@@ -13,7 +13,7 @@
 
     loki.write "local" {
       endpoint {
-        url = "http://localhost:${toString config.services.loki.configuration.server.http_listen_port}/loki/api/v1/push"
+        url = "http://127.0.0.1:${toString config.services.loki.configuration.server.http_listen_port}/loki/api/v1/push"
       }
     }
 
@@ -29,4 +29,13 @@
       forward_to = [loki.write.local.receiver]
     }
   '';
+
+
+   system.activationScripts.setAlloyACLs = {
+    text = ''
+      ${pkgs.acl}/bin/setfacl -dR -m u:alloy:rx /var/log/nginx
+      ${pkgs.acl}/bin/setfacl -R -m u:alloy:rx /var/log/nginx
+      ${pkgs.acl}/bin/setfacl -R -m u:alloy:r /var/log/nginx/access*.log
+    '';
+  };
 }
