@@ -12,14 +12,9 @@
 
       common = {
         path_prefix = "/var/lib/loki";
-        storage = {
-          filesystem = {
-            chunks_directory = "/var/lib/loki/chunks";
-            rules_directory = "/var/lib/loki/rules_chunks";
-          };
-        };
         replication_factor = 1;
         ring = {
+          instance_addr= "127.0.0.1";
           kvstore.store = "inmemory";
         };
       };
@@ -38,6 +33,8 @@
           }
         ];
       };
+
+      storage_config.filesystem.directory = "/var/lib/loki/chunks";
 
       analytics.reporting_enabled = false;
     };
