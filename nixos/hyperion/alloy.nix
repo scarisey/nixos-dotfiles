@@ -1,4 +1,8 @@
-{config,pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   services.alloy.enable = true;
   # services.alloy.extraFlags = [
   #   "--server.http.listen-addr=127.0.0.1:9200"
@@ -30,8 +34,7 @@
     }
   '';
 
-
-   system.activationScripts.setAlloyACLs = {
+  system.activationScripts.setAlloyACLs = {
     text = ''
       ${pkgs.acl}/bin/setfacl -dR -m u:alloy:rx /var/log/nginx
       ${pkgs.acl}/bin/setfacl -R -m u:alloy:rx /var/log/nginx
