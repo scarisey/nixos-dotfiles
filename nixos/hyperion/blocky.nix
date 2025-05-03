@@ -1,4 +1,8 @@
-{config,pkgs, ...}: let
+{
+  config,
+  pkgs,
+  ...
+}: let
   localv4 = config.scarisey.network.settings.hyperion.ipv4;
   localv6 = config.scarisey.network.settings.hyperion.ipv6;
   domains = config.scarisey.network.settings.hyperion.domains;
@@ -33,11 +37,6 @@ in {
         denylists = {
           ads = ["https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"];
           fakenews = ["https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-only/hosts"];
-        };
-        allowlists = {
-          googleads =let file=pkgs.writeText "googleads.txt" ''
-            www.googleadservices.com
-          ''; in  [ file ];
         };
         clientGroupsBlock = {
           default = ["ads" "fakenews"];

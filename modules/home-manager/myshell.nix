@@ -109,7 +109,7 @@ in {
 
       retry = ''f(){while true;do "$@" && break;sleep 1;done};f'';
 
-      ns="f(){nix shell --inputs-from github:scarisey/nixos-dotfiles/main nixpkgs#$1};f";
+      ns = "f(){nix shell --inputs-from github:scarisey/nixos-dotfiles/main nixpkgs#$1};f";
     };
 
     programs.yazi = {
