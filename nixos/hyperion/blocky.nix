@@ -1,4 +1,4 @@
-{config, ...}: let
+{config,pkgs, ...}: let
   localv4 = config.scarisey.network.settings.hyperion.ipv4;
   localv6 = config.scarisey.network.settings.hyperion.ipv6;
   domains = config.scarisey.network.settings.hyperion.domains;
@@ -23,14 +23,25 @@ in {
         "${domains.grafana}" = "${localv4},${localv6}";
         "${domains.pgadmin}" = "${localv4},${localv6}";
       };
+      clientLookup.clients.agmob = [
+        "192.168.1.11"
+        "fe80::54d2:b5ff:fef1:61e5"
+      ];
 
       blocking = {
         blockType = "zeroIP";
         denylists = {
           ads = ["https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"];
+          fakenews = ["https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-only/hosts"];
+        };
+        allowlists = {
+          googleads =let file=pkgs.writeText "googleads.txt" ''
+            www.googleadservices.com
+          ''; in  [ file ];
         };
         clientGroupsBlock = {
-          default = ["ads"];
+          default = ["ads" "fakenews"];
+          agmob = ["fakenews"];
         };
       };
       caching = {
