@@ -14,8 +14,8 @@
               "${config.services.prometheus.exporters.node.listenAddress}:${toString config.services.prometheus.exporters.node.port}"
               "${config.services.prometheus.exporters.process.listenAddress}:${toString config.services.prometheus.exporters.process.port}"
               "${config.services.prometheus.exporters.nginx.listenAddress}:${toString config.services.prometheus.exporters.nginx.port}"
-              "127.0.0.1:${toString config.services.prometheus.exporters.postgres.port}"
-              "127.0.0.1:${toString config.services.prometheus.exporters.systemd.port}"
+              "${config.services.prometheus.exporters.postgres.listenAddress}:${toString config.services.prometheus.exporters.postgres.port}"
+              "${config.services.prometheus.exporters.systemd.listenAddress}:${toString config.services.prometheus.exporters.systemd.port}"
               "127.0.0.1:${toString config.services.blocky.settings.ports.http}"
             ];
           }
@@ -55,6 +55,7 @@
   services.prometheus.exporters.postgres = {
     enable = true;
     port = 9103;
+    listenAddress = "127.0.0.1";
     runAsLocalSuperUser = true;
   };
 

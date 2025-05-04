@@ -2,7 +2,11 @@
   pkgs,
   config,
   ...
-}: {
+}: let
+  domains = config.scarisey.network.settings.hyperion.domains;
+  libProxy = import ./libProxy.nix {inherit config;};
+  inherit (libProxy) declareVirtualHostDefaults declareCerts;
+in {
   services.postgresql = {
     enable = true;
 
@@ -12,12 +16,8 @@
         name = "pgadmin";
         ensureDBOwnership = true;
       }
-      {
-        name = "blocky";
-        ensureDBOwnership = true;
-      }
     ];
-    ensureDatabases = ["pgadmin" "blocky"];
+    ensureDatabases = ["pgadmin"];
     authentication = ''
       # TYPE  DATABASE        USER            ADDRESS                 METHOD
       local   all             all                                     peer
@@ -48,4 +48,13 @@
     initialEmail = config.scarisey.network.settings.email;
     initialPasswordFile = "/run/secrets/hyperion/pgadmin/init_passwd";
   };
+
+  services.nginx.virtualHosts.${domains.pgadmin} =
+    declareVirtualHostDefaults {
+      domain = domains.pgadmin;
+      localOnly = true;
+    }
+    // {
+      locations."/".proxyPass = "http://localhost:${toString config.services.pgadmin.port}";
+    };
 }

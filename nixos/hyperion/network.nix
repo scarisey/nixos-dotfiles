@@ -11,6 +11,8 @@ in {
     settings = {
       email = "sylvain@carisey.dev";
       hyperion = {
+        ssl.local.port = 443;
+        ssl.remote.port = 8443;
         ipv4 = "192.168.1.79";
         ipv6 = "fe80::291b:a25b:4e6d:5a84";
         domains = {

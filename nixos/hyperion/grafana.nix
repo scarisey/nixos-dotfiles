@@ -1,4 +1,8 @@
-{config, ...}: {
+{config, ...}: let
+  domains = config.scarisey.network.settings.hyperion.domains;
+  libProxy = import ./libProxy.nix {inherit config;};
+  inherit (libProxy) declareVirtualHostDefaults declareCerts;
+in {
   services.grafana = {
     enable = true;
     settings = {
@@ -40,4 +44,11 @@
       };
     };
   };
+
+  services.nginx.virtualHosts.${domains.grafana} =
+    declareVirtualHostDefaults {domain = domains.grafana;}
+    // {
+      locations."/".proxyPass = "http://${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}";
+    };
+  security.acme.certs.${domains.grafana} = declareCerts domains.grafana;
 }

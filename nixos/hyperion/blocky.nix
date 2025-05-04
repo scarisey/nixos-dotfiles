@@ -69,4 +69,14 @@ in {
       config.services.blocky.settings.ports.dns
     ];
   };
+
+  services.postgresql = {
+    ensureUsers = [
+      {
+        name = "blocky";
+        ensureDBOwnership = true;
+      }
+    ];
+    ensureDatabases = ["blocky"];
+  };
 }
