@@ -2,51 +2,11 @@
   domains = config.scarisey.network.settings.hyperion.domains;
   ipv4 = config.scarisey.network.settings.hyperion.ipv4;
   ipv6 = config.scarisey.network.settings.hyperion.ipv6;
+  localSslPort = config.scarisey.network.settings.hyperion.ssl.local.port;
+  remoteSslPort = config.scarisey.network.settings.hyperion.ssl.remote.port;
 
-  localSslPort = 443;
-  remoteSslPort = 8443;
-
-  declareCerts = domain: {
-    inherit domain;
-    #check https://go-acme.github.io/lego/dns/
-    dnsProvider = "ionos";
-    dnsPropagationCheck = true;
-    environmentFile = "/var/ionos/token";
-    group = "acme";
-  };
-
-  ifLocalListen = localOnly:
-    [
-      {
-        addr = ipv4;
-        port = localSslPort;
-        ssl = true;
-      }
-    ]
-    ++ (
-      if localOnly
-      then []
-      else [
-        {
-          addr = ipv4;
-          port = remoteSslPort;
-          ssl = true;
-        }
-      ]
-    );
-
-  declareVirtualHostDefaults = {
-    domain,
-    localOnly ? false,
-  }: {
-    listen = ifLocalListen localOnly;
-    http2 = true;
-    useACMEHost =
-      if localOnly
-      then domains.internal
-      else domain;
-    forceSSL = true;
-  };
+  libProxy = import ./libProxy.nix {inherit config;};
+  inherit (libProxy) declareVirtualHostDefaults declareCerts;
 in {
   services.nginx = {
     enable = true;
@@ -149,47 +109,6 @@ in {
           '';
         };
       };
-
-    virtualHosts.${domains.plex} =
-      declareVirtualHostDefaults {domain = domains.plex;}
-      // {
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:32400/";
-          proxyWebsockets = true;
-          extraConfig = ''
-            send_timeout 100m;
-            gzip_disable "MSIE [1-6]\.";
-            client_max_body_size 100M;
-            proxy_buffering off;
-            proxy_set_header X-Plex-Client-Identifier $http_x_plex_client_identifier;
-            proxy_set_header X-Plex-Device $http_x_plex_device;
-            proxy_set_header X-Plex-Device-Name $http_x_plex_device_name;
-            proxy_set_header X-Plex-Platform $http_x_plex_platform;
-            proxy_set_header X-Plex-Platform-Version $http_x_plex_platform_version;
-            proxy_set_header X-Plex-Product $http_x_plex_product;
-            proxy_set_header X-Plex-Token $http_x_plex_token;
-            proxy_set_header X-Plex-Version $http_x_plex_version;
-            proxy_set_header X-Plex-Nocache $http_x_plex_nocache;
-            proxy_set_header X-Plex-Provides $http_x_plex_provides;
-            proxy_set_header X-Plex-Device-Vendor $http_x_plex_device_vendor;
-            proxy_set_header X-Plex-Model $http_x_plex_model;
-          '';
-        };
-      };
-    virtualHosts.${domains.grafana} =
-      declareVirtualHostDefaults {domain = domains.grafana;}
-      // {
-        locations."/".proxyPass = "http://${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}";
-      };
-
-    virtualHosts.${domains.pgadmin} =
-      declareVirtualHostDefaults {
-        domain = domains.pgadmin;
-        localOnly = true;
-      }
-      // {
-        locations."/".proxyPass = "http://localhost:${toString config.services.pgadmin.port}";
-      };
   };
   users.users.nginx.extraGroups = ["acme"];
 
@@ -198,8 +117,6 @@ in {
 
   security.acme.certs.${domains.root} = declareCerts domains.root;
   security.acme.certs.${domains.internal} = declareCerts domains.wildcardInternal;
-  security.acme.certs.${domains.plex} = declareCerts domains.plex;
-  security.acme.certs.${domains.grafana} = declareCerts domains.grafana;
 
   networking.firewall = {
     enable = true;

@@ -8,8 +8,10 @@
     ./loki.nix
     ./network.nix
     ./postgresql.nix
+    ./privatebin.nix
     ./prometheus.nix
     ./samba.nix
+    ./plex.nix
     ./proxy.nix
   ];
 
@@ -17,8 +19,6 @@
     smartmontools
   ];
   services.fail2ban.enable = true;
-  services.plex.enable = true;
-  users.users.plex.extraGroups = ["users"];
 
   services.smartd = {
     enable = true;
