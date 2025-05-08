@@ -6,9 +6,9 @@
     ../common.nix
     ./grafana.nix
     ./loki.nix
+    ./microbin.nix
     ./network.nix
     ./postgresql.nix
-    ./privatebin.nix
     ./prometheus.nix
     ./samba.nix
     ./plex.nix
@@ -82,6 +82,10 @@
     secrets."hyperion/postgresql/init_script" = {
       mode = "0440";
       group = "postgres";
+    };
+    secrets."hyperion/microbin/passwordFile" = {
+      mode = "0440";
+      group = "microbin-sec";
     };
   };
 }
