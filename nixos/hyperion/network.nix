@@ -27,13 +27,7 @@ in {
       };
     };
   };
-  services.gnome.gnome-remote-desktop.enable = true;
-  services.xrdp.enable = true;
-  services.xrdp.defaultWindowManager = "${pkgs.gnome-session}/bin/gnome-session";
-  services.xrdp.openFirewall = true;
   networking.firewall = {
     connectionTrackingModules = ["netbios_sn"];
   };
-
-  environment.systemPackages = [pkgs.gnome-remote-desktop];
 }
