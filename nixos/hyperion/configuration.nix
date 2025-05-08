@@ -5,6 +5,7 @@
     ./blocky.nix
     ../common.nix
     ./grafana.nix
+    ./jellyfin.nix
     ./loki.nix
     ./microbin.nix
     ./network.nix

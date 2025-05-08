@@ -1,6 +1,7 @@
 {config}: let
   settings = config.scarisey.network.settings.hyperion;
 in {
+  domains = settings.domains;
   declareCerts = domain: {
     inherit domain;
     #check https://go-acme.github.io/lego/dns/
