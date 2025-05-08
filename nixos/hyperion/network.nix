@@ -22,7 +22,7 @@ in {
           pgadmin = "pgadmin.${internalDomain}";
           plex = "plex-hyperion.${rootDomain}";
           grafana = "grafana-hyperion.${rootDomain}";
-          frigate = "frigate.${internalDomain}";
+          microbin = "microbin-hyperion.${rootDomain}";
         };
       };
     };
