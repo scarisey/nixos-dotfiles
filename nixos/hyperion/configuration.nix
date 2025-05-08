@@ -12,7 +12,6 @@
     ./postgresql.nix
     ./prometheus.nix
     ./samba.nix
-    ./plex.nix
     ./proxy.nix
   ];
 

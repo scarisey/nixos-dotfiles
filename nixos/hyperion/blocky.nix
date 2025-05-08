@@ -23,7 +23,6 @@ in {
       upstreams.strategy = "parallel_best";
       upstreams.timeout = "2s";
       customDNS.mapping = {
-        "${domains.plex}" = "${localv4},${localv6}";
         "${domains.grafana}" = "${localv4},${localv6}";
         "${domains.pgadmin}" = "${localv4},${localv6}";
         "${domains.microbin}" = "${localv4},${localv6}";
