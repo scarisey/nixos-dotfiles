@@ -27,6 +27,7 @@ in {
         "${domains.grafana}" = "${localv4},${localv6}";
         "${domains.pgadmin}" = "${localv4},${localv6}";
         "${domains.microbin}" = "${localv4},${localv6}";
+        "${domains.jellyfin}" = "${localv4},${localv6}";
       };
       clientLookup.clients.agmob = [
         "192.168.1.11"

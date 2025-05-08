@@ -22,7 +22,8 @@ in {
           pgadmin = "pgadmin.${internalDomain}";
           plex = "plex-hyperion.${rootDomain}";
           grafana = "grafana-hyperion.${rootDomain}";
-          microbin = "microbin-hyperion.${rootDomain}";
+          microbin = "microbin.${rootDomain}";
+          jellyfin = "jellyfin.${rootDomain}";
         };
       };
     };

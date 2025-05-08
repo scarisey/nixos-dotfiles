@@ -1,12 +1,11 @@
 {config, ...}: let
-  domains = config.scarisey.network.settings.hyperion.domains;
   ipv4 = config.scarisey.network.settings.hyperion.ipv4;
   ipv6 = config.scarisey.network.settings.hyperion.ipv6;
   localSslPort = config.scarisey.network.settings.hyperion.ssl.local.port;
   remoteSslPort = config.scarisey.network.settings.hyperion.ssl.remote.port;
 
   libProxy = import ./libProxy.nix {inherit config;};
-  inherit (libProxy) declareVirtualHostDefaults declareCerts;
+  inherit (libProxy) declareVirtualHostDefaults declareCerts domains;
 in {
   services.nginx = {
     enable = true;

@@ -3,9 +3,8 @@
   config,
   ...
 }: let
-  domains = config.scarisey.network.settings.hyperion.domains;
   libProxy = import ./libProxy.nix {inherit config;};
-  inherit (libProxy) declareVirtualHostDefaults declareCerts;
+  inherit (libProxy) declareVirtualHostDefaults declareCerts domains;
 in {
   services.postgresql = {
     enable = true;

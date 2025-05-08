@@ -1,7 +1,6 @@
-{config, ...}:let
-  domains = config.scarisey.network.settings.hyperion.domains;
+{config, ...}: let
   libProxy = import ./libProxy.nix {inherit config;};
-  inherit (libProxy) declareVirtualHostDefaults declareCerts;
+  inherit (libProxy) declareVirtualHostDefaults declareCerts domains;
 in {
   services.microbin = {
     enable = true;
@@ -29,7 +28,7 @@ in {
       };
     };
 
-  users.groups.microbin.name="microbin-sec";
-  systemd.services.microbin.serviceConfig.SupplementaryGroups = [ "microbin-sec" ];
+  users.groups.microbin.name = "microbin-sec";
+  systemd.services.microbin.serviceConfig.SupplementaryGroups = ["microbin-sec"];
   security.acme.certs.${domains.microbin} = declareCerts domains.microbin;
 }
