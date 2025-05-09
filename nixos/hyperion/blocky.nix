@@ -6,6 +6,7 @@
   localv4 = config.scarisey.network.settings.hyperion.ipv4;
   localv6 = config.scarisey.network.settings.hyperion.ipv6;
   domains = config.scarisey.network.settings.hyperion.domains;
+  mergedDomains = builtins.foldl' (z: x: z//x) {} (builtins.map (d:{ "${d}" = "${localv4},${localv6}" ;}) (builtins.attrValues domains));
 in {
   services.blocky = {
     enable = true;
@@ -22,12 +23,7 @@ in {
       ];
       upstreams.strategy = "parallel_best";
       upstreams.timeout = "2s";
-      customDNS.mapping = {
-        "${domains.grafana}" = "${localv4},${localv6}";
-        "${domains.pgadmin}" = "${localv4},${localv6}";
-        "${domains.microbin}" = "${localv4},${localv6}";
-        "${domains.jellyfin}" = "${localv4},${localv6}";
-      };
+      customDNS.mapping = mergedDomains;
       clientLookup.clients.agmob = [
         "192.168.1.11"
         "fe80::54d2:b5ff:fef1:61e5"
