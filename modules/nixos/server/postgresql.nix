@@ -3,8 +3,9 @@
   config,
   ...
 }: let
+  domains = config.services.scarisey.server.domains;
   libProxy = import ./libProxy.nix {inherit config;};
-  inherit (libProxy) declareVirtualHostDefaults declareCerts domains;
+  inherit (libProxy) declareVirtualHostDefaults declareCerts;
 in {
   services.postgresql = {
     enable = true;
@@ -35,8 +36,6 @@ in {
       jit = true;
       track_io_timing = true;
     };
-
-    initialScript = "/run/secrets/hyperion/postgresql/init_script";
   };
 
   #PGADMIN
@@ -44,8 +43,7 @@ in {
   services.pgadmin = {
     enable = true;
     port = 5050;
-    initialEmail = config.scarisey.network.settings.email;
-    initialPasswordFile = "/run/secrets/hyperion/pgadmin/init_passwd";
+    initialEmail = config.services.scarisey.server.email;
   };
 
   services.nginx.virtualHosts.${domains.pgadmin} =

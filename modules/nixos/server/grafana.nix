@@ -1,22 +1,16 @@
 {config, ...}: let
   libProxy = import ./libProxy.nix {inherit config;};
-  inherit (libProxy) declareVirtualHostDefaults declareCerts domains;
+  inherit (libProxy) declareVirtualHostDefaults declareCerts;
 in {
   services.grafana = {
     enable = true;
     settings = {
       log.level = "info";
       server = {
-        root_url = "https://${config.scarisey.network.settings.hyperion.domains.grafana}";
+        root_url = "https://${config.services.scarisey.server.domains.grafana}";
         http_addr = "127.0.0.1";
         http_port = 3000;
         enable_gzip = true;
-      };
-      security = {
-        admin_user = "admin";
-        admin_password = "$__file{/run/secrets/hyperion/grafana/init_passwd}"; #only for first setup
-        secret_key = "$__file{/run/secrets/hyperion/grafana/init_secret}"; #only for first setup
-        allow_embedding = false;
       };
       smtp.enabled = false;
       users = {
@@ -44,10 +38,10 @@ in {
     };
   };
 
-  services.nginx.virtualHosts.${domains.grafana} =
-    declareVirtualHostDefaults {domain = domains.grafana;}
+  services.nginx.virtualHosts.${config.services.scarisey.server.domains.grafana} =
+    declareVirtualHostDefaults {domain = config.services.scarisey.server.domains.grafana;}
     // {
       locations."/".proxyPass = "http://${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}";
     };
-  security.acme.certs.${domains.grafana} = declareCerts domains.grafana;
+  security.acme.certs.${config.services.scarisey.server.domains.grafana} = declareCerts config.services.scarisey.server.domains.grafana;
 }

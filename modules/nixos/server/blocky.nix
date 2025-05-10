@@ -3,10 +3,15 @@
   pkgs,
   ...
 }: let
-  localv4 = config.scarisey.network.settings.hyperion.ipv4;
-  localv6 = config.scarisey.network.settings.hyperion.ipv6;
-  domains = config.scarisey.network.settings.hyperion.domains;
-  mergedDomains = builtins.foldl' (z: x: z//x) {} (builtins.map (d:{ "${d}" = "${localv4},${localv6}" ;}) (builtins.attrValues domains));
+  localv4 = config.services.scarisey.server.ipv4;
+  localv6 = config.services.scarisey.server.ipv6;
+  domains =
+    config.services.scarisey.server.domains.exposed
+    // config.services.scarisey.server.domains.private
+    // {
+      inherit (config.services.scarisey.server.domains) grafana pgadmin;
+    };
+  mergedDomains = builtins.foldl' (z: x: z // x) {} (builtins.map (d: {"${d}" = "${localv4},${localv6}";}) (builtins.attrValues domains));
 in {
   services.blocky = {
     enable = true;
@@ -24,22 +29,6 @@ in {
       upstreams.strategy = "parallel_best";
       upstreams.timeout = "2s";
       customDNS.mapping = mergedDomains;
-      clientLookup.clients.agmob = [
-        "192.168.1.11"
-        "fe80::54d2:b5ff:fef1:61e5"
-      ];
-
-      blocking = {
-        blockType = "zeroIP";
-        denylists = {
-          ads = ["https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"];
-          fakenews = ["https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-only/hosts"];
-        };
-        clientGroupsBlock = {
-          default = ["ads" "fakenews"];
-          agmob = ["fakenews"];
-        };
-      };
       caching = {
         minTime = "5m";
         maxTime = "30m";

@@ -1,11 +1,11 @@
 {config, ...}: let
-  ipv4 = config.scarisey.network.settings.hyperion.ipv4;
-  ipv6 = config.scarisey.network.settings.hyperion.ipv6;
-  localSslPort = config.scarisey.network.settings.hyperion.ssl.local.port;
-  remoteSslPort = config.scarisey.network.settings.hyperion.ssl.remote.port;
-
+  ipv4 = config.services.scarisey.server.ipv4;
+  ipv6 = config.services.scarisey.server.ipv6;
+  localSslPort = config.services.scarisey.server.ssl.local.port;
+  remoteSslPort = config.services.scarisey.server.ssl.remote.port;
+  domains = config.services.scarisey.server.domains;
   libProxy = import ./libProxy.nix {inherit config;};
-  inherit (libProxy) declareVirtualHostDefaults declareCerts domains;
+  inherit (libProxy) declareVirtualHostDefaults declareCerts;
 in {
   services.nginx = {
     enable = true;
@@ -112,7 +112,7 @@ in {
   users.users.nginx.extraGroups = ["acme"];
 
   security.acme.acceptTerms = true;
-  security.acme.defaults.email = config.scarisey.network.settings.email;
+  security.acme.defaults.email = config.services.scarisey.server.email;
 
   security.acme.certs.${domains.root} = declareCerts domains.root;
   security.acme.certs.${domains.internal} = declareCerts domains.wildcardInternal;

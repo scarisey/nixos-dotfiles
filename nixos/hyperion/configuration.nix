@@ -1,18 +1,11 @@
 {pkgs, ...}: {
   imports = [
     ./hardware.nix
-    ./alloy.nix
-    ./blocky.nix
     ../common.nix
-    ./grafana.nix
     ./jellyfin.nix
-    ./loki.nix
     ./microbin.nix
-    ./network.nix
-    ./postgresql.nix
-    ./prometheus.nix
     ./samba.nix
-    ./proxy.nix
+    ./services.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -63,29 +56,11 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "hyperion";
+  networking.firewall = {
+    connectionTrackingModules = ["netbios_sn"];
+  };
   sops = {
     defaultSopsFile = ../../secrets.yaml;
     age.keyFile = "/home/sylvain/.config/sops/age/keys.txt";
-    secrets."hyperion/samba/freebox" = {};
-    secrets."hyperion/grafana/init_passwd" = {
-      mode = "0440";
-      group = "grafana";
-    };
-    secrets."hyperion/grafana/init_secret" = {
-      mode = "0440";
-      group = "grafana";
-    };
-    secrets."hyperion/pgadmin/init_passwd" = {
-      mode = "0440";
-      group = "pgadmin";
-    };
-    secrets."hyperion/postgresql/init_script" = {
-      mode = "0440";
-      group = "postgres";
-    };
-    secrets."hyperion/microbin/passwordFile" = {
-      mode = "0440";
-      group = "microbin-sec";
-    };
   };
 }
