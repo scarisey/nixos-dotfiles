@@ -6,9 +6,6 @@ in {
     enable = true;
   };
 
-  #TODO GPU acceleration
-  #TODO skipper plugin
-
   services.nginx.virtualHosts.${domains.jellyfin} =
     declareVirtualHostDefaults {domain = domains.jellyfin;}
     // {

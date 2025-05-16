@@ -22,6 +22,11 @@ in {
           port = settings.ssl.local.port;
           ssl = true;
         }
+        {
+          addr = "[${settings.ipv6}]";
+          port = settings.ssl.local.port;
+          ssl = true;
+        }
       ]
       ++ (
         if localOnly
@@ -29,6 +34,11 @@ in {
         else [
           {
             addr = settings.ipv4;
+            port = settings.ssl.remote.port;
+            ssl = true;
+          }
+          {
+          addr = "[${settings.ipv6}]";
             port = settings.ssl.remote.port;
             ssl = true;
           }
