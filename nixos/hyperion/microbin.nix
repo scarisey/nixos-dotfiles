@@ -17,11 +17,7 @@
     passwordFile = "/run/secrets/hyperion/microbin/passwordFile";
   };
 
-  services.nginx.virtualHosts.${config.services.scarisey.server.domains.exposed.microbin} = {
-    locations."/" = {
-      proxyPass = "http://127.0.0.1:8080$request_uri";
-    };
-  };
+  services.nginx.virtualHosts.${config.services.scarisey.server.domains.exposed.microbin}.locations."/".proxyPass = "http://127.0.0.1:8080$request_uri";
 
   users.groups.microbin.name = "microbin-sec";
   systemd.services.microbin.serviceConfig.SupplementaryGroups = ["microbin-sec"];

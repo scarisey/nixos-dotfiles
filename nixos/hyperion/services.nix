@@ -13,6 +13,7 @@
         jellyfin = "jellyfin";
       };
     };
+    autodeclare = true;
   };
 
   services.blocky.settings = {

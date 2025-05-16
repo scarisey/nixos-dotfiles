@@ -3,10 +3,20 @@
   pkgs,
   lib,
   ...
-}:
+} @ modInput:
 with lib; let
   cfg = config.services.scarisey.server;
 in {
+  imports = [
+    ./alloy.nix
+    ./blocky.nix
+    ./grafana.nix
+    ./loki.nix
+    ./postgresql.nix
+    ./prometheus.nix
+    ./proxy.nix
+  ];
+
   options.services.scarisey.server = {
     enable = mkOption {
       type = types.bool;
@@ -73,30 +83,27 @@ in {
       description = "Services exposed to internal domain only";
       default = {};
     };
+    autodeclare = mkEnableOption "Autodeclare server domains.";
   };
 
-  config = mkIf cfg.enable (mkMerge [
-    {
-      imports = [
-        ./alloy.nix
-        ./autodeclare.nix
-        ./blocky.nix
-        ./grafana.nix
-        ./loki.nix
-        ./postgresql.nix
-        ./prometheus.nix
-        ./proxy.nix
-      ];
-      assertions = [
-        {
-          assertion = cfg.domains ? root;
-          message = "services.scarisey.server.domains must define 'root' domain.";
-        }
-      ];
-      services.scarisey.server.domains.internal = mkDefault "internal.${cfg.domains.root}";
-      services.scarisey.server.domains.wildcardInternal = mkDefault "*.${cfg.domains.internal}";
-      services.scarisey.server.domains.pgadmin = mkDefault "pgadmin.${cfg.domains.internal}";
-      services.scarisey.server.domains.grafana = mkDefault "grafana.${cfg.domains.root}";
-    }
-  ]);
+  config = mkIf cfg.enable (
+    mkMerge [
+      {
+        _module.args = let
+          libProxy = import ./libProxy.nix {inherit config;};
+        in {inherit (libProxy) declareVirtualHostDefaults declareCerts;};
+        assertions = [
+          {
+            assertion = cfg.domains ? root;
+            message = "services.scarisey.server.domains must define 'root' domain.";
+          }
+        ];
+        services.scarisey.server.domains.internal = mkDefault "internal.${cfg.domains.root}";
+        services.scarisey.server.domains.wildcardInternal = mkDefault "*.${cfg.domains.internal}";
+        services.scarisey.server.domains.pgadmin = mkDefault "pgadmin.${cfg.domains.internal}";
+        services.scarisey.server.domains.grafana = mkDefault "grafana.${cfg.domains.root}";
+      }
+      (mkIf cfg.autodeclare ((import ./autodeclare.nix modInput).autoDeclareDomains {}))
+    ]
+  );
 }

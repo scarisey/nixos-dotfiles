@@ -1,13 +1,33 @@
-{config, ...}: let
+{
+  config,
+  lib,
+  ...
+}: let
   libProxy = import ./libProxy.nix {inherit config;};
   inherit (libProxy) declareVirtualHostDefaults declareCerts;
-  declareDomains = f: domains: builtins.map (x: {services.nginx.virtualHosts.${x} = f x;}) (builtins.attrValues domains);
-  exposedDomains = domains: declareDomains (x: declareVirtualHostDefaults {domain = x;}) domains;
-  privateDomains = domains: declareDomains (x:
-    declareVirtualHostDefaults {
-      domain = x;
-      localOnly = true;
-    })
-  domains;
-in (exposedDomains config.services.scarisey.server.domains.exposed) // (privateDomains config.services.scarisey.server.domains.private)
-
+in {
+  autoDeclareDomains = {}: let
+    settings = config.services.scarisey.server;
+    exposedDomains = domains:
+      lib.pipe domains [
+        (builtins.attrValues)
+        (map (x: "${x}.${settings.domains.root}"))
+        (builtins.map (x: {
+          services.nginx.virtualHosts.${x} = declareVirtualHostDefaults {domain = x;};
+          security.acme.certs.${x} = declareCerts x;
+        }))
+      ];
+    privateDomains = domains:
+      lib.pipe domains [
+        (builtins.attrValues)
+        (map (x: "${x}.${settings.domains.internal}") domains)
+        (builtins.map (x: {
+          services.nginx.virtualHosts.${x} = declareVirtualHostDefaults {
+            domain = x;
+            localOnly = true;
+          };
+        }))
+      ];
+  in
+    (exposedDomains settings.domains.exposed) ++ (privateDomains settings.domains.private);
+}
