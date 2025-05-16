@@ -1,4 +1,5 @@
 {config, ...}: let
+  email=config.scarisey.network.settings.email;
   ipv4 = config.scarisey.network.settings.hyperion.ipv4;
   ipv6 = config.scarisey.network.settings.hyperion.ipv6;
   localSslPort = config.scarisey.network.settings.hyperion.ssl.local.port;
@@ -112,7 +113,7 @@ in {
   users.users.nginx.extraGroups = ["acme"];
 
   security.acme.acceptTerms = true;
-  security.acme.defaults.email = config.scarisey.network.settings.email;
+  security.acme.defaults.email = email;
 
   security.acme.certs.${domains.root} = declareCerts domains.root;
   security.acme.certs.${domains.internal} = declareCerts domains.wildcardInternal;
