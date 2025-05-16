@@ -72,6 +72,7 @@ in {
           ]
           ++ optionals (cfg.vscode) [
             (config.lib.nixGL.wrap vscode-fhs)
+            sqlfluff
           ]
           ++ optionals (cfg.go || cfg.all) [
             go
