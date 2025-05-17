@@ -1,5 +1,5 @@
 {config, ...}: let
-  libProxy = import ./libProxy.nix {inherit config;};
+  libProxy = import ../libProxy.nix {inherit config;};
   inherit (libProxy) declareVirtualHostDefaults declareCerts domains;
 in {
   services.grafana = {
