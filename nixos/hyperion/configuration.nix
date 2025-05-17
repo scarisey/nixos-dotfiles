@@ -4,7 +4,7 @@
     ./alloy.nix
     ./blocky.nix
     ../common.nix
-    ./grafana.nix
+    ./grafana/default.nix
     ./jellyfin.nix
     ./loki.nix
     ./microbin.nix
