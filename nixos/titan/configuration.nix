@@ -6,6 +6,7 @@
   imports = [
     ./hardware.nix
     ../common.nix
+    ./samba.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
