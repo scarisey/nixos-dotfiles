@@ -17,5 +17,6 @@
     nix-alien
     protonvpn-gui
     picard
+    windsurf
   ];
 }
