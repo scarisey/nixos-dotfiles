@@ -9,6 +9,7 @@
     // {
       ghostty = inputs.ghostty.packages.${final.system}.default;
       plex = unstable.plex;
+      windsurf = unstable.windsurf;
     };
 
   modifications = final: prev: {
