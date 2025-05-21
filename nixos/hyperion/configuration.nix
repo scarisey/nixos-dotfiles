@@ -4,6 +4,7 @@
     ./alloy.nix
     ./blocky.nix
     ../common.nix
+    ./docker.nix
     ./grafana/default.nix
     ./jellyfin.nix
     ./loki.nix
