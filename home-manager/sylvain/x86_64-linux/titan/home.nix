@@ -14,7 +14,6 @@
   scarisey.gnome.enable = true;
 
   home.packages = with pkgs; [
-    nix-alien
     protonvpn-gui
     picard
     windsurf

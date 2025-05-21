@@ -38,7 +38,7 @@
     ];
     extraPackages32 = with pkgs.pkgsi686Linux; [vaapiIntel];
   };
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;

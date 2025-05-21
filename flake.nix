@@ -3,15 +3,13 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
 
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
 
     # Home manager
-    home-manager.url = "github:nix-community/home-manager/release-24.11";
+    home-manager.url = "github:nix-community/home-manager/release-25.05";
 
-    # For unpatched binaries
-    nix-alien.url = "github:thiagokokada/nix-alien/7e687663d2054fa1708284bd42731c6be62b1667"; #specific since python build bug
     #For Non Nixos systems
     nixgl.url = "github:guibou/nixGL";
 
@@ -42,7 +40,6 @@
   in {
     inherit lib';
     lib = nixpkgs.lib;
-    defaultPackage.x86_64-linux = home-manager.defaultPackage.x86_64-linux;
     packages = forAllSystems (
       system: let
         overlays = [
@@ -51,6 +48,9 @@
         pkgs = import nixpkgs {inherit system overlays;};
       in
         import ./pkgs {inherit pkgs;}
+        // {
+          default = home-manager.packages.${system}.default;
+        }
     );
     devShells =
       forAllSystems

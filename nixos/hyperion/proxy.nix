@@ -1,5 +1,5 @@
 {config, ...}: let
-  email=config.scarisey.network.settings.email;
+  email = config.scarisey.network.settings.email;
   ipv4 = config.scarisey.network.settings.hyperion.ipv4;
   ipv6 = config.scarisey.network.settings.hyperion.ipv6;
   localSslPort = config.scarisey.network.settings.hyperion.ssl.local.port;

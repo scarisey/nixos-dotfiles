@@ -9,9 +9,8 @@
 
   nixpkgs = {
     overlays =
-      (builtins.attrValues outputs.overlays)
+      builtins.attrValues outputs.overlays
       ++ [
-        inputs.nix-alien.overlays.default
         inputs.android-nixpkgs.overlays.default
       ];
     config = {
