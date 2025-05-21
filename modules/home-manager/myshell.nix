@@ -12,62 +12,62 @@ in {
   };
   config = mkIf cfg.enable {
     fonts.fontconfig.enable = true;
-    home.packages = with pkgs; [
-      (nerdfonts.override {fonts = ["FiraCode" "FiraMono" "DroidSansMono" "Hack" "Hasklig" "Meslo" "UbuntuMono"];})
+    home.packages = with pkgs;
+      [
+        git
+        git-lfs
+        curl
+        dos2unix
+        screen
 
-      git
-      git-lfs
-      curl
-      dos2unix
-      screen
+        ffmpegthumbnailer #pictures preview in yazi
+        unar #archive preview in yazi
 
-      ffmpegthumbnailer #pictures preview in yazi
-      unar #archive preview in yazi
+        thefuck
+        peco #querying input
+        fd #better find
+        bat
+        eza
+        jq
+        yq-go
+        neovim
+        nvimpager
+        nil #  nix LSP
+        ripgrep #recursive search fs for a regex
+        neofetch
+        pstree
+        zip
+        unrar
+        unzip
+        w3m
+        lazygit
+        ghq
+        btop
+        powertop
+        poppler_utils #pdf conversions
+        imagemagick #image to pdf with convert cli
+        ttygif
+        gifsicle
+        rclone
+        cryfs
+        cht-sh
+        cz-cli
 
-      thefuck
-      peco #querying input
-      fd #better find
-      bat
-      eza
-      jq
-      yq-go
-      neovim
-      nvimpager
-      nil #  nix LSP
-      ripgrep #recursive search fs for a regex
-      neofetch
-      pstree
-      zip
-      unrar
-      unzip
-      w3m
-      lazygit
-      ghq
-      btop
-      powertop
-      poppler_utils #pdf conversions
-      imagemagick #image to pdf with convert cli
-      ttygif
-      gifsicle
-      rclone
-      cryfs
-      cht-sh
-      cz-cli
+        #sops
+        sops
+        age
+        ssh-to-age
 
-      #sops
-      sops
-      age
-      ssh-to-age
+        nethogs #network load by process
+        nload #network load by interface
+        nmap #scan network - nmap -sn 192.168.1.128/24
+        #agressive scan - sudo nmap -O --osscan-guess -sS 192.168.1.128/24
 
-      nethogs #network load by process
-      nload #network load by interface
-      nmap #scan network - nmap -sn 192.168.1.128/24
-      #agressive scan - sudo nmap -O --osscan-guess -sS 192.168.1.128/24
-
-      adoc
-      basic-secret
-      git-prune
-    ];
+        adoc
+        basic-secret
+        git-prune
+      ]
+      ++ (with pkgs.nerd-fonts; [fira-code fira-mono droid-sans-mono hack hasklug meslo-lg ubuntu-mono]);
 
     home.sessionVariables = {
       GITDIR = "$HOME/git";
@@ -122,7 +122,7 @@ in {
       enable = true;
       enableCompletion = true;
       autosuggestion.enable = true;
-      initExtra = ''
+      initContent = ''
         eval $(thefuck --alias)
         export PAGER="nvimpager -p -- -c 'lua nvimpager.maps=false' "
         export MANPAGER="nvimpager -p -- -c 'lua nvimpager.maps=false' "

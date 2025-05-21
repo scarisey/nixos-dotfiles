@@ -8,11 +8,7 @@
 }: {
   imports = builtins.attrValues outputs.nixosModules ++ [inputs.sops-nix.nixosModules.sops];
   nixpkgs = {
-    overlays =
-      (builtins.attrValues outputs.overlays)
-      ++ [
-        inputs.nix-alien.overlays.default
-      ];
+    overlays = builtins.attrValues outputs.overlays;
     config = {
       allowUnfree = true;
     };
