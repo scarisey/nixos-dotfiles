@@ -50,4 +50,13 @@ in {
       locations."/".proxyPass = "http://${config.services.grafana.settings.server.http_addr}:${toString config.services.grafana.settings.server.http_port}";
     };
   security.acme.certs.${domains.grafana} = declareCerts domains.grafana;
+
+  sops.secrets."hyperion/grafana/init_passwd" = {
+    mode = "0440";
+    group = "grafana";
+  };
+  sops.secrets."hyperion/grafana/init_secret" = {
+    mode = "0440";
+    group = "grafana";
+  };
 }

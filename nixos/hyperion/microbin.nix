@@ -31,4 +31,9 @@ in {
   users.groups.microbin.name = "microbin-sec";
   systemd.services.microbin.serviceConfig.SupplementaryGroups = ["microbin-sec"];
   security.acme.certs.${domains.microbin} = declareCerts domains.microbin;
+
+  sops.secrets."hyperion/microbin/passwordFile" = {
+    mode = "0440";
+    group = "microbin-sec";
+  };
 }

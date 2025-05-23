@@ -56,4 +56,13 @@ in {
     // {
       locations."/".proxyPass = "http://localhost:${toString config.services.pgadmin.port}";
     };
+
+  sops.secrets."hyperion/pgadmin/init_passwd" = {
+    mode = "0440";
+    group = "pgadmin";
+  };
+  sops.secrets."hyperion/postgresql/init_script" = {
+    mode = "0440";
+    group = "postgres";
+  };
 }
