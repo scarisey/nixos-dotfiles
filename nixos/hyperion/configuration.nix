@@ -14,6 +14,7 @@
     ./prometheus.nix
     ./samba.nix
     ./proxy.nix
+    ./wireguard.nix
   ];
 
   environment.systemPackages = with pkgs; [
