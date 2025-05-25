@@ -1,4 +1,5 @@
 {
+  inputs,
   pkgs,
   config,
   lib,
@@ -214,6 +215,8 @@ in {
     home.file.".gitconfig".source = ./git/gitconfig;
     home.file."git/.gitignore".source = ./git/gitignore;
 
+    home.file.".ssh/config".source = ./ssh/config;
+
     home.file.".config/nvim" = {
       source = ./nvim;
       recursive = true;
@@ -224,10 +227,10 @@ in {
 
     sops = {
       age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
-      defaultSopsFile = ../../secrets.yaml;
+      defaultSopsFile = "${inputs.private-vault}/secrets.yaml";
       secrets."private_git_config/config".path = "${config.home.homeDirectory}/.private.gitconfig";
       secrets."private_git_config/user".path = "${config.home.homeDirectory}/.private.gituser";
-      secrets.private_ssh_config.path = "${config.home.homeDirectory}/.ssh/config";
+      secrets.private_ssh_config.path = "${config.home.homeDirectory}/.ssh/private_config";
     };
   };
 }

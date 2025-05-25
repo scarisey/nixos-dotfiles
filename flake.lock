@@ -296,6 +296,21 @@
         "type": "github"
       }
     },
+    "private-vault": {
+      "locked": {
+        "lastModified": 1748205646,
+        "narHash": "sha256-hP1tZdUbbDL6N0kbF0BEpH55eqmIsX0RtjVzz3n8peg=",
+        "ref": "refs/heads/main",
+        "rev": "3980c3ba515c56da5d27e76eb6ee2c29034297ca",
+        "revCount": 2,
+        "type": "git",
+        "url": "ssh://git@github.com/scarisey/vault.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/scarisey/vault.git"
+      }
+    },
     "root": {
       "inputs": {
         "android-nixpkgs": "android-nixpkgs",
@@ -304,6 +319,7 @@
         "nixgl": "nixgl",
         "nixpkgs": "nixpkgs_4",
         "nixpkgs-master": "nixpkgs-master",
+        "private-vault": "private-vault",
         "sops-nix": "sops-nix"
       }
     },

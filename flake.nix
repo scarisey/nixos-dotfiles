@@ -21,6 +21,12 @@
 
     #ghostty terminal
     ghostty.url = "github:ghostty-org/ghostty";
+
+    #Private vault - change for your own when fork
+    private-vault = {
+      url = "git+ssh://git@github.com/scarisey/vault.git";
+    };
+
   };
 
   outputs = {
