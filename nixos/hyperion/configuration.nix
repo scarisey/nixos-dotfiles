@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{inputs,pkgs, ...}: {
   imports = [
     ./hardware.nix
     ./alloy.nix
@@ -65,7 +65,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "hyperion";
   sops = {
-    defaultSopsFile = ../../secrets.yaml;
+    defaultSopsFile = "${inputs.private-vault}/secrets.yaml";
     age.keyFile = "/home/sylvain/.config/sops/age/keys.txt";
     secrets."hyperion/samba/freebox" = {};
     secrets."hyperion/grafana/init_passwd" = {
