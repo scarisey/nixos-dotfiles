@@ -1,4 +1,8 @@
-{inputs,pkgs, ...}: {
+{
+  inputs,
+  pkgs,
+  ...
+}: {
   imports = [
     ./hardware.nix
     ./alloy.nix

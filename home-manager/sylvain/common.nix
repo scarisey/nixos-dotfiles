@@ -1,6 +1,7 @@
 {
   outputs,
   inputs,
+  config,
   ...
 }: {
   imports =
@@ -17,6 +18,14 @@
       allowUnfree = true;
       allowUnfreePredicate = _: true;
     };
+  };
+
+  sops = {
+    age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
+    defaultSopsFile = "${inputs.private-vault}/secrets.yaml";
+    secrets."private_git_config/config".path = "${config.home.homeDirectory}/.private.gitconfig";
+    secrets."private_git_config/user".path = "${config.home.homeDirectory}/.private.gituser";
+    secrets.private_ssh_config.path = "${config.home.homeDirectory}/.ssh/private_config";
   };
 
   programs.home-manager.enable = true;

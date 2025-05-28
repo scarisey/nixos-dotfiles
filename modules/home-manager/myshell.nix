@@ -224,13 +224,5 @@ in {
     home.activation.lazyvim = lib.hm.dag.entryAfter ["writeBoundary"] ''
       run test -f ~/.config/nvim/lazyvim.json || cp ~/.config/nvim/lazyvim.orig ~/.config/nvim/lazyvim.json && chmod a+w ~/.config/nvim/lazyvim.json
     '';
-
-    sops = {
-      age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
-      defaultSopsFile = "${inputs.private-vault}/secrets.yaml";
-      secrets."private_git_config/config".path = "${config.home.homeDirectory}/.private.gitconfig";
-      secrets."private_git_config/user".path = "${config.home.homeDirectory}/.private.gituser";
-      secrets.private_ssh_config.path = "${config.home.homeDirectory}/.ssh/private_config";
-    };
   };
 }
