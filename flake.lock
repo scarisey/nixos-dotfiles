@@ -298,11 +298,11 @@
     },
     "private-vault": {
       "locked": {
-        "lastModified": 1748205646,
-        "narHash": "sha256-hP1tZdUbbDL6N0kbF0BEpH55eqmIsX0RtjVzz3n8peg=",
+        "lastModified": 1748610085,
+        "narHash": "sha256-AgTuwPxTaTc3tPlMWZGA/jPOKux0d+X6tSNSgR0hcMY=",
         "ref": "refs/heads/main",
-        "rev": "3980c3ba515c56da5d27e76eb6ee2c29034297ca",
-        "revCount": 2,
+        "rev": "7ec811b53bf53d4b8a2de0a6d2b51d8503f5bcd9",
+        "revCount": 7,
         "type": "git",
         "url": "ssh://git@github.com/scarisey/vault.git"
       },
