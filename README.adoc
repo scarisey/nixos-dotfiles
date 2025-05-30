@@ -8,12 +8,18 @@ nix-shell -p git
 git clone https://github.com/scarisey/nixos-dotfiles.git
 cd nixos-dotfiles
 nix-shell ##the shell.nix file will activate flake feature
-sudo cachix use scarisey-public #benefits from cache - you maybe have to do some extra steps indicated by cachix
-sudo cachix use nix-community
+echo "trusted-users = root sylvain" | sudo tee -a /etc/nix/nix.conf && sudo pkill nix-daemon
 sudo nixos-rebuild switch --flake .#hostname
-nix --accept-flake-config run . -- switch --flake .
+nix run . -- switch --flake .
 #OR
 home-manager switch --flake .
+```
+
+## Default shell on other OS than Nixos
+
+```
+echo "$HOME/.nix-profile/bin/zsh" | sudo tee -a /etc/shells
+chsh -s "$HOME/.nix-profile/bin/zsh"
 ```
 
 ## SOPS
