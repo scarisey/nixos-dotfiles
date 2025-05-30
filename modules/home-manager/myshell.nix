@@ -176,6 +176,7 @@ in {
       escapeTime = 10;
       historyLimit = 100000;
       mouse = true;
+      shell = "${pkgs.zsh}/bin/zsh";
       extraConfig = ''
         set-option -g default-terminal 'screen-256color'
         set-option -g terminal-overrides ',xterm-256color:RGB'
