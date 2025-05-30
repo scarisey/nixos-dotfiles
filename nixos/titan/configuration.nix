@@ -13,9 +13,12 @@
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "titan";
   services.xserver.videoDrivers = ["nvidia"];
-  scarisey.network.enable = true;
-  scarisey.qemu.enable = true;
-  scarisey.gnome.enable = true;
+  scarisey = {
+    network.enable = true;
+    docker.enable = true;
+    qemu.enable = true;
+    gnome.enable = true;
+  };
   virtualisation.waydroid.enable = true;
   hardware.graphics.enable = true;
   hardware.nvidia = {

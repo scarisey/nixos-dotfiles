@@ -11,7 +11,7 @@ in {
     enable = mkEnableOption "Enable distrobox";
   };
   config = mkIf cfg.enable {
-    virtualisation.docker.enable = true;
+    scarisey.docker.enable = true;
 
     environment.systemPackages = with pkgs; [
       distrobox
