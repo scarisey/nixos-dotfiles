@@ -23,6 +23,8 @@ in {
           grafana = "grafana-hyperion.${rootDomain}";
           microbin = "microbin.${rootDomain}";
           jellyfin = "jellyfin.${rootDomain}";
+          heimdall = "heimdall.${rootDomain}";
+          wildcardHeimdall = "*.heimdall.${rootDomain}";
         };
       };
     };
