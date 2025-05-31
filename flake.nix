@@ -45,6 +45,14 @@
   in {
     inherit lib';
     lib = nixpkgs.lib;
+
+    templates = {
+      devshell = {
+        path = ./templates/devshell;
+        description = "Development shell for running non-Nix software";
+      };
+    };
+
     packages = forAllSystems (
       system: let
         overlays = [
