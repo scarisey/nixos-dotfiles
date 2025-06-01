@@ -65,21 +65,6 @@
           default = home-manager.packages.${system}.default;
         }
     );
-    devShells =
-      forAllSystems
-      (
-        system: let
-          overlays = [(import ./overlays {inherit inputs;}).modifications];
-          pkgs = import nixpkgs {inherit system overlays;};
-        in {
-          default = pkgs.mkShell {
-            LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
-            shellHook = ''
-              exec ${pkgs.zsh}/bin/zsh
-            '';
-          };
-        }
-      );
 
     overlays = import ./overlays {inherit inputs;};
     nixosModules = import ./modules/nixos;
