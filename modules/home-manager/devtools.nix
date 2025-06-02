@@ -58,11 +58,10 @@ in {
             coursier
             maven
             gradle
-            mcs
+            cfr #decompiler
           ]
           ++ optionals (cfg.javascript || cfg.all) [
             nodejs
-            nodePackages."fx"
           ]
           ++ optionals (cfg.rust || cfg.all) [
             rustup
