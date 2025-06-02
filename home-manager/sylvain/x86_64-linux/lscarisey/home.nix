@@ -13,6 +13,7 @@
     enable = true;
     all = true;
     vscode = true;
+    intellij = true;
   };
   scarisey.cloud.all = true;
   scarisey.cloud.enable = true;
