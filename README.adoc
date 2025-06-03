@@ -8,8 +8,11 @@ nix-shell -p git
 git clone https://github.com/scarisey/nixos-dotfiles.git
 cd nixos-dotfiles
 nix-shell ##the shell.nix file will activate flake feature
+#the command below enables your following builds to benefit from caches
 echo "trusted-users = root sylvain" | sudo tee -a /etc/nix/nix.conf && sudo pkill nix-daemon
+#for Nixos
 sudo nixos-rebuild switch --flake .#hostname
+#for Home manager
 nix run . -- switch --flake .
 #OR
 home-manager switch --flake .
