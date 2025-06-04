@@ -14,3 +14,5 @@ opt.titlelen = 70
 
 vim.g.neovide_cursor_vfx_mode = "pixiedust"
 vim.g.neovide_hide_mouse_when_typing = false
+
+vim.g.autoformat = false
