@@ -24,7 +24,6 @@ in {
       {
         home.packages = with pkgs;
           map (x: config.lib.nixGL.wrap x) [
-            opera
             firefox
 
             vlc
