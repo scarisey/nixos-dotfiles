@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
+{config, ...}: let
   localv4 = config.scarisey.network.settings.hyperion.ipv4;
   localv6 = config.scarisey.network.settings.hyperion.ipv6;
   domains = config.scarisey.network.settings.hyperion.domains;
