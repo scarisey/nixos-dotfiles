@@ -9,6 +9,7 @@
   cloud = import ./cloud.nix;
   distrobox = import ./distrobox.nix;
   qemu = import ./qemu.nix;
+  server = import ./server/default.nix;
   network = import ./network.nix;
   vpn = import ./vpn.nix;
 }
