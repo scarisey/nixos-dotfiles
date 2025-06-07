@@ -1,7 +1,11 @@
-{config, ...}: let
-  localv4 = config.scarisey.network.settings.hyperion.ipv4;
-  localv6 = config.scarisey.network.settings.hyperion.ipv6;
-  domains = config.scarisey.network.settings.hyperion.domains;
+{
+  config,
+  pkgs,
+  ...
+}: let
+  localv4 = config.scarisey.server.settings.ipv4;
+  localv6 = config.scarisey.server.settings.ipv6;
+  domains = config.scarisey.server.settings.domains;
   mergedDomains = builtins.foldl' (z: x: z // x) {} (builtins.map (d: {"${d}" = "${localv4},${localv6}";}) (builtins.attrValues domains));
 in {
   services.blocky = {
