@@ -6,6 +6,7 @@ SCRIPTNAME=$(basename "$0")
 RUNDIR=$(dirname "$(realpath $0)")
 CURRENTDIR=$(pwd)
 OUTPUTDIR=${CURRENTDIR}/out
+SCRIPT_REQUIREMENTS=("jq" "yq")
 
 mkdir -p $OUTPUTDIR
 
@@ -17,10 +18,14 @@ function _usage() {
 }
 
 function _requirements() {
-	if ! command -v jq &>/dev/null; then
-		echo "jq could not be found"
-		exit
-	fi
+  inError=0
+  for required in "${SCRIPT_REQUIREMENTS[@]}"; do
+    if ! command -v ${required} &>/dev/null; then
+      echo "${required} could not be found; please install it"
+      inError=1
+    fi
+  done
+  if [ $inError -eq 1 ];then exit 1; fi
 }
 
 function _checkCommand() {

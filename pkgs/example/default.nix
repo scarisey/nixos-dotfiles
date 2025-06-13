@@ -6,6 +6,7 @@
   makeWrapper,
   coreutils,
   jq,
+  yq,
   ...
 }: let
   fs = lib.fileset; #check https://nix.dev/tutorials/file-sets
@@ -21,7 +22,7 @@ in
     };
 
     nativeBuildInputs = [makeWrapper];
-    buildInputs = [bash coreutils jq];
+    buildInputs = [bash coreutils jq yq];
 
     postInstall = ''
       wrapProgram $out/bin/scriptExample \
