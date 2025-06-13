@@ -16,6 +16,12 @@ in {
     intellij = mkEnableOption "Include Intellij Toolbox";
     vscode = mkEnableOption "Include VSCode";
     jvm = mkEnableOption "JVM dev tools";
+    jdkPkg = mkOption {
+      type = lib.types.package;
+      default = pkgs.jdk;
+      example = "pkgs.jdk_21";
+      description = "Set the default JDK (JAVA_HOME, jdks/.current).";
+    };
     javascript = mkEnableOption "Javascript dev tools";
     rust = mkEnableOption "Rust dev tools";
     go = mkEnableOption "Go dev tools";
@@ -89,9 +95,9 @@ in {
 
       (mkIf (cfg.jvm || cfg.all) {
         home.sessionVariables = {
-          JAVA_HOME = "${pkgs.jdk}/lib/openjdk";
+          JAVA_HOME = "${cfg.jdkPkg}/lib/openjdk";
         };
-        home.file.".jdks/current".source = "${pkgs.jdk}/lib/openjdk";
+        home.file.".jdks/current".source = "${cfg.jdkPkg}/lib/openjdk";
       })
     ]);
 }

@@ -14,6 +14,7 @@
     all = true;
     vscode = true;
     intellij = true;
+    jdkPkg = pkgs.jdk21;
   };
   scarisey.cloud.all = true;
   scarisey.cloud.enable = true;

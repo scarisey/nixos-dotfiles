@@ -12,10 +12,5 @@
       windsurf = unstable.windsurf;
     };
 
-  modifications = final: prev: {
-    jdk = final.jdk21;
-    jdk_headless = final.jdk21_headless;
-    jre = final.jdk;
-    jre_headless = final.jdk_headless;
-  };
+  modifications = final: prev: { };
 }
