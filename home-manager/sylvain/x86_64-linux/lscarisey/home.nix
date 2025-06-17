@@ -24,7 +24,6 @@
     keepassxc
     msgconvert
     glab-tools
-    pritunl-client
   ];
 
   home.file.".local/bin/firewall.sh" = {

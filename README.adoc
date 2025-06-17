@@ -27,6 +27,10 @@ chsh -s "$HOME/.nix-profile/bin/zsh"
 
 ## SOPS
 
+### Private vault
+
+Sops files are stored in a private github repository, represented as the input `private-vault` in this flake.
+
 ### Generate key
 
 ```
