@@ -21,10 +21,6 @@
       auto-optimise-store = true;
       trusted-users = ["root" "sylvain"];
     };
-    gc = {
-      automatic = true;
-      options = "--delete-older-than 7d";
-    };
   };
   time = {
     hardwareClockInLocalTime = true;
@@ -52,6 +48,12 @@
     cachix
   ];
   programs.zsh.enable = true;
+  programs.nh = {
+    enable = true;
+    clean.enable = true;
+    clean.extraArgs = "--keep-since 7d --keep 2";
+    flake = "/home/sylvain/git/github.com/scarisey/nixos-dotfiles";
+  };
   services.openssh = {
     enable = true;
     settings = {

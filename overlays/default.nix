@@ -12,5 +12,5 @@
       windsurf = unstable.windsurf;
     };
 
-  modifications = final: prev: { };
+  modifications = final: prev: {};
 }
