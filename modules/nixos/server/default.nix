@@ -15,9 +15,7 @@ with lib; let
       (import ./blocky.nix enrichedArgs)
       (import ./proxy.nix enrichedArgs)
       (import ./postgresql.nix enrichedArgs)
-      {
-        #grafana - alloy - prometheus - loki
-      }
+      (import ./monitoring/default.nix enrichedArgs)
     ]);
   };
 in
