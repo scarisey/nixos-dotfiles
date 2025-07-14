@@ -24,6 +24,7 @@
     keepassxc
     msgconvert
     glab-tools
+    nh
   ];
 
   home.file.".local/bin/firewall.sh" = {
