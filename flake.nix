@@ -44,7 +44,7 @@
     forHosts = lib'.forHosts ./nixos;
     forUsers = lib'.forUsers ./home-manager;
     overlaysFlake = import ./overlays {inherit inputs;};
-    overlays= builtins.attrValues overlaysFlake;
+    overlays = builtins.attrValues overlaysFlake;
   in {
     inherit lib';
     lib = nixpkgs.lib;

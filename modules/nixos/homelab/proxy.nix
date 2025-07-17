@@ -3,14 +3,38 @@
   lib,
   ...
 }: let
-  email = config.scarisey.server.settings.email;
-  ipv4 = config.scarisey.server.settings.ipv4;
-  ipv6 = config.scarisey.server.settings.ipv6;
-  localSslPort = config.scarisey.server.settings.lanPort;
-  remoteSslPort = config.scarisey.server.settings.wanPort;
-  domains = config.scarisey.server.settings.domains;
+  email = config.scarisey.homelab.settings.email;
+  ipv4 = config.scarisey.homelab.settings.ipv4;
+  ipv6 = config.scarisey.homelab.settings.ipv6;
+  lanPort = config.scarisey.homelab.settings.lanPort;
+  wanPort = config.scarisey.homelab.settings.wanPort;
+  domains = config.scarisey.homelab.settings.domains;
+  lanDomains = config.scarisey.homelab.settings.domains.lan;
+  publicDomains = config.scarisey.homelab.settings.domains.public;
+  declareVirtualHostDefaults = lib.libProxy.declareVirtualHostDefaults;
+  # declareVirtualHostDefaults = lib.libProxy.declareVirtualHostDefaults {inherit ipv4 lanPort wanPort;};
+  inherit (lib.libProxy) declareCerts;
 
-  inherit (lib.libProxy) declareVirtualHostDefaults declareCerts;
+  _automaticVirtualHosts = {localOnly?false, _domains}:
+    lib.mapAttrs' (k: v: {
+      name = "${v.domain}";
+      value = declareVirtualHostDefaults {
+        domain = v.domain;
+        inherit localOnly;
+      } // {
+        locations."/".proxyPass = v.proxyPass;
+      };
+    }) _domains;
+  automaticVirtualHosts = _automaticVirtualHosts {localOnly=true;_domains=lanDomains;} ++ _automaticVirtualHosts {_domains=publicDomains;};
+  automaticDeclareCerts =
+    lib.mapAttrs' (k: v: {
+      name = "${v}";
+      value = declareCerts v;
+    })
+    lanDomains // publicDomains;
+
+  debugV = builtins.trace automaticVirtualHosts true;
+  debugD = builtins.trace automaticDeclareCerts true;
 in {
   services.nginx = {
     enable = true;
@@ -124,6 +148,6 @@ in {
 
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [localSslPort remoteSslPort];
+    allowedTCPPorts = [lanPort wanPort];
   };
 }

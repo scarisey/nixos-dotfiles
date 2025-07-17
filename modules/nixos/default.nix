@@ -6,10 +6,10 @@
   i3Xfce = import ./i3.nix;
   kde = import ./kde.nix;
   gnome = import ./gnome.nix;
+  homelab = import ./homelab/default.nix;
   cloud = import ./cloud.nix;
   distrobox = import ./distrobox.nix;
   qemu = import ./qemu.nix;
-  server = import ./server/default.nix;
   network = import ./network.nix;
   vpn = import ./vpn.nix;
 }
