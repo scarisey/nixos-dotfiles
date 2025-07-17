@@ -13,9 +13,9 @@
       domain,
       localOnly ? false,
     }: let
-      ipv4 = config.scarisey.server.settings.ipv4;
-      lanPort = config.scarisey.server.settings.lanPort;
-      wanPort = config.scarisey.server.settings.wanPort;
+      ipv4 = config.scarisey.homelab.settings.ipv4;
+      lanPort = config.scarisey.homelab.settings.lanPort;
+      wanPort = config.scarisey.homelab.settings.wanPort;
       ifLocalListen = localOnly:
         [
           {

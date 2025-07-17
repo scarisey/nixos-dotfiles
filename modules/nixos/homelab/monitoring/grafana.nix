@@ -4,30 +4,30 @@
   pkgs,
   ...
 }: let
-  domains = config.scarisey.server.settings.domains;
+  domains = config.scarisey.homelab.settings.domains;
+  customSettings = config.scarisey.homelab.settings.grafana;
   inherit (lib.libProxy) declareVirtualHostDefaults declareCerts;
 in {
   services.grafana = {
     enable = true;
-    settings = {
-      log.level = "info";
-      server = {
-        root_url = "https://${domains.grafana}";
-        http_addr = "127.0.0.1";
-        http_port = 3000;
-        enable_gzip = true;
-      };
-      security = {
-        admin_user = "admin";
-        admin_password = "$__file{/run/secrets/hyperion/grafana/init_passwd}"; #only for first setup
-        secret_key = "$__file{/run/secrets/hyperion/grafana/init_secret}"; #only for first setup
-        allow_embedding = false;
-      };
-      smtp.enabled = false;
-      users = {
-        allow_sign_up = false;
-      };
-    };
+    settings =
+      {
+        log.level = "info";
+        server = {
+          root_url = "https://${domains.grafana}";
+          http_addr = "127.0.0.1";
+          http_port = 3000;
+          enable_gzip = true;
+        };
+        security = {
+          allow_embedding = false;
+        };
+        smtp.enabled = false;
+        users = {
+          allow_sign_up = false;
+        };
+      }
+      // customSettings;
 
     provision = {
       enable = true;

@@ -8,7 +8,7 @@
     ../common.nix
   ];
 
-  scarisey.server = {
+  scarisey.homelab = {
     enable = true;
     settings = {
       email = "sylvain@carisey.dev";
@@ -24,6 +24,13 @@
         internal = internalDomain;
         wildcardInternal = "*.${internalDomain}";
         grafana = "grafana-hyperion.${rootDomain}";
+      };
+      grafana = {
+        security = {
+          admin_user = "admin";
+          admin_password = "$__file{/run/secrets/hyperion/grafana/init_passwd}"; #only for first setup
+          secret_key = "$__file{/run/secrets/hyperion/grafana/init_secret}"; #only for first setup
+        };
       };
       blocky = {
         clientLookup.clients.agmob = [
@@ -45,6 +52,8 @@
       };
     };
   };
+
+  services.postgresql.initialScript = "/run/secrets/hyperion/postgresql/grafana_grants";
 
   networking.hostName = "vm";
   sops = {

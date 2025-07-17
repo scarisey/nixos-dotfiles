@@ -26,7 +26,5 @@
       jit = true;
       track_io_timing = true;
     };
-
-    initialScript = "/run/secrets/hyperion/postgresql/grafana_grants";
   };
 }

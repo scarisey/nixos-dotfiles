@@ -3,10 +3,10 @@
   config,
   ...
 }: let
-  cfg = config.scarisey.server;
+  cfg = config.scarisey.homelab;
 in
   with lib; {
-    scarisey.server = {
+    scarisey.homelab = {
       enable = mkEnableOption "Server settings";
       settings.email = mkOption {
         type = types.str;
@@ -52,33 +52,38 @@ in
               description = "grafana domain, will be exposed on LAN and WAN by default.";
               default = "grafana.${cfg.settings.domains.root}";
             };
-            # lan = mkOption {
-            #   type = types.attrs;
-            #   default = {};
-            #   example = litteralExpression ''
-            #     {
-            #       grafana1 = "grafana-1"; #would resolve to grafana-1.{settings.domains.root}
-            #       grafana2 = "grafana-2"; #would resolve to grafana-2.{settings.domains.root}
-            #     }
-            #   '';
-            #   description = "Attribute set of domains accessible only on LAN.";
-            # };
-            # public = mkOption {
-            #   type = types.attrs;
-            #   default = {};
-            #   example = litteralExpression ''
-            #     {
-            #       grafana1 = "grafana-1"; #would resolve to grafana-1.{settings.domains.root}
-            #       grafana2 = "grafana-2"; #would resolve to grafana-2.{settings.domains.root}
-            #     }
-            #   '';
-            #   description = "Attribute set of domains accessible on LAN and WAN.";
-            # };
+            lan = mkOption {
+              type = types.attrs;
+              default = {};
+              example = litteralExpression ''
+                {
+                  grafana1 = "grafana-1"; #would resolve to grafana-1.{settings.domains.root}
+                  grafana2 = "grafana-2"; #would resolve to grafana-2.{settings.domains.root}
+                }
+              '';
+              description = "Attribute set of domains accessible only on LAN.";
+            };
+            public = mkOption {
+              type = types.attrs;
+              default = {};
+              example = litteralExpression ''
+                {
+                  grafana1 = "grafana-1"; #would resolve to grafana-1.{settings.domains.root}
+                  grafana2 = "grafana-2"; #would resolve to grafana-2.{settings.domains.root}
+                }
+              '';
+              description = "Attribute set of domains accessible on LAN and WAN.";
+            };
           };
         };
       };
       settings.blocky = mkOption {
         description = "Blocky settings to merge to defaults.";
+        default = {};
+        type = types.attrsOf types.anything;
+      };
+      settings.grafana = mkOption {
+        description = "Grafana settings to merge to defaults.";
         default = {};
         type = types.attrsOf types.anything;
       };
