@@ -3,11 +3,11 @@
   pkgs,
   ...
 }: let
-  localv4 = config.scarisey.server.settings.ipv4;
-  localv6 = config.scarisey.server.settings.ipv6;
-  domains = config.scarisey.server.settings.domains;
-  mergedDomains = builtins.foldl' (z: x: z // x) {} (builtins.map (d: {"${d}" = "${localv4},${localv6}";}) (builtins.attrValues domains));
-  customSettings = config.scarisey.server.settings.blocky;
+  localv4 = config.scarisey.homelab.settings.ipv4;
+  localv6 = config.scarisey.homelab.settings.ipv6;
+  domains = config.scarisey.homelab.settings.domains;
+  mergedDomains = builtins.foldl' (z: x: z // x) {} (builtins.map (d: {"${d.domain}" = "${localv4},${localv6}";}) (builtins.attrValues (domains.lan // domains.public // {grafana={domain=domains.grafana;};})));
+  customSettings = config.scarisey.homelab.settings.blocky;
 in {
   services.blocky = {
     enable = true;
