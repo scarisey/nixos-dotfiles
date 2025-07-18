@@ -19,7 +19,6 @@ in {
           root = "carisey.dev";
           internal = "internal.${rootDomain}";
           wildcardInternal = "*.${internalDomain}";
-          pgadmin = "pgadmin.${internalDomain}";
           grafana = "grafana-hyperion.${rootDomain}";
           microbin = "microbin.${rootDomain}";
           jellyfin = "jellyfin.${rootDomain}";

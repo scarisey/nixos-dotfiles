@@ -10,13 +10,6 @@ in {
     enable = true;
 
     package = pkgs.postgresql_17;
-    ensureUsers = [
-      {
-        name = "pgadmin";
-        ensureDBOwnership = true;
-      }
-    ];
-    ensureDatabases = ["pgadmin"];
     authentication = ''
       # TYPE  DATABASE        USER            ADDRESS                 METHOD
       local   all             all                                     peer
@@ -36,24 +29,6 @@ in {
       track_io_timing = true;
     };
 
-    initialScript = "/run/secrets/hyperion/postgresql/init_script";
+    initialScript = "/run/secrets/hyperion/postgresql/grafana_grants";
   };
-
-  #PGADMIN
-
-  services.pgadmin = {
-    enable = true;
-    port = 5050;
-    initialEmail = config.scarisey.network.settings.email;
-    initialPasswordFile = "/run/secrets/hyperion/pgadmin/init_passwd";
-  };
-
-  services.nginx.virtualHosts.${domains.pgadmin} =
-    declareVirtualHostDefaults {
-      domain = domains.pgadmin;
-      localOnly = true;
-    }
-    // {
-      locations."/".proxyPass = "http://localhost:${toString config.services.pgadmin.port}";
-    };
 }
