@@ -4,15 +4,12 @@
   pkgs,
   inputs,
   outputs,
+  overlays,
   ...
 }: {
   imports = builtins.attrValues outputs.nixosModules ++ [inputs.sops-nix.nixosModules.sops];
-  nixpkgs = {
-    overlays = builtins.attrValues outputs.overlays;
-    config = {
-      allowUnfree = true;
-    };
-  };
+  nixpkgs.config.allowUnfree = true;
+  nixpkgs.overlays = overlays;
   nix = {
     registry = lib.mapAttrs (_: value: {flake = value;}) inputs;
     nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
