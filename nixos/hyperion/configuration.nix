@@ -80,11 +80,7 @@
       mode = "0440";
       group = "grafana";
     };
-    secrets."hyperion/pgadmin/init_passwd" = {
-      mode = "0440";
-      group = "pgadmin";
-    };
-    secrets."hyperion/postgresql/init_script" = {
+    secrets."hyperion/postgresql/grafana_grants" = {
       mode = "0440";
       group = "postgres";
     };
