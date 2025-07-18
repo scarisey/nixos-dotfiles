@@ -33,6 +33,7 @@
     nixpkgs,
     home-manager,
     nixgl,
+    android-nixpkgs,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -42,10 +43,13 @@
     lib' = import ./lib {lib = nixpkgs.lib;};
     forHosts = lib'.forHosts ./nixos;
     forUsers = lib'.forUsers ./home-manager;
+    overlaysFlake = import ./overlays {inherit inputs;};
+    overlays= builtins.attrValues overlaysFlake;
   in {
     inherit lib';
     lib = nixpkgs.lib;
 
+    overlays = overlaysFlake;
     templates = {
       devshell = {
         path = ./templates/devshell;
@@ -55,9 +59,6 @@
 
     packages = forAllSystems (
       system: let
-        overlays = [
-          (import ./overlays {inherit inputs;}).modifications
-        ];
         pkgs = import nixpkgs {inherit system overlays;};
       in
         import ./pkgs {inherit pkgs;}
@@ -66,14 +67,13 @@
         }
     );
 
-    overlays = import ./overlays {inherit inputs;};
     nixosModules = import ./modules/nixos;
     homeManagerModules = import ./modules/home-manager;
 
     nixosConfigurations = forHosts (
       path:
         nixpkgs.lib.nixosSystem {
-          specialArgs = {inherit inputs outputs;};
+          specialArgs = {inherit inputs outputs overlays;};
           modules = [path];
         }
     );
@@ -87,7 +87,7 @@
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
             inherit system;
-            overlays = [nixgl.overlay];
+            overlays = overlays ++ [nixgl.overlay android-nixpkgs.overlays.default];
           };
           extraSpecialArgs = {inherit inputs outputs;};
           modules = [path];
