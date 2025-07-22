@@ -5,19 +5,11 @@
 }: {
   imports = [
     ./hardware.nix
-    ./alloy.nix
-    ./blocky.nix
     ../common.nix
     ./docker.nix
-    ./grafana/default.nix
-    ./jellyfin.nix
-    ./loki.nix
+    ./homelab.nix
     ./microbin.nix
-    ./network.nix
-    ./postgresql.nix
-    ./prometheus.nix
     ./samba.nix
-    ./proxy.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -68,6 +60,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "hyperion";
+  networking.firewall = {
+    connectionTrackingModules = ["netbios_sn"];
+  };
   sops = {
     defaultSopsFile = "${inputs.private-vault}/secrets.yaml";
     age.keyFile = "/home/sylvain/.config/sops/age/keys.txt";
