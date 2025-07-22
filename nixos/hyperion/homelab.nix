@@ -1,18 +1,5 @@
-{
-  inputs,
-  pkgs,
-  ...
-}: {
-  imports = [
-    ./hardware.nix
-    ../common.nix
-    ./microbin.nix
-  ];
-
-  virtualisation = {
-    diskSize = 65536;
-  };
-
+{...}:{
+  services.jellyfin.enable = true;
   scarisey.homelab = {
     enable = true;
     settings = {
@@ -34,13 +21,12 @@
             domain = "jellyfin.${rootDomain}";
             proxyPass = "http://localhost:8096";
           };
-        };
-        lan = {
           microbin ={
             domain = "microbin.${internalDomain}";
             proxyPass = "http://127.0.0.1:8080$request_uri";
           };
         };
+        lan = { };
       };
       grafana = {
         security = {
@@ -50,6 +36,10 @@
         };
       };
       blocky = {
+        clientLookup.clients.agmob = [
+          "192.168.1.11"
+          "fe80::54d2:b5ff:fef1:61e5"
+        ];
         blocking = {
           blockType = "zeroIP";
           denylists = {
@@ -62,33 +52,6 @@
           };
         };
       };
-    };
-  };
-
-  users.users.sylvain.password = "nixos";
-
-  services.jellyfin.enable = true;
-
-  networking.hostName = "vm";
-  sops = {
-    defaultSopsFile = "${inputs.private-vault}/secrets.yaml";
-    age.keyFile = "/home/sylvain/.config/sops/age/keys.txt";
-    secrets."hyperion/samba/freebox" = {};
-    secrets."hyperion/grafana/init_passwd" = {
-      mode = "0440";
-      group = "grafana";
-    };
-    secrets."hyperion/grafana/init_secret" = {
-      mode = "0440";
-      group = "grafana";
-    };
-    secrets."hyperion/postgresql/grafana_grants" = {
-      mode = "0440";
-      group = "postgres";
-    };
-    secrets."hyperion/microbin/passwordFile" = {
-      mode = "0440";
-      group = "microbin-sec";
     };
   };
 }
