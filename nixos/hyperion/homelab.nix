@@ -6,8 +6,8 @@
       email = "sylvain@carisey.dev";
       lanPort = 443;
       wanPort = 8443;
-      ipv4 = "10.0.2.15";
-      ipv6 = "fe80::5054:ff:fe12:3456";
+      ipv4 = "192.168.1.79";
+      ipv6 = "fe80::291b:a25b:4e6d:5a84";
       domains = let
         rootDomain = "carisey.dev";
         internalDomain = "internal.${rootDomain}";
@@ -15,7 +15,7 @@
         root = rootDomain;
         internal = internalDomain;
         wildcardInternal = "*.${internalDomain}";
-        grafana = "grafana-vm.${rootDomain}";
+        grafana = "grafana-hyperion.${rootDomain}";
         public = {
           jellyfin = {
             domain = "jellyfin.${rootDomain}";
