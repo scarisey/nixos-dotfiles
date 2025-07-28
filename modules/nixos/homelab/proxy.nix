@@ -12,7 +12,6 @@
   lanDomains = config.scarisey.homelab.settings.domains.lan;
   publicDomains = config.scarisey.homelab.settings.domains.public;
   declareVirtualHostDefaults = lib.libProxy.declareVirtualHostDefaults;
-  # declareVirtualHostDefaults = lib.libProxy.declareVirtualHostDefaults {inherit ipv4 lanPort wanPort;};
   inherit (lib.libProxy) declareCerts;
 
   _automaticVirtualHosts = {localOnly?false, _domains}:
@@ -111,7 +110,7 @@ in {
     };
 
     virtualHosts.${domains.root} =
-      declareVirtualHostDefaults {domain = domains.root;}
+      declareVirtualHostDefaults {domain = domains.root; localOnly = true;}
       // {
         locations."/" = {
           return = "200 '<html><body>It works</body></html>'";
@@ -125,7 +124,7 @@ in {
       };
 
     virtualHosts.${domains.internal} =
-      declareVirtualHostDefaults {domain = domains.internal;}
+      declareVirtualHostDefaults {domain = domains.internal; localOnly = true;}
       // {
         locations."/" = {
           return = "200 '<html><body>It works</body></html>'";
