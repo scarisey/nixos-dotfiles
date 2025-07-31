@@ -26,6 +26,13 @@
     private-vault = {
       url = "git+ssh://git@github.com/scarisey/vault.git";
     };
+
+    #Use nix in termux for Android
+    nix-on-droid = {
+      url = "github:nix-community/nix-on-droid/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
   outputs = {
@@ -34,6 +41,7 @@
     home-manager,
     nixgl,
     android-nixpkgs,
+    nix-on-droid,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -93,6 +101,29 @@
           modules = [path];
         }
     );
+
+    nixOnDroidConfigurations.fenrir = nix-on-droid.lib.nixOnDroidConfiguration {
+        pkgs = import nixpkgs {
+          system = "aarch64-linux";
+          inherit overlays;
+          config = {
+            allowUnfree = true;
+            allowUnfreePredicate = pkg: true;
+          };
+        };
+        modules = [
+          ./nixOnDroid/fenrir/configuration.nix
+          {
+            home-manager = {
+              config = ./nixOnDroid/fenrir/hm.nix;
+              backupFileExtension = "hm-bak";
+              useGlobalPkgs = true;
+              extraSpecialArgs = { inherit inputs outputs; };
+            };
+          }
+        ];
+        home-manager-path = home-manager.outPath;
+      };
 
     formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
   };
