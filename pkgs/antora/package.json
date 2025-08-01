@@ -23,7 +23,7 @@
     "@antora/cli": "3.1.10",
     "@antora/lunr-extension": "^1.0.0-alpha.10",
     "@antora/site-generator": "3.1.10",
-    "@sntke/antora-mermaid-extension": "^0.0.6"
+    "@sntke/antora-mermaid-extension": "^0.0.8"
   },
   "engines": {
     "node": ">=16.0.0"
