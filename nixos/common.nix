@@ -7,7 +7,13 @@
   overlays,
   ...
 }: {
-  imports = builtins.attrValues outputs.nixosModules ++ [inputs.sops-nix.nixosModules.sops];
+  imports =
+    builtins.attrValues outputs.nixosModules
+    ++ [
+      inputs.sops-nix.nixosModules.sops
+      inputs.homelab-nix.nixosModules.homelab
+      inputs.private-modules.nixosModules.privateModules
+    ];
   nixpkgs.config.allowUnfree = true;
   nixpkgs.overlays = overlays;
   nix = {
@@ -38,12 +44,20 @@
     isNormalUser = true;
     description = "sylvain";
     extraGroups = ["networkmanager" "wheel" "docker" "libvirtd" "kvm"];
+    openssh.authorizedKeys.keys = [
+      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCGMOV7eUZHjaQAX3DasvWYR8I1lFe5mp3hjTq+Cc2okkfrTqW1mA5LLtkwvjpUgWixA3Y0OM9/+XTbYF80c1J8= lscarisey"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFfzo6os2jVd/4Q0BVk9sbn3GqQeyCddzCd4ZkgDmBLY galaxyS25"
+      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMWBJqOjJ7saqLyiUyE9Oe+rlDB7MoG7LjfAPiTZCrtrc9d6zb50oaXh7BsRpBy9lvyGYjo9WiB16Nntu+Dbwjk= titan"
+    ];
   };
   environment.systemPackages = with pkgs; [
     vim
     wget
     cachix
   ];
+  systemd.extraConfig = ''
+    DefaultTimeoutStopSec=30s
+  '';
   programs.zsh.enable = true;
   programs.nh = {
     enable = true;

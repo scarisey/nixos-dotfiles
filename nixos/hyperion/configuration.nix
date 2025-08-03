@@ -10,7 +10,10 @@
     ./homelab.nix
     ./microbin.nix
     ./samba.nix
+    ./vpnServer.nix
   ];
+
+  scarisey.privateModules.enable = true;
 
   environment.systemPackages = with pkgs; [
     smartmontools
@@ -75,13 +78,23 @@
       mode = "0440";
       group = "grafana";
     };
-    secrets."hyperion/postgresql/grafana_grants" = {
+    secrets."hyperion/postgresql/grafana_role_postscript" = {
       mode = "0440";
       group = "postgres";
+    };
+    secrets."hyperion/postgresql/blocky_grants" = {
+      mode = "0440";
+      group = "postgres";
+    };
+    secrets."hyperion/postgresql/blocky_password" = {
+      mode = "0440";
     };
     secrets."hyperion/microbin/passwordFile" = {
       mode = "0440";
       group = "microbin-sec";
+    };
+    secrets."hyperion/wireguard/server/privateKey" = {
+      mode = "0440";
     };
   };
 }
