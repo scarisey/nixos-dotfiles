@@ -22,9 +22,16 @@
     #ghostty terminal
     ghostty.url = "github:ghostty-org/ghostty";
 
+    #Homelabe separate module
+    homelab-nix.url = "github:scarisey/homelab-nix";
+
     #Private vault - change for your own when fork
     private-vault = {
-      url = "git+ssh://git@github.com/scarisey/vault.git";
+      url = "github:scarisey/vault";
+    };
+
+    private-modules = {
+      url = "github:scarisey/private-nix-modules";
     };
   };
 

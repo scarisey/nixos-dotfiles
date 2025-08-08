@@ -6,8 +6,8 @@ in {
     settings = {
       MICROBIN_PUBLIC_PATH = "https://${domain}/";
       MICROBIN_QR = true;
-      MICROBIN_ENCRYPTION_CLIENT_SIDE = true;
       MICROBIN_DISABLE_UPDATE_CHECKING = true;
+      MICROBIN_ENCRYPTION_SERVER_SIDE = true;
       MICROBIN_LIST_SERVER = false;
       MICROBIN_HASH_IDS = true;
       MICROBIN_ENABLE_BURN_AFTER = true;
