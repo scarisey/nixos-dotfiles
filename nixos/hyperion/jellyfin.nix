@@ -4,6 +4,7 @@
 in {
   services.jellyfin = {
     enable = true;
+    group = "users";
   };
 
   services.nginx.virtualHosts.${domains.jellyfin} =
