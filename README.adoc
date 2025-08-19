@@ -45,3 +45,13 @@ Add public key to .sops.yaml then update secrets.yaml with a computer that can a
 ```
 sops updatekeys secrets.yaml
 ```
+
+### Access your private repos
+
+Define a PAT in github with at least read access to selected repos. Then set up `~/.config/nix/nix.conf` like so : 
+
+```
+#some content
+
+access-tokens = github.com=<the given PAT>
+```
