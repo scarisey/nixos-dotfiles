@@ -10,7 +10,9 @@ jobs:
       NIXPKGS_ALLOW_BROKEN: "1"
       NIXPKGS_ALLOW_UNFREE: "1"
       NIXPKGS_ALLOW_INSECURE: "1"
-      NIX_CONFIG: "experimental-features = nix-command flakes"
+      NIX_CONFIG: |
+        experimental-features = nix-command flakes
+        access-tokens = github.com=${{ secrets.GH_TOKEN }}
       GIT_AUTHOR_NAME: github-actions[bot]
       GIT_AUTHOR_EMAIL: github-actions[bot]@users.noreply.github.com
       GIT_COMMITTER_NAME: github-actions[bot]
@@ -34,14 +36,6 @@ jobs:
         with:
           name: scarisey-public
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-      - name: Setup SSH for private flake
-        run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_KEY" > ~/.ssh/id_ecdsa
-          chmod 600 ~/.ssh/id_ecdsa
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
-        env:
-          SSH_KEY: ${{ secrets.SSH_KEY }}
       - name: Prepare update branch
         run: |
           git remote remove origin
