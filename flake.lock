@@ -157,15 +157,16 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1754986515,
-        "narHash": "sha256-BvjAUq23DiOLSZNUPXgU3joayOBqIjTSnehFABkNfNc=",
+        "lastModified": 1756024848,
+        "narHash": "sha256-N/iglCTpA0kU0jcfCbFb0Ct7GBM461IpQcF0h9UVTQI=",
         "owner": "scarisey",
         "repo": "homelab-nix",
-        "rev": "f65e20f650d4498d73b2b86ee548acf4718d399f",
+        "rev": "0026b3b513027ad0ba9044dafa9ab35e3d0e826e",
         "type": "github"
       },
       "original": {
         "owner": "scarisey",
+        "ref": "feat/fail2ban",
         "repo": "homelab-nix",
         "type": "github"
       }
@@ -330,11 +331,11 @@
     },
     "private-vault": {
       "locked": {
-        "lastModified": 1754559447,
-        "narHash": "sha256-H0Mn5KKZVNspxLk5AfyKDVwnL0IpMmONNuNm4BYoW7g=",
+        "lastModified": 1756017727,
+        "narHash": "sha256-sV/f9DmPd+f/KM9Mr96bQQmG5sL8s/wrjOZsH77KRkQ=",
         "owner": "scarisey",
         "repo": "vault",
-        "rev": "68988bf0e11d48d93f7054cd03c260793158e13a",
+        "rev": "67eef05b56aefee5fc2a7e6ee6446424af47a7c4",
         "type": "github"
       },
       "original": {
