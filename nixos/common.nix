@@ -9,9 +9,9 @@
 }: {
   imports =
     builtins.attrValues outputs.nixosModules
+    ++ builtins.attrValues inputs.homelab-nix.nixosModules
     ++ [
       inputs.sops-nix.nixosModules.sops
-      inputs.homelab-nix.nixosModules.homelab
       inputs.private-modules.nixosModules.privateModules
     ];
   nixpkgs.config.allowUnfree = true;

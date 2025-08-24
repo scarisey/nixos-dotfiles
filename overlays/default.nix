@@ -13,4 +13,7 @@
     };
 
   modifications = final: prev: {};
+
+  homelab = inputs.homelab-nix.overlays.default;
+
 }

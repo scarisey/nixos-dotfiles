@@ -57,6 +57,12 @@
         };
         environmentFile = "/run/secrets/hyperion/postgresql/blocky_password";
       };
+      crowdsec = {
+        enrollKeyFile = null;
+        inspectServices = [
+          "sshd.service"
+        ];
+      };
     };
   };
 

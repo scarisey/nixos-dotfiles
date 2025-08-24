@@ -22,8 +22,12 @@
     #ghostty terminal
     ghostty.url = "github:ghostty-org/ghostty";
 
-    #Homelabe separate module
-    homelab-nix.url = "github:scarisey/homelab-nix";
+    #Homelab separate module
+    homelab-nix = {
+      url = "github:scarisey/homelab-nix/feat/crowdsec";
+      # inputs.crowdsec.inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     #Private vault - change for your own when fork
     private-vault = {
