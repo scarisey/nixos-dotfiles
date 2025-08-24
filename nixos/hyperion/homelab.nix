@@ -1,4 +1,4 @@
-{lib,...}: {
+{lib, ...}: {
   services.jellyfin.enable = true;
   scarisey.homelab = {
     enable = lib.mkForce true;
@@ -26,7 +26,7 @@
             proxyPass = "http://127.0.0.1:8080$request_uri";
           };
         };
-        lan = { };
+        lan = {};
       };
       grafana = {
         security = {
