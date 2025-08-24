@@ -91,8 +91,7 @@ in {
           ]
           ++ optionals (cfg.duckdb || cfg.all) [
             duckdb
-          ]
-          ;
+          ];
       }
       (mkIf (cfg.javascript || cfg.all) {
         home.activation.npmSetPrefix = hm.dag.entryAfter ["reloadSystemd"] "$DRY_RUN_CMD ${config.home.path}/bin/npm $VERBOSE_ARG set prefix ${npmGlobalDir}"; #then npm -g install should work

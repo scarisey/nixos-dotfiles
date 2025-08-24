@@ -71,13 +71,11 @@
   ];
   systemd.services.powertop-autotune = {
     description = "Powertop auto-tune at boot";
-    after = [ "multi-user.target" ];
-    wantedBy = [ "multi-user.target" ];
+    after = ["multi-user.target"];
+    wantedBy = ["multi-user.target"];
     serviceConfig = {
       Type = "oneshot";
       ExecStart = "${pkgs.powertop}/bin/powertop --auto-tune";
     };
   };
-
-
 }
