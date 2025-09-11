@@ -43,7 +43,7 @@
     shell = pkgs.zsh;
     isNormalUser = true;
     description = "sylvain";
-    extraGroups = ["networkmanager" "wheel" "docker" "libvirtd" "kvm"];
+    extraGroups = ["networkmanager" "wheel" "docker" "libvirtd" "kvm" "homelabMedia"];
     openssh.authorizedKeys.keys = [
       "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCGMOV7eUZHjaQAX3DasvWYR8I1lFe5mp3hjTq+Cc2okkfrTqW1mA5LLtkwvjpUgWixA3Y0OM9/+XTbYF80c1J8= lscarisey"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFfzo6os2jVd/4Q0BVk9sbn3GqQeyCddzCd4ZkgDmBLY galaxyS25"
