@@ -1,5 +1,9 @@
-{lib, ...}: {
+{config,lib, ...}: let
+  privateModulesGroup = config.scarisey.privateModules.group;
+in {
   services.jellyfin.enable = true;
+  users.users.jellyfin.extraGroups = [ privateModulesGroup ];
+  users.users.sylvain.extraGroups = lib.mkAfter [ privateModulesGroup ];
   scarisey.homelab = {
     enable = lib.mkForce true;
     settings = {

@@ -328,11 +328,11 @@
     },
     "private-modules": {
       "locked": {
-        "lastModified": 1756056329,
-        "narHash": "sha256-ScnnZ10niNW/JQqujmHPFRP/MZJAmkvN9t9auka9nkM=",
+        "lastModified": 1757838134,
+        "narHash": "sha256-QAd9ysnr0fYrSqN5GG0U/6rg1YDlGntmgT3xC8Cuu8s=",
         "owner": "scarisey",
         "repo": "private-nix-modules",
-        "rev": "759306f9baf92382702fc93b6831e72aff3bf117",
+        "rev": "46e7bbf4c7fe5218ab499e6066d2b3cf0228c700",
         "type": "github"
       },
       "original": {
