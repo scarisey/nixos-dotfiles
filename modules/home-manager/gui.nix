@@ -33,7 +33,7 @@ in {
             ghostty
             neovide
 
-            xclip
+            wl-clipboard
             pavucontrol
             flameshot
 
