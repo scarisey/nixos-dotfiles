@@ -14,8 +14,8 @@
   scarisey.gnome.enable = true;
 
   home.packages = with pkgs; [
-    protonvpn-gui
     picard
     windsurf
+    rawtherapee
   ];
 }
