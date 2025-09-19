@@ -25,6 +25,7 @@
     msgconvert
     glab-tools
     nh
+    rawtherapee
   ];
 
   home.file.".local/bin/firewall.sh" = {
