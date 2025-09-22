@@ -42,6 +42,12 @@
           comment = "Hello World!";
           public = "yes";
         };
+        shared = {
+          browseable = "yes";
+          path = "/data/shared";
+          "read only" = "no";
+          "guest ok" = "no";
+        };
       };
     };
   };
