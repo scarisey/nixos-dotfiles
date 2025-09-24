@@ -13,4 +13,5 @@
   cloud = import ./cloud.nix;
   kde = import ./kde.nix;
   gnome = import ./gnome.nix;
+  restic = import ./restic.nix;
 }
