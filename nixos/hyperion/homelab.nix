@@ -30,7 +30,12 @@ in {
             proxyPass = "http://127.0.0.1:8080$request_uri";
           };
         };
-        lan = {};
+        lan = {
+          immich = {
+            domain = "immich.${internalDomain}";
+            proxyPass = "https://127.0.0.1:${builtins.toString config.services.immich.port}";
+          };
+        };
       };
       grafana = {
         security = {
