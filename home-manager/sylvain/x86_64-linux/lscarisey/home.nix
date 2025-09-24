@@ -18,6 +18,7 @@
   };
   scarisey.cloud.all = true;
   scarisey.cloud.enable = true;
+  scarisey.restic.enable = true;
 
   home.packages = with pkgs; [
     nixgl.nixGLIntel
