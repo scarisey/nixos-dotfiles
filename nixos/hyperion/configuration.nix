@@ -8,10 +8,13 @@
     ../common.nix
     ./docker.nix
     ./homelab.nix
+    ./immich.nix
     ./microbin.nix
     ./samba.nix
     ./vpnServer.nix
   ];
+
+  nixpkgs.config.allowBroken = true; #FIXME for immich to build
 
   scarisey.privateModules.enable = true;
 
