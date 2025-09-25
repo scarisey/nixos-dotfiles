@@ -7,8 +7,8 @@ in {
       "render"
     ];
     services.immich = {
-      group = config.scarisey.homelab.group;
       enable = true;
+      group = config.scarisey.homelab.group;
       port = 2283;
       mediaLocation = "${mediaDir}";
     };

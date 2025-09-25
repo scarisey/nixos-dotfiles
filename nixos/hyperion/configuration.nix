@@ -8,6 +8,7 @@
     ../common.nix
     ./docker.nix
     ./homelab.nix
+    ./immich.nix
     ./microbin.nix
     ./samba.nix
     ./vpnServer.nix
