@@ -33,7 +33,7 @@ in {
         lan = {
           immich = {
             domain = "immich.${internalDomain}";
-            proxyPass = "https://127.0.0.1:${builtins.toString config.services.immich.port}";
+            proxyPass = "http://127.0.0.1:${builtins.toString config.services.immich.port}";
           };
         };
       };

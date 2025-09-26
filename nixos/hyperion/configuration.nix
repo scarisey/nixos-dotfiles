@@ -14,6 +14,8 @@
     ./vpnServer.nix
   ];
 
+  nixpkgs.config.allowBroken = true; #FIXME for immich to build
+
   scarisey.privateModules.enable = true;
 
   environment.systemPackages = with pkgs; [

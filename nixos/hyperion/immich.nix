@@ -1,6 +1,8 @@
-{config,...}:let
+{config,pkgs,...}:let
  mediaDir = "/data/disk1/Photos";
 in {
+    # nixpkgs.config.allowBroken = true; #FIXME for immich to build
+
     systemd.tmpfiles.rules = [ "d ${mediaDir} 0775 immich ${config.scarisey.homelab.group} - -" ];
     users.users.immich.extraGroups = [
       "video"
@@ -11,5 +13,11 @@ in {
       group = config.scarisey.homelab.group;
       port = 2283;
       mediaLocation = "${mediaDir}";
+      database = {
+        enable=true;
+        createDB=true;
+        enableVectors = false;
+        enableVectorChord = true;
+      };
     };
 }
