@@ -16,6 +16,7 @@
   home.packages = with pkgs; [
     picard
     windsurf
-    rawtherapee
+    darktable
+    copilotCli
   ];
 }
