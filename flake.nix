@@ -22,6 +22,9 @@
     #ghostty terminal
     ghostty.url = "github:ghostty-org/ghostty";
 
+    #copilot CLI from a flake of mine
+    copilot-cli.url = "github:scarisey/copilot-cli-flake";
+
     #Homelabe separate module
     homelab-nix.url = "github:scarisey/homelab-nix";
 

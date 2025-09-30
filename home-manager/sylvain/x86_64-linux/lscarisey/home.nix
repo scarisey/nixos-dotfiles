@@ -27,6 +27,7 @@
     glab-tools
     nh
     darktable
+    copilotCli
   ];
 
   home.file.".local/bin/firewall.sh" = {
