@@ -28,6 +28,7 @@
     nh
     darktable
     copilotCli
+    libreoffice
   ];
 
   home.file.".local/bin/firewall.sh" = {
