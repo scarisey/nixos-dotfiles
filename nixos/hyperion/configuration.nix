@@ -10,6 +10,7 @@
     ./homelab.nix
     ./immich.nix
     ./microbin.nix
+    ./restic.nix
     ./samba.nix
     ./vpnServer.nix
   ];
@@ -98,6 +99,14 @@
     };
     secrets."hyperion/wireguard/server/privateKey" = {
       mode = "0440";
+    };
+    secrets."restic/cronos-backups/repositoryPwd" = {
+      mode = "0400";
+      owner = "restic";
+    };
+    secrets."restic/cronos-backups/backblaze/envFile" = {
+      mode = "0400";
+      owner = "restic";
     };
   };
 }
