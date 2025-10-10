@@ -33,7 +33,7 @@ in {
             ghostty
             neovide
 
-            wl-clipboard
+            #            wl-clipboard #buggy with neovim
             pavucontrol
             flameshot
 
