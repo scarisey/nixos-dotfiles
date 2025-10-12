@@ -33,6 +33,9 @@ in {
             domain = "immich.${rootDomain}";
             proxyPass = "http://127.0.0.1:${builtins.toString config.services.immich.port}";
             proxyWebsockets = true;
+            extraConfig = ''
+              client_max_body_size 8196M;
+            '';
           };
         };
         lan = {};
