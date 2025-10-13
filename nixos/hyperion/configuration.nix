@@ -4,6 +4,7 @@
   ...
 }: {
   imports = [
+    ./audiobookshelf.nix
     ./hardware.nix
     ../common.nix
     ./docker.nix

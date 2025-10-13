@@ -1,9 +1,13 @@
-{config,lib, ...}: let
+{
+  config,
+  lib,
+  ...
+}: let
   privateModulesGroup = config.scarisey.privateModules.group;
 in {
   services.jellyfin.enable = true;
-  users.users.jellyfin.extraGroups = [ privateModulesGroup ];
-  users.users.sylvain.extraGroups = lib.mkAfter [ privateModulesGroup ];
+  users.users.jellyfin.extraGroups = [privateModulesGroup];
+  users.users.sylvain.extraGroups = lib.mkAfter [privateModulesGroup];
   scarisey.homelab = {
     enable = lib.mkForce true;
     settings = {
@@ -37,8 +41,16 @@ in {
               client_max_body_size 8196M;
             '';
           };
+          audiobookshelf = {
+            domain = "audiobookshelf.${rootDomain}";
+            proxyPass = "http://${config.services.audiobookshelf.host}:${builtins.toString config.services.audiobookshelf.port}";
+            proxyWebsockets = true;
+            extraConfig = ''
+              proxy_redirect http:// $scheme://;
+            '';
+          };
         };
-        lan = {};
+        lan = { };
       };
       grafana = {
         security = {
