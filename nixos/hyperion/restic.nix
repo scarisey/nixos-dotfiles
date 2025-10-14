@@ -14,7 +14,7 @@
     capabilities = "cap_dac_read_search=+ep";
   };
 
-  services.restic.backups.immich = {
+  services.restic.backups.cronos-backups = {
     repository = "s3:https://s3.eu-central-003.backblazeb2.com/cronos-backups";
     environmentFile = config.sops.secrets."restic/cronos-backups/backblaze/envFile".path;
     passwordFile = config.sops.secrets."restic/cronos-backups/repositoryPwd".path;
@@ -22,6 +22,7 @@
     user = "restic";
     paths = [
       "${config.services.immich.mediaLocation}"
+      "/var/lib/audiobookshelf/metadata/backups"
     ];
     timerConfig = {
       OnCalendar = "daily";
