@@ -1,57 +1,438 @@
-# NixOS dotfiles
+= NixOS Dotfiles
+:toc:
+:toc-placement!:
 
+Personal NixOS and Home Manager configuration with support for multiple machines and private secrets management.
 
-## Fresh install
+toc::[]
 
-```
+== Overview
+
+This is a flake-based NixOS configuration repository that manages both system-level (NixOS) and user-level (Home Manager) configurations. It supports multiple machines and includes custom modules, packages, and overlays.
+
+=== Key Features
+
+* **Flake-based configuration** - Modern Nix flakes for reproducible builds
+* **Multi-machine support** - Separate configurations for `hyperion` (server) and `titan` (workstation)
+* **Home Manager integration** - User environment management across NixOS and non-NixOS systems
+* **Secrets management** - Uses SOPS-nix for encrypted secrets
+* **Custom packages** - Custom derivations in `pkgs/` directory
+* **Modular architecture** - Reusable NixOS and Home Manager modules
+* **Binary caches** - Pre-configured Cachix caches for faster builds
+* **Multiple desktop environments** - Support for GNOME, KDE, i3/Xfce
+
+=== Repository Structure
+
+----
+.
+├── flake.nix              # Main flake configuration
+├── flake.lock             # Lock file for flake inputs
+├── nixos/                 # NixOS system configurations
+│   ├── common.nix         # Common NixOS settings
+│   ├── hyperion/          # Server configuration
+│   └── titan/             # Workstation configuration
+├── home-manager/          # Home Manager configurations
+│   └── sylvain/           # User configurations
+│       └── x86_64-linux/  # Per-host user configs
+├── modules/               # Custom modules
+│   ├── nixos/             # NixOS modules (boot, cloud, docker, etc.)
+│   └── home-manager/      # Home Manager modules (dev tools, shell, etc.)
+├── pkgs/                  # Custom package derivations
+├── overlays/              # Nixpkgs overlays
+├── lib/                   # Helper functions for flake
+├── templates/             # Nix templates (devshell, etc.)
+├── shell.nix              # Development shell
+└── nixpkgs.nix            # Nixpkgs configuration
+----
+
+== Quick Start
+
+=== Prerequisites
+
+* NixOS installed or Nix package manager on another Linux distribution
+* Git installed
+* (Optional) GitHub Personal Access Token for private repository access
+
+=== Fresh NixOS Installation
+
+[source,bash]
+----
+# Enter a shell with git available
 nix-shell -p git
+
+# Clone the repository
 git clone https://github.com/scarisey/nixos-dotfiles.git
 cd nixos-dotfiles
-nix-shell ##the shell.nix file will activate flake feature
-#the command below enables your following builds to benefit from caches
+
+# Activate flakes feature
+nix-shell
+
+# Enable trusted users for binary caches (replace 'sylvain' with your username)
 echo "trusted-users = root sylvain" | sudo tee -a /etc/nix/nix.conf && sudo pkill nix-daemon
-#for Nixos
+
+# Build and activate NixOS configuration (replace 'hostname' with your machine name)
 sudo nixos-rebuild switch --flake .#hostname
-#for Home manager
+
+# Build and activate Home Manager configuration
 nix run . -- switch --flake .
-#OR
+# OR if home-manager is already in PATH:
 home-manager switch --flake .
-```
+----
 
-## Default shell on other OS than Nixos
+=== Non-NixOS Systems
 
-```
+For Home Manager on other Linux distributions:
+
+[source,bash]
+----
+# Clone and enter the repository
+git clone https://github.com/scarisey/nixos-dotfiles.git
+cd nixos-dotfiles
+nix-shell
+
+# Build Home Manager configuration
+home-manager switch --flake .
+----
+
+To set zsh as the default shell:
+
+[source,bash]
+----
 echo "$HOME/.nix-profile/bin/zsh" | sudo tee -a /etc/shells
 chsh -s "$HOME/.nix-profile/bin/zsh"
-```
+----
 
-## SOPS
+== Forking This Repository
 
-### Private vault
+=== Step 1: Fork and Clone
 
-Sops files are stored in a private github repository, represented as the input `private-vault` in this flake.
+[source,bash]
+----
+# Fork on GitHub, then clone your fork
+git clone https://github.com/YOURUSERNAME/nixos-dotfiles.git
+cd nixos-dotfiles
+----
 
-### Generate key
+=== Step 2: Update Personal Information
 
-```
+Edit `flake.nix` and update:
+
+* **Private repositories**: Change `private-vault` and `private-modules` URLs to your own (or remove them)
+* **Cachix caches**: Update or remove the `scarisey-public.cachix.org` cache
+
+Edit `nixos/common.nix`:
+
+* **Username**: Replace `sylvain` with your username (lines 26, 42)
+* **Timezone**: Update `time.timeZone` (line 30)
+* **Locale**: Update `i18n.defaultLocale` (line 33)
+* **Keyboard layout**: Update `console.keyMap` (line 35)
+* **SSH keys**: Replace with your own SSH public keys (lines 47-50)
+
+Edit `home-manager/sylvain/common.nix`:
+
+* **Username and home directory**: Update to match your system (lines 25-26)
+
+=== Step 3: Create Your Machine Configuration
+
+==== For NixOS Systems
+
+[source,bash]
+----
+# Create a new host configuration directory
+mkdir -p nixos/mymachine
+
+# Generate hardware configuration
+sudo nixos-generate-config --show-hardware-config > nixos/mymachine/hardware.nix
+
+# Create configuration.nix
+cat > nixos/mymachine/configuration.nix << 'EOF'
+{ config, pkgs, ... }:
+{
+  imports = [
+    ../common.nix
+    ./hardware.nix
+  ];
+
+  networking.hostName = "mymachine";
+  
+  # Add machine-specific configuration here
+  
+  system.stateVersion = "25.05";
+}
+EOF
+----
+
+==== For Home Manager Configurations
+
+The repository uses a specific structure: `home-manager/USERNAME/SYSTEM/HOSTNAME/home.nix`
+
+[source,bash]
+----
+# Create your user's home configuration
+mkdir -p home-manager/youruser/x86_64-linux/mymachine
+
+cat > home-manager/youruser/x86_64-linux/mymachine/home.nix << 'EOF'
+{ config, pkgs, ... }:
+{
+  imports = [
+    ../../common.nix
+  ];
+
+  # Machine-specific home configuration
+  
+  home.stateVersion = "23.05";
+}
+EOF
+
+# Create common.nix for your user
+cat > home-manager/youruser/common.nix << 'EOF'
+{ outputs, inputs, config, ... }:
+{
+  imports = builtins.attrValues outputs.homeManagerModules
+    ++ [ inputs.sops-nix.homeManagerModules.sops ];
+
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnfreePredicate = _: true;
+  };
+
+  programs.home-manager.enable = true;
+  home.username = "youruser";
+  home.homeDirectory = "/home/youruser";
+
+  systemd.user.startServices = "sd-switch";
+
+  home.stateVersion = "23.05";
+}
+EOF
+----
+
+=== Step 4: Remove or Adapt Private Modules
+
+If you don't have private repositories, remove these imports from `flake.nix`:
+
+[source,nix]
+----
+# Remove from inputs:
+private-vault = { ... };
+private-modules = { ... };
+----
+
+And remove references in:
+
+* `nixos/common.nix`: Remove `inputs.private-modules.nixosModules.privateModules`
+* `home-manager/sylvain/common.nix`: Remove SOPS secrets configuration or adapt to your needs
+
+=== Step 5: Build and Test
+
+[source,bash]
+----
+# For NixOS
+sudo nixos-rebuild switch --flake .#mymachine
+
+# For Home Manager
+home-manager switch --flake .
+----
+
+== SOPS Secrets Management
+
+This configuration uses SOPS with age for managing secrets.
+
+=== Setting Up SOPS
+
+==== Generate Age Key
+
+[source,bash]
+----
 mkdir -p ~/.config/sops/age
 age-keygen -o ~/.config/sops/age/keys.txt
-```
+----
 
-### Update sops
+Keep your public key (starts with `age1...`) for the next step.
 
-Add public key to .sops.yaml then update secrets.yaml with a computer that can already decrypt secrets.
+==== Create Private Vault Repository
 
-```
+[source,bash]
+----
+# Create a new private repository on GitHub
+# Clone it locally
+git clone https://github.com/YOURUSERNAME/vault.git
+cd vault
+
+# Create .sops.yaml configuration
+cat > .sops.yaml << 'EOF'
+keys:
+  - &user1 age1your_public_key_here
+creation_rules:
+  - path_regex: secrets.yaml$
+    key_groups:
+      - age:
+          - *user1
+EOF
+
+# Create secrets file
+sops secrets.yaml
+----
+
+==== Update Flake to Use Your Vault
+
+In `flake.nix`, change:
+
+[source,nix]
+----
+private-vault = {
+  url = "github:YOURUSERNAME/vault";
+};
+----
+
+==== Update Secrets
+
+On a machine that can already decrypt:
+
+[source,bash]
+----
 sops updatekeys secrets.yaml
-```
+----
 
-### Access your private repos
+=== Accessing Private Repositories
 
-Define a PAT in github with at least read access to selected repos. Then set up `~/.config/nix/nix.conf` like so : 
+To allow Nix to access private GitHub repositories:
 
-```
-#some content
+1. Create a Personal Access Token (PAT) on GitHub with `repo` scope
+2. Configure Nix:
 
-access-tokens = github.com=<the given PAT>
-```
+[source,bash]
+----
+mkdir -p ~/.config/nix
+cat >> ~/.config/nix/nix.conf << EOF
+access-tokens = github.com=YOUR_PAT_HERE
+EOF
+----
+
+== Available Hosts
+
+Current configurations:
+
+* **hyperion**: Home server with Docker, Immich, Audiobookshelf, Samba, VPN server, etc.
+* **titan**: Desktop workstation with KDE/GNOME/i3
+
+== Custom Modules
+
+=== NixOS Modules (modules/nixos/)
+
+* `bootanimation.nix` - Plymouth boot animation
+* `cloud.nix` - Cloud provider settings
+* `distrobox.nix` - Distrobox container support
+* `docker.nix` - Docker and container runtime
+* `gnome.nix` - GNOME desktop environment
+* `i3.nix` - i3 window manager
+* `kde.nix` - KDE Plasma desktop
+* `network.nix` - Network configuration
+* `qemu.nix` - QEMU/KVM virtualization
+* `vpn.nix` - VPN client configuration
+
+=== Home Manager Modules (modules/home-manager/)
+
+* `android.nix` - Android development tools
+* `autoUpdate.nix` - Auto-update configuration
+* `devtools.nix` - Development tools and IDEs
+* `ghostty/` - Ghostty terminal configuration
+* `git/` - Git configuration
+* `gnome.nix` - GNOME user settings
+* `gui.nix` - GUI applications
+* `i3Xfce/` - i3 + Xfce configuration
+* `kde/` - KDE user settings
+* `myshell.nix` - Shell environment (zsh, starship)
+* `nvim/` - Neovim configuration
+* `quickemu.nix` - Quick VM management
+* `restic.nix` - Restic backup configuration
+* `ssh/` - SSH configuration
+* `tmux/` - Tmux configuration
+* `vim/` - Vim configuration
+
+== Custom Packages
+
+Custom packages are defined in `pkgs/`:
+
+* `adoc` - AsciiDoc tools
+* `antora` - Documentation site generator
+* `glab-tools` - GitLab CLI tools
+* `graalvm-21` - GraalVM JDK
+* `msgconvert` - Email converter
+* And more...
+
+== Templates
+
+The repository includes templates for common use cases:
+
+* `devshell` - Development shell for running non-Nix software
+
+Use with:
+
+[source,bash]
+----
+nix flake init -t github:scarisey/nixos-dotfiles#devshell
+----
+
+== Binary Caches
+
+Pre-configured binary caches for faster builds:
+
+* `ghostty.cachix.org` - Ghostty terminal builds
+* `nix-community.cachix.org` - Community packages
+* `scarisey-public.cachix.org` - Custom packages
+
+These are automatically configured when you use this flake.
+
+== Updating Dependencies
+
+[source,bash]
+----
+# Update all inputs
+nix flake update
+
+# Update specific input
+nix flake lock --update-input nixpkgs
+
+# Rebuild after update
+sudo nixos-rebuild switch --flake .#hostname
+home-manager switch --flake .
+----
+
+== Troubleshooting
+
+=== Build Fails Due to Missing Private Repositories
+
+If you see errors about `private-vault` or `private-modules`, you need to either:
+
+1. Create your own private repositories and update the URLs in `flake.nix`
+2. Remove the private inputs and all references to them
+
+=== SOPS Decryption Fails
+
+Ensure:
+
+* Age key exists at `~/.config/sops/age/keys.txt`
+* Your public key is added to `.sops.yaml` in the vault repository
+* Secrets file has been updated with `sops updatekeys secrets.yaml`
+
+=== Trusted User Not Working
+
+After adding trusted users, restart the Nix daemon:
+
+[source,bash]
+----
+sudo systemctl restart nix-daemon
+----
+
+== Contributing
+
+This is a personal dotfiles repository, but feel free to:
+
+* Open issues for questions
+* Submit PRs for bug fixes
+* Fork and adapt for your own use
+
+== License
+
+See LICENSE file for details.
