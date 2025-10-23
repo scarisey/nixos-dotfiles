@@ -1,0 +1,54 @@
+[alias]
+	lol = log --graph --decorate --pretty=oneline --abbrev-commit
+	lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+	last = log -1 --stat
+	cp = cherry-pick
+	co = checkout
+	cl = clone
+	ci = commit
+	st = status -sb
+	br = branch
+	unstage = reset HEAD --
+	dc = diff --cached
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %Cblue<%an>%Creset' --abbrev-commit --date=relative --all
+[color]
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto
+	ui = true
+	pager = true
+[push]
+	default = simple
+[pull]
+	rebase = true
+[core]
+	autocrlf = input
+	editor = nvim
+  excludesfile = ~/git/.gitignore
+  pager = less
+[credential]
+[merge]
+	tool = vimdiff
+[lfs "transfer"]
+  maxretries = 10
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[help]
+	autocorrect = prompt
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
+[init]
+	defaultBranch = main
+[ghq]
+	root = /home/sylvain/git
+[user]
+	name = Sylvain Carisey
+	email = sylvain@carisey.dev
+[include]
+  path = ./.private.gitconfig

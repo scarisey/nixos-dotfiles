@@ -1,0 +1,8 @@
+Include ~/.ssh/private_config
+
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ecdsa
+  IdentityFile ~/.ssh/id_ed25519
+  IdentitiesOnly yes

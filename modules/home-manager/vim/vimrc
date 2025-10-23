@@ -1,0 +1,58 @@
+set noswapfile
+syntax enable
+filetype plugin on
+set path+=**
+set wildmenu
+set mouse=a
+set hidden
+set encoding=utf8
+set fileencoding=utf8
+set ruler
+set incsearch
+set nohlsearch
+set splitright
+set splitbelow
+set number
+set norelativenumber
+setlocal spell spelllang=en_us
+set expandtab
+set smarttab
+set shiftwidth=4
+set softtabstop=4
+set clipboard=unnamedplus               " Copy paste between vim and everything else
+set guifont=MesloLGS\ NF
+set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»
+let g:netrw_liststyle= 3
+let g:netrw_banner = 0
+let g:netrw_browse_split = 4
+let g:netrw_winsize = 25
+set background=dark
+colorscheme everforest
+" add yaml stuffs
+au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+" JSON
+au! BufRead,BufNewFile *.json set filetype=json 
+augroup json_autocmd 
+  autocmd! 
+  autocmd FileType json set autoindent 
+  autocmd FileType json set formatoptions=tcq2l 
+  autocmd FileType json set textwidth=78 shiftwidth=2 
+  autocmd FileType json set softtabstop=2 tabstop=8 
+  autocmd FileType json set expandtab 
+augroup END
+" Themes
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'minimalist'
+let g:airline#extensions#tabline#enabled = 1
+" spell checking
+function! ToggleSpellLang()
+    " toggle between en and fr
+    if &spelllang =~# 'en'
+        :set spelllang=fr
+    else
+        :set spelllang=en
+    endif
+endfunction
+nnoremap <F7> :setlocal spell!<CR> " toggle spell on or off
+nnoremap <F8> :call ToggleSpellLang()<CR> " toggle language

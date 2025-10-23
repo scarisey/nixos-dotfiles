@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+#set -euxo pipefail
+set -euo pipefail
+
+SCRIPTNAME=$(basename "$0")
+RUNDIR=$(dirname "$(realpath $0)")
+CURRENTDIR=$(pwd)
+
+REVEALJS_CDN=https://cdn.jsdelivr.net/npm/reveal.js@4.1.2
+HIGHLIGHTJSDIR=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build
+ASCIIDOCTOR_OPTS_WITH_IMAGE="-a toc=left -a data-uri -a highlightjsdir=${HIGHLIGHTJSDIR} -r asciidoctor-diagram"
+ASCIIDOCTOR_OPTS_REVEALJS="-a revealjsdir=${REVEALJS_CDN} -a revealjs_slideNumber=h.v -a revealjs_mouseWheel=true -a revealjs_transition=fade"
+
+function _usage() {
+  echo "USAGE"
+  echo "${SCRIPTNAME} prez [args for revealjs]"
+  echo "${SCRIPTNAME} html [args for asciidoctor]"
+  echo "${SCRIPTNAME} pdf [args for asciidoctor]"
+  exit 1
+}
+
+function _checkCommand() {
+  case ${1:-''} in
+  prez) ;;
+  html) ;;
+  pdf) ;;
+  *)
+    _usage
+    exit 1
+    ;;
+  esac
+}
+
+function prez() {
+  asciidoctor-revealjs ${ASCIIDOCTOR_OPTS_REVEALJS} ${ASCIIDOCTOR_OPTS_WITH_IMAGE} $@
+}
+
+function html() {
+  asciidoctor ${ASCIIDOCTOR_OPTS_WITH_IMAGE} $@
+}
+
+function pdf() {
+  asciidoctor-pdf ${ASCIIDOCTOR_OPTS_WITH_IMAGE} $@
+}
+
+_checkCommand $@
+$@
