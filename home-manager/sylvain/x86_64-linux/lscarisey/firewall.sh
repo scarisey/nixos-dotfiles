@@ -30,16 +30,20 @@ function _checkCommand() {
 }
 
 function defaults {
-  ufw reset
-  ufw default allow outgoing
-  ufw default allow forward
-  ufw default deny incoming
-  ufw allow ssh
-  ufw limit ssh
-  ufw allow http
-  ufw allow https
-  ufw allow 53 #waydroid
-  ufw allow 67 #waydroid
+  sudo -v
+  sudo ufw reset
+  sudo ufw default allow outgoing
+  sudo ufw default allow forward
+  sudo ufw default deny incoming
+  sudo ufw allow ssh
+  sudo ufw limit ssh
+  sudo ufw allow http
+  sudo ufw allow https
+  sudo ufw allow 53 #waydroid
+  sudo ufw allow 67 #waydroid
+  sudo ufw allow 2049/tcp #nfs
+  sudo ufw allow nfs
+  sudo ufw enable
 }
 
 _requirements
