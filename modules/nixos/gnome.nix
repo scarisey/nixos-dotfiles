@@ -35,7 +35,6 @@ in {
       };
       programs.dconf.enable = true;
       environment.gnome.excludePackages = with pkgs; [
-        gnome-photos
         gnome-tour
         gedit
         cheese # webcam tool

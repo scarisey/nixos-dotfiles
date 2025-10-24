@@ -13,6 +13,11 @@
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "titan";
   services.xserver.videoDrivers = ["nvidia"];
+
+  #automount
+  services.udisks2.enable = true;
+  services.udev.packages = [pkgs.libgphoto2];
+
   scarisey = {
     network.enable = true;
     docker.enable = true;
