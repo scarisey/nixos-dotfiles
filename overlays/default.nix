@@ -8,6 +8,7 @@
     import ../pkgs {pkgs = final;}
     // {
       copilotCli = inputs.copilot-cli.packages.${final.system}.default;
+      darktable = unstable.darktable;
       ghostty = inputs.ghostty.packages.${final.system}.default;
       plex = unstable.plex;
       windsurf = unstable.windsurf;
