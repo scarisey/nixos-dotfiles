@@ -4,7 +4,10 @@
   pkgs,
   ...
 }: {
-  users.users.restic = {isNormalUser = true;};
+  users.users.restic = {
+    isNormalUser = true;
+    extraGroups = [ config.services.jellyfin.group config.scarisey.privateModules.group ];
+  };
 
   security.wrappers.restic = {
     source = "${pkgs.restic}/bin/restic";
@@ -23,6 +26,9 @@
     paths = [
       "${config.services.immich.mediaLocation}"
       "/var/lib/audiobookshelf/metadata/backups"
+      "${config.services.jellyfin.dataDir}"
+      "/data/disk1/Musique"
+      "/data/disk1/MusicImport"
     ];
     timerConfig = {
       OnCalendar = "daily";
