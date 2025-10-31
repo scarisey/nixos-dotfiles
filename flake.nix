@@ -51,6 +51,11 @@
     forUsers = lib'.forUsers ./home-manager;
     overlaysFlake = import ./overlays {inherit inputs;};
     overlays = builtins.attrValues overlaysFlake;
+    rev = builtins.tryEval self.rev;
+    flakeRev =
+      if rev.success
+      then rev.value
+      else "unknown"; #inspect current flake revision from the system
   in {
     inherit lib';
     lib = nixpkgs.lib;
@@ -79,7 +84,7 @@
     nixosConfigurations = forHosts (
       path:
         nixpkgs.lib.nixosSystem {
-          specialArgs = {inherit inputs outputs overlays;};
+          specialArgs = {inherit inputs outputs overlays flakeRev;};
           modules = [path];
         }
     );
