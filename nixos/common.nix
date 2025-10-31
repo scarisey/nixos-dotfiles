@@ -5,6 +5,7 @@
   inputs,
   outputs,
   overlays,
+  flakeRev,
   ...
 }: {
   imports =
@@ -73,6 +74,6 @@
       LogLevel = "VERBOSE";
     };
   };
-
+  environment.etc."flake-revision".text = flakeRev;
   system.stateVersion = "23.05";
 }
