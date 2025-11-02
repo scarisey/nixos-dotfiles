@@ -32,6 +32,11 @@
     fsType = "ext4";
   };
 
+  fileSystems."/data/disk2" = {
+    device = "/dev/disk/by-uuid/8f5fcf04-403e-4202-a124-1fea9e6eb83c";
+    fsType = "ext4";
+  };
+
   swapDevices = [];
 
   networking.useDHCP = lib.mkDefault true;
