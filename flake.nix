@@ -51,7 +51,7 @@
     forUsers = lib'.forUsers ./home-manager;
     overlaysFlake = import ./overlays {inherit inputs;};
     overlays = builtins.attrValues overlaysFlake;
-    rev = builtins.tryEval self.rev;
+    rev = builtins.tryEval (self.rev or self.dirtyRev or self.dirtyShortRev);
     flakeRev =
       if rev.success
       then rev.value
