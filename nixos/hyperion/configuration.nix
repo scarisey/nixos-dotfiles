@@ -11,7 +11,6 @@
     ./homelab.nix
     ./immich.nix
     ./microbin.nix
-    ./restic.nix
     ./samba.nix
     ./vpnServer.nix
   ];

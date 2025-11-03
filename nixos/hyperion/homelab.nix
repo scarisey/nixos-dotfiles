@@ -82,6 +82,24 @@ in {
         environmentFile = "/run/secrets/hyperion/postgresql/blocky_password";
       };
     };
+    backups = {
+      enable = true;
+      groups = [config.services.jellyfin.group];
+      repository = {
+        name = "cronos-backups";
+        url = "s3:https://s3.eu-central-003.backblazeb2.com/cronos-backups";
+        environmentFile = config.sops.secrets."restic/cronos-backups/backblaze/envFile".path;
+        passwordFile = config.sops.secrets."restic/cronos-backups/repositoryPwd".path;
+        locations = [
+          "${config.services.immich.mediaLocation}"
+          "${config.services.jellyfin.dataDir}"
+          "/var/lib/audiobookshelf/metadata/backups"
+          "/data/disk1/MusicImport/"
+          "/data/disk1/Musique/"
+          "${config.services.grafana.dataDir}"
+        ];
+      };
+    };
   };
 
   services.postgresql = {
