@@ -11,7 +11,7 @@ opt.titlestring = "%{substitute(getcwd(), $HOME, '~', '')}"
 opt.title = true
 opt.titlelen = 70
 
-vim.o.guifont = "MesloLGL Nerd Font Mono:h11"
+vim.o.guifont = "MesloLGL Nerd Font Mono:h10"
 vim.g.neovide_cursor_vfx_mode = "pixiedust"
 vim.g.neovide_hide_mouse_when_typing = false
 
