@@ -63,3 +63,23 @@ jobs:
             -H "X-GitHub-Api-Version: 2022-11-28" \
             /repos/scarisey/nixos-dotfiles/check-runs \
             -f "name=check_ok" -f "head_sha=$(git rev-parse HEAD)" -f "status=completed" -f "conclusion=success"
+      - name: Discord notification on failure
+        if: failure()
+        run: |
+          curl -H "Content-Type: application/json" \
+            -d "{
+              \"embeds\": [{
+                \"title\": \"❌ Nix Flake Check Failed\",
+                \"description\": \"Workflow failed on branch \`${{ github.ref_name }}\`\",
+                \"color\": 15158332,
+                \"fields\": [
+                  {\"name\": \"Repository\", \"value\": \"${{ github.repository }}\", \"inline\": true},
+                  {\"name\": \"Branch\", \"value\": \"${{ github.ref_name }}\", \"inline\": true},
+                  {\"name\": \"Commit\", \"value\": \"[\`${GITHUB_SHA:0:7}\`](${{ github.event.head_commit.url }})\", \"inline\": true},
+                  {\"name\": \"Author\", \"value\": \"${{ github.actor }}\", \"inline\": true},
+                  {\"name\": \"Workflow\", \"value\": \"[${{ github.workflow }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})\", \"inline\": false}
+                ],
+                \"timestamp\": \"$(date -u +%Y-%m-%dT%H:%M:%S.000Z)\"
+              }]
+            }" \
+            ${{ secrets.DISCORD_WEBHOOK_URL }}
