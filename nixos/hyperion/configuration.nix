@@ -60,8 +60,10 @@
     enable = true;
     flake = "github:scarisey/nixos-dotfiles";
     dates = "Fri *-*-* 04:00:00";
+    # upgrade = false; # coming nixos 25.11
     flags = [
       "--accept-flake-config"
+      "--no-write-lock-file" # until nixos 25.11
     ];
   };
   boot.loader.systemd-boot.enable = true;
