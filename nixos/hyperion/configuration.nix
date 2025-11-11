@@ -1,6 +1,7 @@
 {
   inputs,
   pkgs,
+  lib,
   ...
 }: {
   imports = [
@@ -66,6 +67,7 @@
       "--no-write-lock-file" # until nixos 25.11
     ];
   };
+  programs.nh.clean.enable = lib.mkForce false;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "hyperion";
