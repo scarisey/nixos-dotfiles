@@ -1,4 +1,5 @@
 {
+  config,
   inputs,
   pkgs,
   lib,
@@ -12,6 +13,7 @@
     ./homelab.nix
     ./immich.nix
     ./microbin.nix
+    ./paperless.nix
     ./samba.nix
     ./vpnServer.nix
   ];
@@ -103,6 +105,14 @@
     };
     secrets."hyperion/wireguard/server/privateKey" = {
       mode = "0440";
+    };
+    secrets."hyperion/paperless/passwordFile" = {
+      mode = "0440";
+      owner = config.services.paperless.user;
+    };
+    secrets."hyperion/paperless/environmentFile" = {
+      mode = "0440";
+      owner = config.services.paperless.user;
     };
     secrets."restic/cronos-backups/repositoryPwd" = {
       mode = "0400";
