@@ -77,8 +77,6 @@ in {
     };
 
     home.shellAliases = {
-      dotfiles = "git --git-dir $GITDIR/dotfiles/ --work-tree=$HOME";
-      initDotfiles = "f(){ mkdir -p $GITDIR || true; git clone --bare $1 $GITDIR/dotfiles; dotfiles config status.showUntrackedFiles no; }; f";
       vi = "nvim";
       ranger = "yazi";
       #bat
