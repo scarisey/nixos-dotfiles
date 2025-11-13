@@ -50,7 +50,7 @@ in {
             '';
           };
         };
-        lan = {};
+        lan = { };
       };
       grafana = {
         security = {
@@ -60,8 +60,8 @@ in {
         };
       };
       postgresql.postscripts = {
-        grafana = "/run/secrets/hyperion/postgresql/grafana_role_postscript";
-        blocky = "/run/secrets/hyperion/postgresql/blocky_grants";
+        grafana = config.sops.secrets."hyperion/postgresql/grafana_role_postscript".path;
+        blocky = config.sops.secrets."hyperion/postgresql/blocky_grants".path;
       };
       blocky = {
         clientLookup.clients.agmob = [
@@ -97,6 +97,7 @@ in {
           "/data/disk1/MusicImport/"
           "/data/disk1/Musique/"
           "${config.services.grafana.dataDir}"
+          "${config.services.postgresqlBackup.location}"
         ];
       };
     };
@@ -113,5 +114,11 @@ in {
       }
     ];
     ensureDatabases = ["sylvain"];
+  };
+
+  services.postgresqlBackup = {
+    enable=true;
+    backupAll=true;
+    startAt="*-*-* 23:00:00";
   };
 }
