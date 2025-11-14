@@ -109,6 +109,8 @@ in {
       retry = ''f(){while true;do "$@" && break;sleep 1;done};f'';
 
       ns = "f(){NIXPKGS_ALLOW_UNFREE=1 nix shell --impure --inputs-from github:scarisey/nixos-dotfiles/main nixpkgs#$1};f";
+
+      cocomit = ''copilot --allow-all-tools -p "git commit with a meaningful message using git conventional commit"'';
     };
 
     programs.yazi = {
