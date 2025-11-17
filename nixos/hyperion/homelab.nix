@@ -50,7 +50,7 @@ in {
             '';
           };
         };
-        lan = { };
+        lan = {};
       };
       grafana = {
         security = {
@@ -117,8 +117,8 @@ in {
   };
 
   services.postgresqlBackup = {
-    enable=true;
-    backupAll=true;
-    startAt="*-*-* 23:00:00";
+    enable = true;
+    backupAll = true;
+    startAt = "*-*-* 23:00:00";
   };
 }
