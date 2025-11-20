@@ -50,7 +50,12 @@ in {
             '';
           };
         };
-        lan = {};
+        lan = {
+          paperless = {
+            domain = "paperless.${internalDomain}";
+            proxyPass = "http://${config.services.paperless.address}:${builtins.toString config.services.paperless.port}";
+          };
+        };
       };
       grafana = {
         security = {
@@ -98,6 +103,8 @@ in {
           "/data/disk1/Musique/"
           "${config.services.grafana.dataDir}"
           "${config.services.postgresqlBackup.location}"
+          "${config.services.paperless.dataDir}"
+          "${config.services.paperless.mediaDir}"
         ];
       };
     };
