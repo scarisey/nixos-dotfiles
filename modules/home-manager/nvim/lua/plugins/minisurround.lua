@@ -1,1 +1,1 @@
-return { "echasnovski/mini.surround", enabled = false }
+return { "nvim-mini/mini.surround", enabled = false }
