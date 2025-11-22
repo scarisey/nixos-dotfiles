@@ -8,6 +8,7 @@ in {
   services.jellyfin.enable = true;
   users.users.jellyfin.extraGroups = [privateModulesGroup];
   users.users.sylvain.extraGroups = lib.mkAfter [privateModulesGroup];
+  networking.firewall = {allowedUDPPorts = [1900];}; #DLNA
   scarisey.homelab = {
     enable = lib.mkForce true;
     settings = {
