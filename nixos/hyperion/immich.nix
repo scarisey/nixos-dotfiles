@@ -14,6 +14,7 @@ in {
   ];
   services.immich = {
     enable = true;
+    package = pkgs.immich-unstable;
     group = config.scarisey.homelab.group;
     host = "0.0.0.0";
     port = 2283;
