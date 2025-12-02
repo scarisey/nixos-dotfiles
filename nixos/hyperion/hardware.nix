@@ -9,7 +9,7 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   boot.initrd.availableKernelModules = ["nvme" "ahci" "xhci_pci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci"];
-  boot.initrd.kernelModules = [ "amdgpu" ];
+  boot.initrd.kernelModules = ["amdgpu"];
   boot.kernelModules = ["wireguard"];
   boot.extraModulePackages =
     lib.optional (lib.versionOlder config.boot.kernelPackages.kernel.version "5.6")

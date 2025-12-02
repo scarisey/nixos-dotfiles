@@ -294,6 +294,22 @@
     },
     "nixpkgs_8": {
       "locked": {
+        "lastModified": 1764611609,
+        "narHash": "sha256-yU9BNcP0oadUKupw0UKmO9BKDOVIg9NStdJosEbXf8U=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "8c29968b3a942f2903f90797f9623737c215737c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_9": {
+      "locked": {
         "lastModified": 1763618868,
         "narHash": "sha256-v5afmLjn/uyD9EQuPBn7nZuaZVV9r+JerayK/4wvdWA=",
         "owner": "NixOS",
@@ -305,6 +321,24 @@
         "owner": "NixOS",
         "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "opencode": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_8"
+      },
+      "locked": {
+        "lastModified": 1764680905,
+        "narHash": "sha256-XyuxvjqO+tjcKJkJ5RhJJJ4kknIPQGg5BfJIB3HdqnI=",
+        "owner": "sst",
+        "repo": "opencode",
+        "rev": "67ab9dc4d049d6a1090cee9b51913e0c440a875f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sst",
+        "repo": "opencode",
         "type": "github"
       }
     },
@@ -347,6 +381,7 @@
         "homelab-nix": "homelab-nix",
         "nixpkgs": "nixpkgs_7",
         "nixpkgs-master": "nixpkgs-master",
+        "opencode": "opencode",
         "private-modules": "private-modules",
         "private-vault": "private-vault",
         "sops-nix": "sops-nix"
@@ -354,7 +389,7 @@
     },
     "sops-nix": {
       "inputs": {
-        "nixpkgs": "nixpkgs_8"
+        "nixpkgs": "nixpkgs_9"
       },
       "locked": {
         "lastModified": 1764021963,
