@@ -157,11 +157,11 @@
         "nixpkgs": "nixpkgs_6"
       },
       "locked": {
-        "lastModified": 1764583006,
-        "narHash": "sha256-Lh7P+OOxNwRzZscWbpZGoeoeBvc4fx1T1vAlUT88jzE=",
+        "lastModified": 1764671970,
+        "narHash": "sha256-pb28cIE/dos42awYRM1cvVsAbyiPsQLH4gh1nrE4yX8=",
         "owner": "scarisey",
         "repo": "homelab-nix",
-        "rev": "73f0660fdb0c228c488b406746451e20ecc316a9",
+        "rev": "35f01ca122ed5ee3d230dabe7f0ab0a51d361a85",
         "type": "github"
       },
       "original": {
