@@ -18,5 +18,6 @@
     windsurf
     darktable
     copilotCli
+    opencodeCli
   ];
 }

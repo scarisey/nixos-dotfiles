@@ -22,6 +22,9 @@
     #copilot CLI from a flake of mine
     copilot-cli.url = "github:scarisey/copilot-cli-flake";
 
+    #opencode CLI
+    opencode.url = "github:sst/opencode";
+
     #Homelabe separate module
     homelab-nix.url = "github:scarisey/homelab-nix";
 
