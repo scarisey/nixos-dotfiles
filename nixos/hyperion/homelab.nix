@@ -53,6 +53,10 @@ in {
         };
         lan = {};
       };
+      acme = {
+        dnsProvider = "cloudflare";
+        environmentFile = "${config.sops.secrets."hyperion/acme/cloudflare/environmentFile".path}";
+      };
       grafana = {
         security = {
           admin_user = "admin";

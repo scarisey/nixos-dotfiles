@@ -107,5 +107,9 @@
       mode = "0400";
       owner = "restic";
     };
+    secrets."hyperion/acme/cloudflare/environmentFile" = {
+      mode = "0400";
+      owner = "acme";
+    };
   };
 }
