@@ -26,7 +26,7 @@
     opencode.url = "github:sst/opencode";
 
     #Homelabe separate module
-    homelab-nix.url = "github:scarisey/homelab-nix/chore/update";
+    homelab-nix.url = "github:scarisey/homelab-nix";
 
     #Private vault - change for your own when fork
     private-vault = {
