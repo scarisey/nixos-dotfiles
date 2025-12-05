@@ -24,7 +24,7 @@ in {
         ffmpegthumbnailer #pictures preview in yazi
         unar #archive preview in yazi
 
-        thefuck
+        pay-respects
         peco #querying input
         fd #better find
         bat
@@ -45,7 +45,7 @@ in {
         ghq
         btop
         powertop
-        poppler_utils #pdf conversions
+        poppler-utils #pdf conversions
         imagemagick #image to pdf with convert cli
         ttygif
         gifsicle
@@ -124,7 +124,7 @@ in {
       enableCompletion = true;
       autosuggestion.enable = true;
       initContent = ''
-        eval $(thefuck --alias)
+        eval "$(pay-respects zsh)"
         export PAGER="nvimpager -p -- -c 'lua nvimpager.maps=false' "
         export MANPAGER="nvimpager -p -- -c 'lua nvimpager.maps=false' "
         source $HOME/.customzsh.rc &> /dev/null|| true

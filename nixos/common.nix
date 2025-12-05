@@ -56,9 +56,9 @@
     wget
     cachix
   ];
-  systemd.extraConfig = ''
-    DefaultTimeoutStopSec=30s
-  '';
+  systemd.settings.Manager = {
+    DefaultTimeoutStopSec="30s";
+  };
   programs.zsh.enable = true;
   programs.nh = {
     enable = true;

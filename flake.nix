@@ -3,12 +3,12 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
 
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
 
     # Home manager
-    home-manager.url = "github:nix-community/home-manager/release-25.05";
+    home-manager.url = "github:nix-community/home-manager/release-25.11";
 
     #For secrets encryption
     sops-nix.url = "github:Mic92/sops-nix";
@@ -26,7 +26,7 @@
     opencode.url = "github:sst/opencode";
 
     #Homelabe separate module
-    homelab-nix.url = "github:scarisey/homelab-nix";
+    homelab-nix.url = "github:scarisey/homelab-nix/chore/update";
 
     #Private vault - change for your own when fork
     private-vault = {

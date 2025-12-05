@@ -1,9 +1,9 @@
 {
   stdenv,
   fetchurl,
-  graalvmCEPackages,
+  graalvmPackages,
 }:
-graalvmCEPackages.buildGraalvm {
+graalvmPackages.buildGraalvm {
   useMusl = true;
   src = fetchurl {
     sha256 = "sha256-sEgGmqo6mbhPW5V7FizBgaMqQzDLw1QCdmNjxb52rkg=";
