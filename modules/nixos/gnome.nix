@@ -19,20 +19,13 @@ in {
   config =
     mkIf cfg.enable
     {
-      services.xserver = {
-        # Enable the X11 windowing system.
-        enable = true;
-        # Configure keymap in X11
-        xkb.layout = "fr";
-        xkb.variant = "azerty";
-        displayManager = {
+      services.displayManager = {
           gdm.enable = true;
           gdm.wayland = cfg.wayland;
         };
-        desktopManager = {
+      services.desktopManager = {
           gnome.enable = true;
         };
-      };
       programs.dconf.enable = true;
       environment.gnome.excludePackages = with pkgs; [
         gnome-tour
