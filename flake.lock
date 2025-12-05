@@ -166,7 +166,6 @@
       },
       "original": {
         "owner": "scarisey",
-        "ref": "chore/update",
         "repo": "homelab-nix",
         "type": "github"
       }
