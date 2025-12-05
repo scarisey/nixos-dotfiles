@@ -106,9 +106,9 @@ in {
       #git
       git-release-notes = ''git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h %s"'';
 
-      retry = ''f(){while true;do "$@" && break;sleep 1;done};f'';
+      retry = ''fun(){while true;do "$@" && break;sleep 1;done};fun'';
 
-      ns = "f(){NIXPKGS_ALLOW_UNFREE=1 nix shell --impure --inputs-from github:scarisey/nixos-dotfiles/main nixpkgs#$1};f";
+      ns = "fun(){NIXPKGS_ALLOW_UNFREE=1 nix shell --impure --inputs-from github:scarisey/nixos-dotfiles/main nixpkgs#$1};fun";
 
       cocommit = ''copilot --allow-all-tools -p "git commit with a meaningful message using git conventional commit"'';
     };
