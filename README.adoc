@@ -1,4 +1,4 @@
-= NixOS Dotfiles
+= NixOS and dotfiles
 :toc:
 :toc-placement!:
 
