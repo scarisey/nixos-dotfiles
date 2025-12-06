@@ -34,6 +34,7 @@ in {
         neovim
         nvimpager
         nil #  nix LSP
+        statix # nix linter
         ripgrep #recursive search fs for a regex
         neofetch
         pstree
