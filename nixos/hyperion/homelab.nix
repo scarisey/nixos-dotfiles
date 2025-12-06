@@ -53,6 +53,10 @@ in {
         };
         lan = {};
       };
+      geoip = {
+        maxmindAccountId = "1265441";
+        maxmindLicenseKeyFile = "${config.sops.secrets."hyperion/maxmind/license".path}";
+      };
       acme = {
         dnsProvider = "cloudflare";
         environmentFile = "${config.sops.secrets."hyperion/acme/cloudflare/environmentFile".path}";
