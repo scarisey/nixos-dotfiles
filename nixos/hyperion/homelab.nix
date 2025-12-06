@@ -54,7 +54,7 @@ in {
         lan = {};
       };
       geoip = {
-        maxmindAccountId = "1265441";
+        maxmindAccountId = 1265441;
         maxmindLicenseKeyFile = "${config.sops.secrets."hyperion/maxmind/license".path}";
       };
       acme = {

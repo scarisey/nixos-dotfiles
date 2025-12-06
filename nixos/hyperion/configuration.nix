@@ -111,5 +111,8 @@
       mode = "0400";
       owner = "acme";
     };
+    secrets."hyperion/maxmind/license" = {
+      mode = "0440";
+    };
   };
 }
