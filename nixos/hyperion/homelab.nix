@@ -46,9 +46,6 @@ in {
             domain = "audiobookshelf.${rootDomain}";
             proxyPass = "http://${config.services.audiobookshelf.host}:${builtins.toString config.services.audiobookshelf.port}";
             proxyWebsockets = true;
-            extraConfig = ''
-              proxy_redirect http:// $scheme://;
-            '';
           };
         };
         lan = {};
