@@ -57,7 +57,7 @@
     cachix
   ];
   systemd.settings.Manager = {
-    DefaultTimeoutStopSec="30s";
+    DefaultTimeoutStopSec = "30s";
   };
   programs.zsh.enable = true;
   programs.nh = {

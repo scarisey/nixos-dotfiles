@@ -20,12 +20,12 @@ in {
     mkIf cfg.enable
     {
       services.displayManager = {
-          gdm.enable = true;
-          gdm.wayland = cfg.wayland;
-        };
+        gdm.enable = true;
+        gdm.wayland = cfg.wayland;
+      };
       services.desktopManager = {
-          gnome.enable = true;
-        };
+        gnome.enable = true;
+      };
       programs.dconf.enable = true;
       environment.gnome.excludePackages = with pkgs; [
         gnome-tour

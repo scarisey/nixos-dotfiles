@@ -1,4 +1,5 @@
-{inputs, ...}: {
+{inputs, ...}:
+{
   additions = final: prev: let
     unstable = import inputs.nixpkgs-master {
       system = final.system;
@@ -18,3 +19,4 @@
 
   modifications = final: prev: {};
 }
+// {homelab-nix-overlay = inputs.homelab-nix.overlays.default;}
