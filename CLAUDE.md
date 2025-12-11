@@ -311,5 +311,5 @@ When helping with this repository:
 
 ---
 
-**Last Updated:** 2025-10-15  
+**Last Updated:** 2025-12-11  
 **Maintainer:** Sylvain Carisey (scarisey)
