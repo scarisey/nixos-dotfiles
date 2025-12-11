@@ -29,6 +29,7 @@ in {
         fd #better find
         bat
         eza
+        difftastic #diff highlighting many languages
         jq
         yq-go
         neovim
