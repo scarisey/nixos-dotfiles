@@ -105,7 +105,7 @@
       "model": {
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "${datasource}"
         },
         "description": "Non available RAM memory",
         "fieldConfig": {
@@ -643,7 +643,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "12.0.6"
+      "version": "12.3.0"
     },
     {
       "type": "datasource",
@@ -780,7 +780,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -815,7 +816,7 @@
         "textMode": "name",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.6",
+      "pluginVersion": "12.3.0",
       "targets": [
         {
           "datasource": {
@@ -851,7 +852,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -886,7 +888,7 @@
         "textMode": "name",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.6",
+      "pluginVersion": "12.3.0",
       "targets": [
         {
           "datasource": {
@@ -937,7 +939,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -972,7 +975,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.6",
+      "pluginVersion": "12.3.0",
       "targets": [
         {
           "datasource": {
@@ -1026,6 +1029,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -1041,7 +1045,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -1072,7 +1077,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.0.6",
+      "pluginVersion": "12.3.0",
       "targets": [
         {
           "datasource": {
@@ -1128,6 +1133,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -1142,7 +1148,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -1173,7 +1180,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.0.6",
+      "pluginVersion": "12.3.0",
       "targets": [
         {
           "datasource": {
@@ -1243,7 +1250,8 @@
       }
     }
   ],
-  "schemaVersion": 41,
+  "preload": false,
+  "schemaVersion": 42,
   "tags": [],
   "templating": {
     "list": [
