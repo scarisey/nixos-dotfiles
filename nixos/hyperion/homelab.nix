@@ -32,7 +32,7 @@ in {
           };
           microbin = {
             domain = "microbin.${rootDomain}";
-            proxyPass = "http://127.0.0.1:8080$request_uri";
+            proxyPass = "http://127.0.0.1:8050$request_uri";
           };
           immich = {
             domain = "immich.${rootDomain}";

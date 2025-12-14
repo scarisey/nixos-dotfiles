@@ -1,12 +1,11 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }: let
   mediaDir = "/data/disk1/Photos";
 in {
-  # nixpkgs.config.allowBroken = true; #FIXME for immich to build
-
   systemd.tmpfiles.rules = ["d ${mediaDir} 0775 immich ${config.scarisey.homelab.group} - -"];
   users.users.immich.extraGroups = [
     "video"
