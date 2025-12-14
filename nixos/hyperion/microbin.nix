@@ -15,6 +15,7 @@ in {
       MICROBIN_PRIVATE = true;
       MICROBIN_NO_LISTING = true;
       MICROBIN_WIDE = true;
+      MICROBIN_PORT = 8050;
     };
     passwordFile = "/run/secrets/hyperion/microbin/passwordFile";
   };
