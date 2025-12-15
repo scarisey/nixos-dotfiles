@@ -49,9 +49,11 @@ in {
         };
       }
       (mkIf cfg.nixgl.enable {
-        nixGL.packages = inputs.nixgl.packages;
-        nixGL.defaultWrapper = cfg.nixgl.defaultWrapper;
-        nixGL.installScripts = [cfg.nixgl.defaultWrapper];
+        targets.genericLinux.nixGL = {
+          packages = inputs.nixgl.packages;
+          defaultWrapper = cfg.nixgl.defaultWrapper;
+          installScripts = [cfg.nixgl.defaultWrapper];
+        };
       })
       (mkIf cfg.obs {
         home.packages = [(config.lib.nixGL.wrap pkgs.obs-studio)];
