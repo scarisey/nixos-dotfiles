@@ -98,6 +98,7 @@ in {
         passwordFile = config.sops.secrets."restic/cronos-backups/repositoryPwd".path;
         locations = [
           "${config.services.immich.mediaLocation}"
+          "/data/disk1/CameraRaw/"
           "${config.services.jellyfin.dataDir}"
           "/var/lib/audiobookshelf/metadata/backups"
           "/data/disk1/MusicImport/"
