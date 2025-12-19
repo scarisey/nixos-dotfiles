@@ -2,6 +2,7 @@
   inputs,
   pkgs,
   lib,
+  config,
   ...
 }: {
   imports = [
@@ -24,6 +25,10 @@
     smartmontools
   ];
   services.fail2ban.enable = true;
+  services.cachix-agent = {
+    enable = true;
+    credentialsFile = "${config.sops.secrets."hyperion/cachix/agent".path}";
+  };
 
   services.smartd = {
     enable = true;
@@ -113,6 +118,9 @@
     };
     secrets."hyperion/maxmind/license" = {
       mode = "0440";
+    };
+    secrets."hyperion/cachix/agent" = {
+      mode = "0400";
     };
   };
 }
