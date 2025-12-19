@@ -25,10 +25,6 @@
     smartmontools
   ];
   services.fail2ban.enable = true;
-  services.cachix-agent = {
-    enable = true;
-    credentialsFile = "${config.sops.secrets."hyperion/cachix/agent".path}";
-  };
 
   services.smartd = {
     enable = true;
@@ -57,15 +53,13 @@
     AllowHybridSleep=no
     AllowSuspendThenHibernate=no
   '';
-  system.autoUpgrade = {
+  scarisey.autoDeploy = {
     enable = true;
-    flake = "github:scarisey/nixos-dotfiles";
-    dates = "Fri *-*-* 04:00:00";
-    # upgrade = false; # coming nixos 25.11
-    flags = [
-      "--accept-flake-config"
-      "--no-write-lock-file" # until nixos 25.11
-    ];
+    repoUrl = "https://github.com/scarisey/nixos-dotfiles.git";
+    flakeBaseUrl = "github:scarisey/nixos-dotfiles";
+    interval = "*:0/2";
+    testTag = "test-deploy-hyperion";
+    switchTag = "deploy-hyperion";
   };
   programs.nh.clean.enable = lib.mkForce false;
   boot.loader.systemd-boot.enable = true;
@@ -112,15 +106,12 @@
       mode = "0400";
       owner = "restic";
     };
-    secrets."hyperion/acme/cloudflare/environmentFile" = {
+    secrets."hyperion/ionos/environmentFile" = {
       mode = "0400";
       owner = "acme";
     };
     secrets."hyperion/maxmind/license" = {
       mode = "0440";
-    };
-    secrets."hyperion/cachix/agent" = {
-      mode = "0400";
     };
   };
 }
