@@ -99,6 +99,10 @@ in {
       type = types.path;
       default = "/var/lib/auto-deployer";
     };
+
+    environmentFile = mkOption {
+      type = types.path;
+    };
   };
 
   config = mkIf cfg.enable {
@@ -110,6 +114,7 @@ in {
         Type = "oneshot";
         ExecStart = "${deployScript}/bin/deploy-tags";
         User = "root";
+        EnvironmentFile = cfg.environmentFile;
       };
     };
 

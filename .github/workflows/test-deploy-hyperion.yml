@@ -1,9 +1,6 @@
 name: "Deploy test to hyperion"
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - "main"
 
 jobs:
   test-deploy-hyperion:

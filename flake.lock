@@ -369,11 +369,11 @@
     },
     "private-vault": {
       "locked": {
-        "lastModified": 1766151186,
-        "narHash": "sha256-aW25ulMBIJk/ubPzVjyd1+MPCJSiQ2lai1XS1HqrDxU=",
+        "lastModified": 1766240306,
+        "narHash": "sha256-Msd7TtSo6IvX1+BS04gJyvhKxBABXgCmJhKBP7xLn5c=",
         "owner": "scarisey",
         "repo": "vault",
-        "rev": "75efb2cf6f6b5bbd0f252a35b06d51d2a1498699",
+        "rev": "4c8e9499f4e3f091e7cc25fa9f7fab05132a540e",
         "type": "github"
       },
       "original": {
