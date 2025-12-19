@@ -57,9 +57,10 @@
     enable = true;
     repoUrl = "https://github.com/scarisey/nixos-dotfiles.git";
     flakeBaseUrl = "github:scarisey/nixos-dotfiles";
-    interval = "*:0/2";
+    interval = "*:0/30";
     testTag = "test-deploy-hyperion";
     switchTag = "deploy-hyperion";
+    environmentFile = "${config.sops.secrets."hyperion/autoDeploy/environmentFile".path}";
   };
   programs.nh.clean.enable = lib.mkForce false;
   boot.loader.systemd-boot.enable = true;
@@ -111,6 +112,9 @@
       owner = "acme";
     };
     secrets."hyperion/maxmind/license" = {
+      mode = "0440";
+    };
+    secrets."hyperion/autoDeploy/environmentFile" = {
       mode = "0440";
     };
   };

@@ -8,9 +8,7 @@ with lib; let
   cfg = config.scarisey.autoDeploy;
 
   deployScript = pkgs.writeShellScriptBin "deploy-tags" ''
-    set -euo pipefail
-
-    PATH=${makeBinPath [pkgs.git pkgs.nixos-rebuild pkgs.nix pkgs.coreutils pkgs.gnugrep]}
+    PATH=${makeBinPath [pkgs.git pkgs.nixos-rebuild pkgs.nix pkgs.coreutils pkgs.gnugrep pkgs.systemd]}
     mkdir -p ${cfg.stateDir}
 
     # Helper function to get the current commit hash of a remote tag
@@ -99,6 +97,10 @@ in {
       type = types.path;
       default = "/var/lib/auto-deployer";
     };
+
+    environmentFile = mkOption {
+      type = types.path;
+    };
   };
 
   config = mkIf cfg.enable {
@@ -110,6 +112,7 @@ in {
         Type = "oneshot";
         ExecStart = "${deployScript}/bin/deploy-tags";
         User = "root";
+        EnvironmentFile = cfg.environmentFile;
       };
     };
 
