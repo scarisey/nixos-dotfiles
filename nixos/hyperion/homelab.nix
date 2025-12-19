@@ -55,8 +55,8 @@ in {
         maxmindLicenseKeyFile = "${config.sops.secrets."hyperion/maxmind/license".path}";
       };
       acme = {
-        dnsProvider = "cloudflare";
-        environmentFile = "${config.sops.secrets."hyperion/acme/cloudflare/environmentFile".path}";
+        dnsProvider = "ionos";
+        environmentFile = "${config.sops.secrets."hyperion/ionos/environmentFile".path}";
       };
       grafana = {
         security = {

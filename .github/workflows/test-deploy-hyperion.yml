@@ -1,0 +1,26 @@
+name: "Deploy test to hyperion"
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  test-deploy-hyperion:
+    runs-on: ubuntu-latest
+    env:
+      GIT_AUTHOR_NAME: github-actions[bot]
+      GIT_AUTHOR_EMAIL: github-actions[bot]@users.noreply.github.com
+      GIT_COMMITTER_NAME: github-actions[bot]
+      GIT_COMMITTER_EMAIL: github-actions[bot]@users.noreply.github.com
+    permissions:
+      contents: write
+    steps:
+      - name: Prepare remote
+        run: |
+          git remote remove origin
+          git remote add origin https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+      - name: Push tag
+        run: |
+          git tag --force -a "test-deploy-hyperion" -m "deploy(hyperion):test"
+          git push -f --tags
