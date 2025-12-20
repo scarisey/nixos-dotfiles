@@ -20,6 +20,18 @@
   nixpkgs.config.allowBroken = true; #FIXME for immich to build
 
   scarisey.privateModules.enable = true;
+  
+  system.autoUpgrade = {
+    enable = true;
+    flake = "github:scarisey/nixos-dotfiles/deploy/hyperion";
+    dates = "Fri *-*-* 04:00:00";
+    upgrade = false;
+    flags = [
+      "--accept-flake-config"
+      "--no-write-lock-file" # until nixos 25.11
+    ];
+  };
+
 
   environment.systemPackages = with pkgs; [
     smartmontools
@@ -53,14 +65,6 @@
     AllowHybridSleep=no
     AllowSuspendThenHibernate=no
   '';
-  scarisey.autoDeploy = {
-    enable = true;
-    repoUrl = "https://github.com/scarisey/nixos-dotfiles.git";
-    flakeBaseUrl = "github:scarisey/nixos-dotfiles";
-    interval = "*:0/2";
-    testTag = "test-deploy-hyperion";
-    switchTag = "deploy-hyperion";
-  };
   programs.nh.clean.enable = lib.mkForce false;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
