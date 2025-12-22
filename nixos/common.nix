@@ -62,8 +62,6 @@
   programs.zsh.enable = true;
   programs.nh = {
     enable = true;
-    clean.enable = true;
-    clean.extraArgs = "--keep-since 7d --keep 2";
     flake = "/home/sylvain/git/github.com/scarisey/nixos-dotfiles";
   };
   services.openssh = {
