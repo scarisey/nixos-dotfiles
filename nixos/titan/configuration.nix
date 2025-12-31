@@ -28,10 +28,10 @@
   hardware.graphics.enable = true;
   hardware.nvidia = {
     modesetting.enable = true;
-    powerManagement.enable = false;
+    powerManagement.enable = true;
     open = true;
     nvidiaSettings = true;
-    forceFullCompositionPipeline = true;
+    forceFullCompositionPipeline = false;
     package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
   xdg.portal.enable = true;
