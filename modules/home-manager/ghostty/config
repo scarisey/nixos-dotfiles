@@ -10,8 +10,13 @@ clipboard-read = allow
 clipboard-paste-protection = false
 window-decoration = true
 shell-integration = zsh
+quick-terminal-position = center
+quick-terminal-size = 75%,75%
+gtk-quick-terminal-layer = overlay
+quick-terminal-screen = mouse
 keybind= alt+digit_0=toggle_tab_overview
 keybind= ctrl+alt+j=goto_split:down
 keybind= ctrl+alt+h=goto_split:left
 keybind= ctrl+alt+l=goto_split:right
 keybind= ctrl+alt+k=goto_split:up
+keybind= global:ctrl+²=toggle_quick_terminal
