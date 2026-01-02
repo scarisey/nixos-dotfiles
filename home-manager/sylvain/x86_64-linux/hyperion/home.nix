@@ -8,6 +8,6 @@
   scarisey.autoUpdate = {
     enable = true;
     dates = "Fri *-*-* 04:30:00";
-    flake = "github:scarisey/nixos-dotfiles";
+    flake = "github:scarisey/nixos-dotfiles/deploy/hyperion";
   };
 }
