@@ -17,6 +17,7 @@
   #automount
   services.udisks2.enable = true;
   services.udev.packages = [pkgs.libgphoto2];
+  services.libinput.enable = true;
 
   scarisey = {
     network.enable = true;
@@ -48,6 +49,9 @@
   services.gvfs.enable = true; #for samba
   environment.systemPackages = with pkgs; [
     samba
+    libmtp # Base library for MTP
+    gphoto2 # Standard tool for Nikon/DSLR cameras
+    usbutils # Provides 'lsusb' to check if the camera is seen
   ];
   networking.firewall = {
     allowedTCPPorts = [139 145 5357];
