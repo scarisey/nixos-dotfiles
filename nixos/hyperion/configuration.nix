@@ -20,7 +20,7 @@
   nixpkgs.config.allowBroken = true; #FIXME for immich to build
 
   scarisey.privateModules.enable = true;
-  
+
   system.autoUpgrade = {
     enable = true;
     flake = "github:scarisey/nixos-dotfiles/deploy/hyperion";
@@ -31,7 +31,6 @@
       "--no-write-lock-file" # until nixos 25.11
     ];
   };
-
 
   environment.systemPackages = with pkgs; [
     smartmontools
