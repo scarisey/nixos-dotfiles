@@ -46,6 +46,7 @@ in {
 
         home.shellAliases = {
           nvd = "f(){neovide --frame none \${1:-$(pwd)} &> /dev/null &};f";
+          screencopy = "scrcpy -w -S -K  --new-display=1920x1080 -m1024 &";
         };
       }
       (mkIf cfg.nixgl.enable {
