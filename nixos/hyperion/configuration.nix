@@ -2,7 +2,6 @@
   inputs,
   pkgs,
   lib,
-  config,
   ...
 }: {
   imports = [
@@ -13,6 +12,7 @@
     ./homelab.nix
     ./immich.nix
     ./microbin.nix
+    ./nfs.nix
     ./samba.nix
     ./vpnServer.nix
   ];
