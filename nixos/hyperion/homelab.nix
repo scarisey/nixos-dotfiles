@@ -101,8 +101,8 @@ in {
           "/data/disk1/CameraRaw/"
           "${config.services.jellyfin.dataDir}"
           "/var/lib/audiobookshelf/metadata/backups"
-          "/data/disk1/MusicImport/"
-          "/data/disk1/Musique/"
+          "/data/disk2/MusicImport/"
+          "/data/disk2/Musique/"
           "${config.services.grafana.dataDir}"
           "${config.services.postgresqlBackup.location}"
         ];
