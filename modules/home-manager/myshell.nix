@@ -113,6 +113,10 @@ in {
       ns = "fun(){NIXPKGS_ALLOW_UNFREE=1 nix shell --impure --inputs-from github:scarisey/nixos-dotfiles/main nixpkgs#$1};fun";
 
       cocommit = ''copilot --allow-all-tools -p "git commit with a meaningful message using git conventional commit"'';
+
+      #nix
+      
+      nix-gc = ''nix-env --delete-generations 7d && nix-collect-garbage -d'';
     };
 
     programs.yazi = {
