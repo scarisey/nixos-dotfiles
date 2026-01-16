@@ -36,6 +36,10 @@
     private-modules = {
       url = "github:scarisey/private-nix-modules";
     };
+
+    pullix = {
+      url = "github:scarisey/pullix";
+    };
   };
 
   outputs = {
