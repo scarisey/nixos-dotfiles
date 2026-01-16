@@ -1,4 +1,4 @@
-{ pkgs,inputs, ... }: {
+{ pkgs,inputs,config, ... }: {
   imports = [
     ./hardware.nix
     ../common.nix
@@ -33,9 +33,16 @@
       repo = "scarisey/nixos-dotfiles";
       ref = "feat/vmProd";
     };
+    environmentFile = config.sops.secrets."vm/nix_config_env".path;
   };
 
   environment.systemPackages = with pkgs; [
     inputs.pullix.packages."x86_64-linux".pullix
   ];
+
+  sops = {
+    defaultSopsFile = "${inputs.private-vault}/secrets.yaml";
+    age.keyFile = "/home/sylvain/.config/sops/age/keys.txt";
+    secrets."vm/nix_config_env" = {};
+  };
 }

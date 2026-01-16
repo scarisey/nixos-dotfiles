@@ -403,11 +403,11 @@
     },
     "private-vault": {
       "locked": {
-        "lastModified": 1766578491,
-        "narHash": "sha256-2edhCN0o8YQ6zIMlf8qz4HpY6K0+7TSsOXH5bf3umUg=",
+        "lastModified": 1768566129,
+        "narHash": "sha256-EPe+7fEB6WYucXVVjsT1X7XO58KHOqwAOyHQ6T868YE=",
         "owner": "scarisey",
         "repo": "vault",
-        "rev": "db9709b3b1b0bc6ba9795dc6b8a5c99e706443db",
+        "rev": "e22e643a47e027a1a749658017cbccf9e7cb683e",
         "type": "github"
       },
       "original": {
@@ -423,11 +423,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1768559957,
-        "narHash": "sha256-jVUAp7lpLV3FQI6Q93eJ/JMxBQcPBcfQRNSmw3IeEsc=",
+        "lastModified": 1768566400,
+        "narHash": "sha256-WaX0g91NziARl8usAxxncwvrkH5iCdFQksRJweKXVtk=",
         "owner": "scarisey",
         "repo": "pullix",
-        "rev": "f3cd767c6367cd5a50e0766c67238c619726f6d2",
+        "rev": "526ef8b3081eb3c366bf130fd7252b5b6c418741",
         "type": "github"
       },
       "original": {
