@@ -51,6 +51,7 @@
     samba
     libmtp # Base library for MTP
     gphoto2 # Standard tool for Nikon/DSLR cameras
+    gphoto2fs #gphotofs <mountdir>
     usbutils # Provides 'lsusb' to check if the camera is seen
   ];
   networking.firewall = {
