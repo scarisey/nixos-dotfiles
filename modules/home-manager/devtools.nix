@@ -29,6 +29,7 @@ in {
     antora = mkEnableOption "Antora";
     android = mkEnableOption "Android";
     duckdb = mkEnableOption "DuckDB";
+    mistralVibe = mkEnableOption "Mistral Vibe CLI";
     snowflakeCli = mkEnableOption "Snowflake CLI";
     nixgl = {
       enable = mkEnableOption "Enable NixGL wrappers";
@@ -95,6 +96,9 @@ in {
           ]
           ++ optionals (cfg.snowflakeCli || cfg.all) [
             snowflakeCli
+          ]
+          ++ optionals (cfg.mistralVibe || cfg.all) [
+            mistralVibe
           ];
       }
       (mkIf (cfg.javascript || cfg.all) {
