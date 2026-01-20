@@ -303,16 +303,16 @@
     },
     "nixpkgs_7": {
       "locked": {
-        "lastModified": 1768395095,
-        "narHash": "sha256-ZhuYJbwbZT32QA95tSkXd9zXHcdZj90EzHpEXBMabaw=",
+        "lastModified": 1768305791,
+        "narHash": "sha256-AIdl6WAn9aymeaH/NvBj0H9qM+XuAuYbGMZaP0zcXAQ=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "13868c071cc73a5e9f610c47d7bb08e5da64fdd5",
+        "rev": "1412caf7bf9e660f2f962917c14b1ea1c3bc695e",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixpkgs-unstable",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -330,24 +330,6 @@
         "owner": "NixOS",
         "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "opencode": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_7"
-      },
-      "locked": {
-        "lastModified": 1768544272,
-        "narHash": "sha256-EaMBt+NO0d1GQ3UzQQY+B6NeZmVo82o/FuBsqF19OXs=",
-        "owner": "sst",
-        "repo": "opencode",
-        "rev": "0e9664d300929b9b4ec1be2377968d2240253fa3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "sst",
-        "repo": "opencode",
         "type": "github"
       }
     },
@@ -390,10 +372,28 @@
         "homelab-nix": "homelab-nix",
         "nixpkgs": "nixpkgs_6",
         "nixpkgs-master": "nixpkgs-master",
-        "opencode": "opencode",
         "private-modules": "private-modules",
         "private-vault": "private-vault",
+        "snowflake-cli": "snowflake-cli",
         "sops-nix": "sops-nix"
+      }
+    },
+    "snowflake-cli": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_7"
+      },
+      "locked": {
+        "lastModified": 1768900980,
+        "narHash": "sha256-pLyNJGdFGlMybCqStmZkBPocm76wUiQaVoOaa3vQXkY=",
+        "owner": "scarisey",
+        "repo": "snowflake-cli-flake",
+        "rev": "1f72186b23c306dd1c001319576cdebe51f87d96",
+        "type": "github"
+      },
+      "original": {
+        "owner": "scarisey",
+        "repo": "snowflake-cli-flake",
+        "type": "github"
       }
     },
     "sops-nix": {
