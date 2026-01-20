@@ -24,7 +24,7 @@
 
     #copilot CLI from a flake of mine
     copilot-cli.url = "github:scarisey/copilot-cli-flake";
-    
+
     #snowflake CLI from a flake of mine
     snowflake-cli.url = "github:scarisey/snowflake-cli-flake";
 
