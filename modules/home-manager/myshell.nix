@@ -115,7 +115,7 @@ in {
       cocommit = ''copilot --allow-all-tools -p "git commit with a meaningful message using git conventional commit"'';
 
       #nix
-      
+
       nix-gc = ''nix-env --delete-generations 7d && nix-collect-garbage -d'';
     };
 
