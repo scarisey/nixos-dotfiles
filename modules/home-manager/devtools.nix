@@ -29,6 +29,7 @@ in {
     antora = mkEnableOption "Antora";
     android = mkEnableOption "Android";
     duckdb = mkEnableOption "DuckDB";
+    snowflakeCli = mkEnableOption "Snowflake CLI";
     nixgl = {
       enable = mkEnableOption "Enable NixGL wrappers";
       defaultWrapper = mkOption {
@@ -91,6 +92,9 @@ in {
           ]
           ++ optionals (cfg.duckdb || cfg.all) [
             duckdb
+          ]
+          ++ optionals (cfg.snowflakeCli || cfg.all) [
+            snowflakeCli
           ];
       }
       (mkIf (cfg.javascript || cfg.all) {
