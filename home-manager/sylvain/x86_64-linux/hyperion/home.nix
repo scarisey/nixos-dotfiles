@@ -10,4 +10,9 @@
     dates = "Fri *-*-* 04:30:00";
     flake = "github:scarisey/nixos-dotfiles/deploy/hyperion";
   };
+  scarisey.restic = {
+    enable = true;
+    all = false;
+    hddBackup1 = true;
+  };
 }

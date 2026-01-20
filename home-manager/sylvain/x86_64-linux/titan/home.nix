@@ -12,6 +12,10 @@
   scarisey.devtools.intellij = true;
   scarisey.devtools.android = true;
   scarisey.gnome.enable = true;
+  scarisey.restic = {
+    enable = true;
+    all = true;
+  };
 
   home.packages = with pkgs; [
     picard
