@@ -10,7 +10,7 @@
     // {
       copilotCli = inputs.copilot-cli.packages.${final.system}.default;
       snowflakeCli = inputs.snowflake-cli.packages.${final.system}.default;
-      mistral-vibe = inputs.mistral-vibe.packages.${final.system}.default;
+      mistralVibe = inputs.mistral-vibe.packages.${final.system}.default;
       darktable = unstable.darktable;
       immich-unstable = unstable.immich;
       ghostty = inputs.ghostty.packages.${final.system}.default;
