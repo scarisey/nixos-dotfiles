@@ -7,12 +7,16 @@ SCRIPTNAME=$(basename "$0")
 function _usage() {
   echo "USAGE"
   echo "${SCRIPTNAME} fetch_all [group_id]"
+  echo "${SCRIPTNAME} filter_project [group_id] [branch_name]"
+  echo "${SCRIPTNAME} delete_branch [project_id] [branch_name]"
   exit 1
 }
 
 function _checkCommand() {
   case ${1:-''} in
   fetch_all) ;;
+  filter_project) ;;
+  delete_branch) ;;
   *)
     _usage
     exit 1
@@ -26,6 +30,7 @@ function _checkArg() {
     exit 1
   fi
 }
+export -f _checkArg
 
 function fetch_all() {
   _checkArg $1
@@ -34,6 +39,35 @@ function fetch_all() {
   glab api groups/$1/projects -X GET -f simple=true -f include_subgroups=true -f per_page=100 --paginate >$projects
   cat $projects | jq -r '.[]|.ssh_url_to_repo' >$remotes
   parallel ghq get {} <$remotes
+}
+
+function _filter_project() {
+  _checkArg $1
+  _checkArg $2
+  local project=$1
+  local branch=$(echo -n $2|jq -sRr @uri) #escape input for URI compliance
+  if glab api "projects/$(echo ${project} | sed 's/\//%2F/g')/repository/branches/${branch}" &>/dev/null; then
+    echo "$project"
+  fi
+}
+export -f _filter_project
+
+function filter_project() {
+  _checkArg $1
+  _checkArg $2
+  projects_file=$(mktemp)
+  groupId=$1
+  branch=$2
+  glab api groups/$1/projects -X GET -f simple=true -f include_subgroups=true -f per_page=100 --paginate | jq -r '.[] | .id' > $projects_file
+  parallel _filter_project {} $branch <$projects_file
+}
+
+function delete_branch(){
+  _checkArg $1
+  _checkArg $2
+  local projectId=$1
+  local branch=$(echo -n $2|jq -sRr @uri) #escape input for URI compliance
+  glab api -X DELETE --silent "/projects/$projectId/repository/branches/$branch"
 }
 
 _checkCommand $@
