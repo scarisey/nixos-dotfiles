@@ -101,6 +101,9 @@ in {
             mistralVibe
           ];
       }
+      (mkIf cfg.enable {
+        home.file.".claude/CLAUDE.md".source = ./llm/CLAUDE.md;
+      })
       (mkIf (cfg.javascript || cfg.all) {
         home.activation.npmSetPrefix = hm.dag.entryAfter ["reloadSystemd"] "$DRY_RUN_CMD ${config.home.path}/bin/npm $VERBOSE_ARG set prefix ${npmGlobalDir}"; #then npm -g install should work
       })
