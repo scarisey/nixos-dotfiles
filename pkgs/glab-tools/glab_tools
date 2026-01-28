@@ -9,6 +9,7 @@ function _usage() {
   echo "${SCRIPTNAME} fetch_all [group_id]"
   echo "${SCRIPTNAME} filter_project [group_id] [branch_name]"
   echo "${SCRIPTNAME} delete_branch [project_id] [branch_name]"
+  echo "${SCRIPTNAME} merge_mr [project_id] [branch_name]"
   exit 1
 }
 
@@ -17,6 +18,7 @@ function _checkCommand() {
   fetch_all) ;;
   filter_project) ;;
   delete_branch) ;;
+  merge_mr) ;;
   *)
     _usage
     exit 1
@@ -69,6 +71,15 @@ function delete_branch(){
   local branch=$(echo -n $2|jq -sRr @uri) #escape input for URI compliance
   glab api -X DELETE --silent "/projects/$projectId/repository/branches/$branch"
 }
+
+function merge_mr(){
+  _checkArg $1
+  _checkArg $2
+  local projectId=$1
+  local mrId=$2
+  glab api -X PUT --silent "/projects/${projectId}/merge_requests/${mrId}/merge"
+}
+
 
 _checkCommand $@
 $@
