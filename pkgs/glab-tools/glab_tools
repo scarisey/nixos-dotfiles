@@ -10,6 +10,7 @@ function _usage() {
   echo "${SCRIPTNAME} filter_project [group_id] [branch_name]"
   echo "${SCRIPTNAME} delete_branch [project_id] [branch_name]"
   echo "${SCRIPTNAME} merge_mr [project_id] [branch_name]"
+  echo "${SCRIPTNAME} list_all_mr_from_group [group_id] [target_branch]"
   exit 1
 }
 
@@ -19,6 +20,7 @@ function _checkCommand() {
   filter_project) ;;
   delete_branch) ;;
   merge_mr) ;;
+  list_all_mr_from_group) ;;
   *)
     _usage
     exit 1
@@ -79,7 +81,15 @@ function merge_mr(){
   local mrId=$2
   glab api -X PUT --silent "/projects/${projectId}/merge_requests/${mrId}/merge"
 }
+export -f merge_mr
 
+function list_all_mr_from_group(){
+  _checkArg $1
+  _checkArg $2
+  local groupId=$1
+  local targetBranch=$2
+  glab mr list --target-branch=$targetBranch --group=$groupId --output=json|jq -r '.[]|"\(.project_id);\(.iid)"'
+}
 
 _checkCommand $@
 $@
