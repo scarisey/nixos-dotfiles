@@ -23,7 +23,7 @@
 
   system.autoUpgrade = {
     enable = true;
-    flake = "github:scarisey/nixos-dotfiles/deploy/hyperion";
+    flake = "github:scarisey/nixos-dotfiles";
     dates = "Fri *-*-* 04:00:00";
     upgrade = false;
     flags = [
