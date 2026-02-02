@@ -1,4 +1,4 @@
-{ pkgs,inputs, ... }: {
+{config, pkgs,inputs, ... }: {
   imports = [
     ./hardware.nix
     ../common.nix
@@ -33,9 +33,19 @@
       repo = "scarisey/nixos-dotfiles";
       ref = "feat/vmProd";
     };
+    privateKey = {
+      path = config.sops.secrets."vm/ssh_private_key".path;
+      passphrase_path = config.sops.secrets."vm/ssh_password".path;
+    };
   };
 
   environment.systemPackages = with pkgs; [
     inputs.pullix.packages."x86_64-linux".pullix
   ];
+  sops = {
+    defaultSopsFile = "${inputs.private-vault}/secrets.yaml";
+    age.keyFile = "/home/sylvain/.config/sops/age/keys.txt";
+    secrets."vm/ssh_private_key" = {};
+    secrets."vm/ssh_password" = {};
+  };
 }
