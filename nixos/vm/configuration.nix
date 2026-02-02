@@ -31,7 +31,7 @@
     flakeProdRepo = {
       type = "GitHub";
       repo = "scarisey/nixos-dotfiles";
-      ref = "feat/vm";
+      ref = "feat/vmProd";
     };
   };
 
