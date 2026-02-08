@@ -19,6 +19,7 @@ in {
   config =
     mkIf cfg.enable
     {
+      services.xserver.xkb.layout = config.console.keyMap;
       services.displayManager = {
         gdm.enable = true;
         gdm.wayland = cfg.wayland;
