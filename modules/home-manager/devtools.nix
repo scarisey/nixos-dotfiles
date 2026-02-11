@@ -59,6 +59,8 @@ in {
             glab
             #made by cachix templates for dev environments
             devenv
+            #markdown linter
+            rumdl
           ]
           ++ optionals (cfg.jvm || cfg.all) [
             jdk
