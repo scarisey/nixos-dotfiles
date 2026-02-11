@@ -15,6 +15,7 @@ in {
     all = mkEnableOption "All tools installed (no IDE)";
     intellij = mkEnableOption "Include Intellij Toolbox";
     vscode = mkEnableOption "Include VSCode";
+    zed = mkEnableOption "Include Zed";
     jvm = mkEnableOption "JVM dev tools";
     jdkPkg = mkOption {
       type = lib.types.package;
@@ -83,6 +84,10 @@ in {
           ++ optionals (cfg.vscode) [
             (config.lib.nixGL.wrap vscode-fhs)
             sqlfluff
+          ]
+          ++ optionals (cfg.zed) [
+            (config.lib.nixGL.wrap vscode-fhs)
+            zed-editor
           ]
           ++ optionals (cfg.go || cfg.all) [
             go

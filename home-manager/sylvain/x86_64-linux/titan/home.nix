@@ -10,6 +10,7 @@
   scarisey.devtools.all = true;
   scarisey.devtools.vscode = true;
   scarisey.devtools.intellij = true;
+  scarisey.devtools.zed = true;
   scarisey.devtools.android = true;
   scarisey.gnome.enable = true;
   scarisey.restic = {
