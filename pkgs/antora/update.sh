@@ -17,6 +17,7 @@ bsdtar -x -f "$(jq -r .filename source.json)"
 pushd package
 npm i '@sntke/antora-mermaid-extension'
 npm i '@antora/lunr-extension'
+npm i 'asciidoctor-kroki'
 npm install --omit=optional
 popd
 

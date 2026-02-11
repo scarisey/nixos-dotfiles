@@ -1,4 +1,5 @@
 {
+  pkgs,
   outputs,
   inputs,
   config,
@@ -24,6 +25,16 @@
   programs.home-manager.enable = true;
   home.username = "sylvain";
   home.homeDirectory = "/home/sylvain";
+
+  home.sessionVariables.NIX_PATH = "nixpkgs=${inputs.nixpkgs}:\${NIX_PATH:+:\$NIX_PATH}";
+  nix = {
+    settings = {
+      experimental-features = ["nix-command" "flakes"];
+      warn-dirty = false;
+    };
+    registry.nixpkgs.flake = inputs.nixpkgs;
+    package = pkgs.nix;
+  };
 
   systemd.user.startServices = "sd-switch";
 

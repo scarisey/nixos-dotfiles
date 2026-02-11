@@ -31,20 +31,21 @@ in {
     hddBackup1 = mkEnableOption "Command for hdd backup 1";
   };
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      restic
-    ]
-    ++ optionals cfg.hddBackup1 [
+    home.packages = with pkgs;
+      [
+        restic
+      ]
+      ++ optionals cfg.hddBackup1 [
         resticHdd1
-    ]
-    ++ optionals cfg.all [
+      ]
+      ++ optionals cfg.all [
         resticCronos
         resticProton
-    ];
+      ];
 
     sops.secrets."restic/hdd-backup-1/repositoryPwd" = mkIf (cfg.all || cfg.hddBackup1) {};
     sops.secrets."restic/protonDrive" = mkIf cfg.all {};
     sops.secrets."restic/cronos-backups/repositoryPwd" = mkIf cfg.all {};
-    sops.secrets."restic/cronos-backups/backblaze/envFile" =  mkIf cfg.all {};
+    sops.secrets."restic/cronos-backups/backblaze/envFile" = mkIf cfg.all {};
   };
 }
