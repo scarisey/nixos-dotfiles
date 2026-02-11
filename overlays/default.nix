@@ -16,6 +16,7 @@
       ghostty = inputs.ghostty.packages.${final.system}.default;
       plex = unstable.plex;
       windsurf = unstable.windsurf;
+      zed-editor = unstable.zed-editor;
     };
 
   modifications = final: prev: {};
