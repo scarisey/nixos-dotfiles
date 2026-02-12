@@ -62,6 +62,8 @@ in {
             devenv
             #markdown linter
             rumdl
+            #Nix LSP
+            nixd
           ]
           ++ optionals (cfg.jvm || cfg.all) [
             jdk
