@@ -103,9 +103,6 @@ in {
           ++ optionals (cfg.duckdb || cfg.all) [
             duckdb
           ]
-          ++ optionals (cfg.snowflakeCli || cfg.all) [
-            snowflakeCli
-          ]
           ++ optionals (cfg.mistralVibe || cfg.all) [
             mistralVibe
           ];
