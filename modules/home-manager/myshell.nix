@@ -174,7 +174,7 @@ in {
       nix-direnv.enable = true;
       enableZshIntegration = true;
       config = {
-        hide_env_diff = true;
+        hide_env_diff = false;
       };
     };
     programs.tmux = {
