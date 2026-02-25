@@ -11,6 +11,13 @@ with lib; let
     export RESTIC_PASSWORD_FILE="${config.sops.secrets."restic/hdd-backup-1/repositoryPwd".path}"
     ${pkgs.restic}/bin/restic "$@"
   '';
+  mountProton = pkgs.writeShellScriptBin "mount-proton" ''
+    if [ "$#" -ne 2 ];then
+      echo "mount-proton [2fa code] [mount point]"
+    fi
+    ${pkgs.rclone}/bin/rclone lsd proton: --protondrive-2fa=$1
+    ${pkgs.rclone}/bin/rclone mount proton: $2
+  '';
   resticProton = pkgs.writeShellScriptBin "restic-proton" ''
     export RESTIC_REPOSITORY="/home/sylvain/backupsRestic/"
     export RESTIC_PASSWORD_FILE="${config.sops.secrets."restic/protonDrive".path}"
@@ -41,6 +48,7 @@ in {
       ++ optionals cfg.all [
         resticCronos
         resticProton
+        mountProton
       ];
 
     sops.secrets."restic/hdd-backup-1/repositoryPwd" = mkIf (cfg.all || cfg.hddBackup1) {};
