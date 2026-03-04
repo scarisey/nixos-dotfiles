@@ -2,6 +2,7 @@
   inputs,
   pkgs,
   lib,
+  config,
   ...
 }: {
   imports = [
@@ -15,21 +16,29 @@
     ./nfs.nix
     ./samba.nix
     ./vpnServer.nix
+    inputs.pullix.nixosModules.default
   ];
 
   nixpkgs.config.allowBroken = true; #FIXME for immich to build
 
   scarisey.privateModules.enable = true;
 
-  system.autoUpgrade = {
+  services.pullix = {
     enable = true;
-    flake = "github:scarisey/nixos-dotfiles";
-    dates = "Fri *-*-* 04:00:00";
-    upgrade = false;
-    flags = [
-      "--accept-flake-config"
-      "--no-write-lock-file" # until nixos 25.11
-    ];
+    hostname = "hyperion";
+    pollIntervalSecs = 60;
+    flakeRepo = {
+      type = "GitHub";
+      repo = "scarisey/nixos-dotfiles";
+      prodSpec = {
+        ref = "hyperion/prod";
+      };
+      testSpec = {
+        ref = "hyperion/test";
+      };
+    };
+    environmentFile = config.sops.secrets."hyperion/nix_config_pullix".path;
+    verbose_logs = true;
   };
 
   environment.systemPackages = with pkgs; [
@@ -114,6 +123,9 @@
       owner = "acme";
     };
     secrets."hyperion/maxmind/license" = {
+      mode = "0440";
+    };
+    secrets."hyperion/nix_config_pullix" = {
       mode = "0440";
     };
   };

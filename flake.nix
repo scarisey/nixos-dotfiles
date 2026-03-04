@@ -31,6 +31,9 @@
     #Homelabe separate module
     homelab-nix.url = "github:scarisey/homelab-nix";
 
+    #Pull based deployments
+    pullix.url = "github:scarisey/pullix";
+
     #Private vault - change for your own when fork
     private-vault = {
       url = "github:scarisey/vault";
