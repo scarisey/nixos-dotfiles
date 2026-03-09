@@ -16,6 +16,7 @@
     ./nfs.nix
     ./samba.nix
     ./vpnServer.nix
+    ./zoneminder.nix
     inputs.pullix.nixosModules.default
   ];
 

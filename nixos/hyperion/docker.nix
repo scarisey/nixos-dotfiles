@@ -8,4 +8,5 @@
       dates = "Fri *-*-* 05:00:00";
     };
   };
+  virtualisation.oci-containers.backend = "docker";
 }

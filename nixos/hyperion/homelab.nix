@@ -48,7 +48,12 @@ in {
             proxyWebsockets = true;
           };
         };
-        lan = {};
+        lan = {
+          zoneminder = {
+            domain = "zoneminder.${internalDomain}";
+            proxyPass = "http://${config.services.zoneminder.hostname}:${builtins.toString config.services.zoneminder.port}";
+          };
+        };
       };
       geoip = {
         maxmindAccountId = 1265441;
