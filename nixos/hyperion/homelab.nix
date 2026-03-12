@@ -108,9 +108,6 @@ in {
         ];
       };
     };
-    textfileCollector = {
-      publicFlakeUrl = "https://github.com/scarisey/nixos-dotfiles.git";
-    };
   };
 
   services.postgresql = {
