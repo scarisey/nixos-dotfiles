@@ -62,11 +62,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1772815817,
-        "narHash": "sha256-imzVAKCOzuo7eYqa+04rFkT0GnsHcvIENdpNf1Dw1iA=",
+        "lastModified": 1773396573,
+        "narHash": "sha256-JdrLItPghtdKNKx+P/vJ0O29DoqbEtkaT1VcAEcUtGE=",
         "owner": "scarisey",
         "repo": "copilot-cli-flake",
-        "rev": "12f49e37f5a22bb08b99b578e9bd7e456fcc00ed",
+        "rev": "d8751ea2440f9c77fb1b968ce9db3c451de1ca88",
         "type": "github"
       },
       "original": {
@@ -446,11 +446,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1773363944,
-        "narHash": "sha256-QsU85SHPwEvmM8pXKJSncAJ5MLZE5s1VJCiLy3932Wo=",
+        "lastModified": 1773403968,
+        "narHash": "sha256-ToSK4oJrIKPDR/rKCDQTEOcdffQLEh243MMiDWk+m/8=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "bfa6e10a31bfa086bf4b5ebfc654be2b42f85dbb",
+        "rev": "10047adfd9937d89f08201d726b39bb055f9240d",
         "type": "github"
       },
       "original": {
@@ -494,11 +494,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1772624091,
-        "narHash": "sha256-QKyJ0QGWBn6r0invrMAK8dmJoBYWoOWy7lN+UHzW1jc=",
+        "lastModified": 1773122722,
+        "narHash": "sha256-FIqHByVqxCprNjor1NqF80F2QQoiiyqanNNefdlvOg4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "80bdc1e5ce51f56b19791b52b2901187931f5353",
+        "rev": "62dc67aa6a52b4364dd75994ec00b51fbf474e50",
         "type": "github"
       },
       "original": {
