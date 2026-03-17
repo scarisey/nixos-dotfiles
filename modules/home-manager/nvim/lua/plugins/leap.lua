@@ -1,1 +1,1 @@
-return { "ggandor/leap.nvim", enabled = false }
+return { "https://codeberg.org/ggandor/leap.nvim", enabled = false }
