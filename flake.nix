@@ -29,7 +29,7 @@
     snowflake-cli.url = "github:scarisey/snowflake-cli-flake";
 
     #Homelabe separate module
-    homelab-nix.url = "github:scarisey/homelab-nix/chore/removeTextfileCollector";
+    homelab-nix.url = "github:scarisey/homelab-nix";
 
     #Pull based deployments
     pullix.url = "github:scarisey/pullix";

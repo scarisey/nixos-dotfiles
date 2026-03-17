@@ -48,7 +48,13 @@ in {
             proxyWebsockets = true;
           };
         };
-        lan = {};
+        lan = {
+          frigate = {
+              domain = "frigate.${internalDomain}";
+              proxyPass = "https://localhost:8971";
+              proxyWebsockets = true;
+           };
+        };
       };
       geoip = {
         maxmindAccountId = 1265441;
