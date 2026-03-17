@@ -10,6 +10,7 @@
     ./hardware.nix
     ../common.nix
     ./docker.nix
+    ./frigate.nix
     ./homelab.nix
     ./immich.nix
     ./microbin.nix
