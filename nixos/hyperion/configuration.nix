@@ -74,6 +74,10 @@
     AllowHybridSleep=no
     AllowSuspendThenHibernate=no
   '';
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+  };
   programs.nh.clean.enable = lib.mkForce false;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
