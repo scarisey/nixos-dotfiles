@@ -227,12 +227,11 @@ in {
 
     home.file.".ssh/config".source = ./ssh/config;
 
-    home.file.".config/nvim" = {
-      source = ./nvim;
-      recursive = true;
+    xdg.configFile = {
+      "nvim" = {
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/git/github.com/scarisey/nixos-dotfiles/modules/home-manager/nvim";
+        recursive = true;
+      };
     };
-    home.activation.lazyvim = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      run test -f ~/.config/nvim/lazyvim.json || cp ~/.config/nvim/lazyvim.orig ~/.config/nvim/lazyvim.json && chmod a+w ~/.config/nvim/lazyvim.json
-    '';
   };
 }
