@@ -461,22 +461,6 @@
     },
     "nixpkgs_10": {
       "locked": {
-        "lastModified": 1770197578,
-        "narHash": "sha256-AYqlWrX09+HvGs8zM6ebZ1pwUqjkfpnv8mewYwAo+iM=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "00c21e4c93d963c50d4c0c89bfa84ed6e0694df2",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_11": {
-      "locked": {
         "lastModified": 1773507054,
         "narHash": "sha256-Q8U5VXgrcxmCxPtCCJCIZkcAX3FCZwGh1GNVIXxMND0=",
         "owner": "NixOS",
@@ -730,7 +714,6 @@
         "private-modules": "private-modules",
         "private-vault": "private-vault",
         "pullix": "pullix",
-        "snowflake-cli": "snowflake-cli",
         "sops-nix": "sops-nix"
       }
     },
@@ -755,27 +738,9 @@
         "type": "github"
       }
     },
-    "snowflake-cli": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_10"
-      },
-      "locked": {
-        "lastModified": 1770819333,
-        "narHash": "sha256-4Q6amlNpBtxjf//jJrU7WdLOmWfqgLfUV673zdSgbM0=",
-        "owner": "scarisey",
-        "repo": "snowflake-cli-flake",
-        "rev": "a78f604b3ce7b66e85d876406e5e6fbf352140cc",
-        "type": "github"
-      },
-      "original": {
-        "owner": "scarisey",
-        "repo": "snowflake-cli-flake",
-        "type": "github"
-      }
-    },
     "sops-nix": {
       "inputs": {
-        "nixpkgs": "nixpkgs_11"
+        "nixpkgs": "nixpkgs_10"
       },
       "locked": {
         "lastModified": 1773889674,

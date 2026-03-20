@@ -31,7 +31,6 @@ in {
     android = mkEnableOption "Android";
     duckdb = mkEnableOption "DuckDB";
     mistralVibe = mkEnableOption "Mistral Vibe CLI";
-    snowflakeCli = mkEnableOption "Snowflake CLI";
     nixgl = {
       enable = mkEnableOption "Enable NixGL wrappers";
       defaultWrapper = mkOption {
