@@ -9,7 +9,6 @@
     import ../pkgs {pkgs = final;}
     // {
       copilotCli = inputs.copilot-cli.packages.${final.system}.default;
-      snowflakeCli = inputs.snowflake-cli.packages.${final.system}.default;
       mistralVibe = inputs.mistral-vibe.packages.${final.system}.default;
       darktable = unstable.darktable;
       devenv = unstable.devenv;
