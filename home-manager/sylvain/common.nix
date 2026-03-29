@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   outputs,
   inputs,
@@ -34,6 +35,9 @@
     };
     registry.nixpkgs.flake = inputs.nixpkgs;
     package = pkgs.nix;
+    extraOptions = ''
+      !include ${config.home.homeDirectory}/.config/nix/nix-custom.conf
+    '';
   };
 
   systemd.user.startServices = "sd-switch";
