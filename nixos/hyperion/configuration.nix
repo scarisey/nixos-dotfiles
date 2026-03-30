@@ -45,6 +45,7 @@
 
   environment.systemPackages = with pkgs; [
     smartmontools
+    wol
   ];
   services.fail2ban.enable = true;
 
