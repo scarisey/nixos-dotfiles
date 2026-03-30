@@ -14,6 +14,7 @@
       inputs.sops-nix.nixosModules.sops
       inputs.homelab-nix.nixosModules.homelab
       inputs.private-modules.nixosModules.privateModules
+      inputs.determinate.nixosModules.default
     ];
   nixpkgs.config.allowUnfree = true;
   nixpkgs.overlays = overlays;
