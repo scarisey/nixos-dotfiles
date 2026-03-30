@@ -2,10 +2,10 @@
   description = "SCarisey's dotfiles";
 
   inputs = {
-    # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
-
-    nixpkgs-master.url = "github:nixos/nixpkgs/master";
+    # Determinate Nix
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
+    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/*";
+    nixpkgs-master.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
 
     # Home manager
     home-manager.url = "github:nix-community/home-manager/release-25.11";
