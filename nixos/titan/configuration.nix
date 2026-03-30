@@ -25,6 +25,20 @@
     qemu.enable = true;
     gnome.enable = true;
   };
+
+  networking.networkmanager.ensureProfiles.profiles = {
+    eth-connection = {
+      connection = {
+        id = "Wired connection 1";
+        type = "ethernet";
+        interface-name = "enp39s0";
+      };
+      ethernet = {
+        wake-on-lan = "magic";
+      };
+    };
+  };
+
   virtualisation.waydroid.enable = true;
   hardware.graphics.enable = true;
   hardware.nvidia = {

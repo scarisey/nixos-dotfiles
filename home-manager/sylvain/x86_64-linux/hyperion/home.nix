@@ -1,18 +1,18 @@
-{pkgs, ...}: {
+{pkgs, config, ...}: {
   imports = [
     ../../common.nix
   ];
 
   scarisey.myshell.enable = true;
   scarisey.devtools.enable = true;
-  scarisey.autoUpdate = {
-    enable = true;
-    dates = "Fri *-*-* 04:30:00";
-    flake = "github:scarisey/nixos-dotfiles";
-  };
   scarisey.restic = {
     enable = true;
     all = false;
     hddBackup1 = true;
+  };
+
+  sops.secrets."hyperion/wake-titan" = {
+    path = "${config.home.homeDirectory}/.local/bin/wake-titan";
+    mode = "0550";
   };
 }
