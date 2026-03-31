@@ -19,7 +19,7 @@ with lib; let
     ${pkgs.rclone}/bin/rclone mount proton: $2
   '';
   resticProton = pkgs.writeShellScriptBin "restic-proton" ''
-    export RESTIC_REPOSITORY="/home/sylvain/backupsRestic/"
+    export RESTIC_REPOSITORY="${config.home.homeDirectory}/backupsRestic/"
     export RESTIC_PASSWORD_FILE="${config.sops.secrets."restic/protonDrive".path}"
     ${pkgs.restic}/bin/restic "$@"
   '';

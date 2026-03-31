@@ -89,7 +89,7 @@
   };
   sops = {
     defaultSopsFile = "${inputs.private-vault}/secrets.yaml";
-    age.keyFile = "/home/sylvain/.config/sops/age/keys.txt";
+    age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
     secrets."hyperion/samba/freebox" = {};
     secrets."hyperion/grafana/init_passwd" = {
       mode = "0440";

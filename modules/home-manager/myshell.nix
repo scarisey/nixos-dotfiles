@@ -12,6 +12,7 @@ in {
     enable = mkEnableOption "My shell defaults";
   };
   config = mkIf cfg.enable {
+    imports = [ ./nvim/default.nix ];
     fonts.fontconfig.enable = true;
     home.packages = with pkgs;
       [
@@ -32,7 +33,6 @@ in {
         difftastic #diff highlighting many languages
         jq
         yq-go
-        neovim
         nvimpager
         nil #  nix LSP
         statix # nix linter
@@ -74,12 +74,9 @@ in {
 
     home.sessionVariables = {
       GITDIR = "$HOME/git";
-      EDITOR = "nvim";
-      VISUAL = "nvim";
     };
 
     home.shellAliases = {
-      vi = "nvim";
       ranger = "yazi";
       #bat
       cat = "bat";
@@ -98,12 +95,6 @@ in {
       #cheat.sh
       cht = "cht.sh";
 
-      #nvim
-      cleanNvim = ''
-        rm -Rf ~/.local/share/nvim
-        rm -Rf ~/.local/state/nvim
-        rm -Rf ~/.cache/nvim
-      '';
 
       #git
       git-release-notes = ''git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h %s"'';
@@ -226,12 +217,5 @@ in {
     home.file."git/.gitignore".source = ./git/gitignore;
 
     home.file.".ssh/config".source = ./ssh/config;
-
-    xdg.configFile = {
-      "nvim" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/git/github.com/scarisey/nixos-dotfiles/modules/home-manager/nvim";
-        recursive = true;
-      };
-    };
   };
 }
