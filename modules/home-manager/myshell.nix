@@ -12,7 +12,7 @@ in {
     enable = mkEnableOption "My shell defaults";
   };
   config = mkIf cfg.enable {
-    imports = [ ./nvim/default.nix ];
+    scarisey.nvim.enable = true;
     fonts.fontconfig.enable = true;
     home.packages = with pkgs;
       [
@@ -94,7 +94,6 @@ in {
 
       #cheat.sh
       cht = "cht.sh";
-
 
       #git
       git-release-notes = ''git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h %s"'';

@@ -62,7 +62,7 @@
   programs.zsh.enable = true;
   programs.nh = {
     enable = true;
-    flake = "${config.home.homeDirectory}/git/github.com/scarisey/nixos-dotfiles";
+    flake = "/home/sylvain/git/github.com/scarisey/nixos-dotfiles";
   };
   services.openssh = {
     enable = true;
