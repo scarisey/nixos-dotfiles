@@ -23,7 +23,6 @@ in {
 
       # ── nvim-treesitter via nixpkgs (parsers pré-compilés) ────
       #
-      # POURQUOI hors de lazy.nvim ?
       # Neovim est wrappé par Nix avec un environnement LuaJIT isolé.
       # Quand lazy installe nvim-treesitter dans ~/.local/share/nvim/lazy/,
       # ce chemin est inconnu de cet environnement → "module not found".
@@ -33,6 +32,9 @@ in {
       # Les parsers listés ici sont des .so pré-compilés dans le store Nix.
       # Zéro compilation au démarrage, zéro besoin de :TSUpdate.
       plugins = with pkgs.vimPlugins; [
+        # mini.icons : requis par which-key v3+ pour l'affichage des icônes
+        mini-nvim
+
         (nvim-treesitter.withPlugins (p:
           with p; [
             # Langages utilisés dans init.lua
@@ -54,8 +56,8 @@ in {
             css
             markdown
             markdown_inline
-            bash
-            regex
+            bash # requis par noice pour le highlighting cmdline
+            regex # requis par noice pour le highlighting cmdline
             # Bonus utiles
             nix
             dockerfile
@@ -90,8 +92,13 @@ in {
         nodePackages.npm # certains serveurs LSP s'installent via npm
 
         # Python → pyright, ruff-lsp
-        python3
-        python3Packages.pip # Mason en a besoin pour certains outils
+        # Sur Nix, pip ne s'expose pas via python3Packages.pip directement :
+        # il faut construire un interpréteur qui l'embarque.
+        (python3.withPackages (ps:
+          with ps; [
+            pip
+            virtualenv # Mason crée des venvs pour certains outils Python
+          ]))
 
         # Go → gopls
         go
@@ -119,12 +126,8 @@ in {
     };
 
     # ─── CONFIGURATION ──────────────────────────────────────────
-    # On place init.lua dans ~/.config/nvim/
-    # Le chemin source est relatif à ce fichier .nix
     xdg.configFile."nvim/init.lua" = {
       source = ../nvim/init.lua; # ← ton fichier init.lua
-      # Si tu veux l'embarquer inline à la place du source :
-      # text = builtins.readFile ../nvim/init.lua;
     };
 
     # ─── VARIABLES D'ENVIRONNEMENT ──────────────────────────────
@@ -144,8 +147,6 @@ in {
     };
 
     # ─── PACKAGES COMPLÉMENTAIRES ───────────────────────────────
-    # Outils utiles en dehors de Neovim mais souvent appelés depuis lui
-    # (terminal intégré, scripts, etc.)
     home.packages = with pkgs; [
       # Diff / merge (Telescope diff, gitsigns)
       delta # git diff amélioré
