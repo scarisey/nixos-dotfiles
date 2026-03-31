@@ -243,31 +243,11 @@ require("lazy").setup({
     end,
   },
 
-  -- ── TREESITTER (coloration syntaxique riche) ─────────────
-  {
-    "nvim-treesitter/nvim-treesitter",
-    build  = ":TSUpdate",
-    event  = "BufReadPost",
-    config = function()
-      require("nvim-treesitter.configs").setup({
-        ensure_installed = {
-          "lua", "vim", "vimdoc", "javascript", "typescript", "tsx",
-          "python", "rust", "go", "c", "cpp", "json", "yaml", "toml",
-          "html", "css", "markdown", "bash", "regex",
-        },
-        highlight    = { enable = true, additional_vim_regex_highlighting = false },
-        indent       = { enable = true },
-        incremental_selection = {
-          enable   = true,
-          keymaps  = {
-            init_selection   = "<C-space>",
-            node_incremental = "<C-space>",
-            node_decremental = "<BS>",
-          },
-        },
-      })
-    end,
-  },
+  -- ── TREESITTER ────────────────────────────────────────────
+  -- NB : sur NixOS, nvim-treesitter est fourni par nixpkgs (parsers
+  -- pré-compilés). Il est déjà dans le runtimepath au démarrage.
+  -- On l'exclut de lazy pour éviter le conflit d'environnement LuaJIT.
+  -- Sa configuration se trouve APRÈS require("lazy").setup(), ci-dessous.
 
   -- ── LSP ──────────────────────────────────────────────────
   {
@@ -643,7 +623,46 @@ require("lazy").setup({
   ui = { border = "rounded" },
   checker = { enabled = true, notify = false },
   change_detection = { notify = false },
+  -- Empêcher lazy de gérer nvim-treesitter (géré par Nix/nixpkgs)
+  performance = {
+    rtp = {
+      disabled_plugins = {},
+    },
+  },
 })
+
+-- ─── TREESITTER (configuré hors lazy — géré par nixpkgs) ─────
+-- nvim-treesitter est dans le runtimepath via programs.neovim.plugins
+-- Les parsers sont pré-compilés dans le store Nix, pas besoin de :TSUpdate
+vim.defer_fn(function()
+  local ok, configs = pcall(require, "nvim-treesitter.configs")
+  if not ok then
+    vim.notify("nvim-treesitter non trouvé dans le runtimepath.\n"
+      .. "Vérifier programs.neovim.plugins dans neovim.nix", vim.log.levels.WARN)
+    return
+  end
+  configs.setup({
+    -- Nix fournit les parsers : ne rien installer à la volée
+    auto_install   = false,
+    ensure_installed = {},     -- vide : tout est déjà dans le store Nix
+    sync_install   = false,
+    ignore_install = {},
+
+    highlight = {
+      enable                            = true,
+      additional_vim_regex_highlighting = false,
+    },
+    indent = { enable = true },
+    incremental_selection = {
+      enable  = true,
+      keymaps = {
+        init_selection   = "<C-space>",
+        node_incremental = "<C-space>",
+        node_decremental = "<BS>",
+      },
+    },
+  })
+end, 0)
 
 -- ─── RACCOURCIS GLOBAUX (hors LSP) ───────────────────────────
 
@@ -743,3 +762,4 @@ autocmd("FileType", {
 -- ─── FIN ─────────────────────────────────────────────────────
 -- Place ce fichier dans ~/.config/nvim/init.lua
 -- Premier lancement : nvim → lazy.nvim installe tout automatiquement
+

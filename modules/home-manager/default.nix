@@ -8,6 +8,7 @@
   gui = import ./gui.nix;
   devtools = import ./devtools.nix;
   myshell = import ./myshell.nix;
+  nvim = import ./nvim/default.nix;
   i3Xfce = import ./i3Xfce;
   quickemu = import ./quickemu.nix;
   cloud = import ./cloud.nix;

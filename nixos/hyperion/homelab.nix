@@ -50,10 +50,10 @@ in {
         };
         lan = {
           frigate = {
-              domain = "frigate.${internalDomain}";
-              proxyPass = "https://localhost:8971";
-              proxyWebsockets = true;
-           };
+            domain = "frigate.${internalDomain}";
+            proxyPass = "https://localhost:8971";
+            proxyWebsockets = true;
+          };
         };
       };
       geoip = {
