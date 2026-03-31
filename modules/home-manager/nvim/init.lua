@@ -1,10 +1,3 @@
--- ============================================================
---  Neovim · Configuration inspirée de Zed Editor
---  Structure : Options → Lazy bootstrap → Plugins → Keymaps
--- ============================================================
-
--- ─── LEADER ──────────────────────────────────────────────────
--- Zed utilise <Space> comme leader pour toutes ses actions
 vim.g.mapleader      = " "
 vim.g.maplocalleader = " "
 
@@ -13,7 +6,7 @@ local opt = vim.opt
 
 -- Apparence
 opt.number         = true
-opt.relativenumber = true
+opt.relativenumber = false
 opt.cursorline     = true
 opt.signcolumn     = "yes"          -- toujours afficher la colonne des signes
 opt.colorcolumn    = ""
@@ -69,6 +62,19 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- ─── HELPER : localiser un plugin injecté par Nix dans le rtp ───
+-- Nix wraps neovim avec --cmd "set rtp^=..." AVANT que init.lua tourne.
+-- On scanne donc le rtp ici pour trouver le path Nix du plugin.
+local function nix_rtp_path(pattern)
+  for _, p in ipairs(vim.api.nvim_list_runtime_paths()) do
+    if p:find(pattern, 1, false) then return p end
+  end
+  return nil
+end
+
+-- Path de nvim-treesitter dans le store Nix (nil si non-NixOS)
+local ts_nix_dir = nix_rtp_path("nvim%-treesitter")
+
 -- ─── PLUGINS ─────────────────────────────────────────────────
 require("lazy").setup({
 
@@ -115,7 +121,7 @@ require("lazy").setup({
   -- ── ICÔNES ───────────────────────────────────────────────
   { "nvim-tree/nvim-web-devicons", lazy = true },
 
-  -- ── STATUSLINE (style Zed : minimaliste) ─────────────────
+  -- ── STATUSLINE ─────────────────
   {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
@@ -153,7 +159,7 @@ require("lazy").setup({
     end,
   },
 
-  -- ── BUFFERLINE (onglets comme Zed) ───────────────────────
+  -- ── BUFFERLINE ───────────────────────
   {
     "akinsho/bufferline.nvim",
     event = "VeryLazy",
@@ -174,7 +180,7 @@ require("lazy").setup({
     end,
   },
 
-  -- ── EXPLORATEUR DE FICHIERS (panneau gauche Zed) ─────────
+  -- ── EXPLORATEUR DE FICHIERS ─────────
   {
     "nvim-tree/nvim-tree.lua",
     cmd  = { "NvimTreeToggle", "NvimTreeFocus" },
@@ -197,7 +203,7 @@ require("lazy").setup({
     end,
   },
 
-  -- ── TELESCOPE (command palette / file picker Zed) ────────
+  -- ── TELESCOPE ────────
   {
     "nvim-telescope/telescope.nvim",
     tag  = "0.1.5",
@@ -206,9 +212,7 @@ require("lazy").setup({
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     },
     keys = {
-      -- <Space><Space>  → fichiers  (Zed : cmd-p)
       { "<leader><space>", "<cmd>Telescope find_files<cr>",              desc = "Find files" },
-      -- <Space>/        → recherche dans le projet  (Zed : cmd-shift-f)
       { "<leader>/",       "<cmd>Telescope live_grep<cr>",               desc = "Project search" },
       { "<leader>fb",      "<cmd>Telescope buffers<cr>",                 desc = "Buffers" },
       { "<leader>fh",      "<cmd>Telescope help_tags<cr>",               desc = "Help" },
@@ -217,7 +221,6 @@ require("lazy").setup({
       { "<leader>fd",      "<cmd>Telescope diagnostics<cr>",             desc = "Diagnostics" },
       { "<leader>fr",      "<cmd>Telescope oldfiles<cr>",                desc = "Recent files" },
       { "<leader>fc",      "<cmd>Telescope commands<cr>",                desc = "Commands" },
-      -- Recherche mot sous curseur (Zed : cmd-shift-f sélection)
       { "<leader>fw",      "<cmd>Telescope grep_string<cr>",             desc = "Search word" },
     },
     config = function()
@@ -243,11 +246,45 @@ require("lazy").setup({
     end,
   },
 
-  -- ── TREESITTER ────────────────────────────────────────────
-  -- NB : sur NixOS, nvim-treesitter est fourni par nixpkgs (parsers
-  -- pré-compilés). Il est déjà dans le runtimepath au démarrage.
-  -- On l'exclut de lazy pour éviter le conflit d'environnement LuaJIT.
-  -- Sa configuration se trouve APRÈS require("lazy").setup(), ci-dessous.
+  -- ── TREESITTER ─────────────────────────────────────────────
+  -- Sur NixOS  : ts_nix_dir pointe vers le store Nix → lazy utilise ce
+  --              path directement, pas de clone git, parsers pré-compilés.
+  -- Hors NixOS : ts_nix_dir = nil → lazy clone depuis GitHub normalement.
+  {
+    "nvim-treesitter/nvim-treesitter",
+    -- Si Nix a mis le plugin dans le rtp, on le pointe directement.
+    -- lazy n'essaiera pas de le télécharger ou compiler quoi que ce soit.
+    dir    = ts_nix_dir,   -- nil sur non-NixOS → comportement lazy normal
+    build  = ts_nix_dir and nil or ":TSUpdate",
+    event  = "BufReadPost",
+    config = function()
+      require("nvim-treesitter.configs").setup({
+        -- NixOS : parsers pré-compilés dans le store, rien à installer
+        -- Autre : lazy gère l'installation via ensure_installed
+        auto_install     = ts_nix_dir == nil,
+        ensure_installed = ts_nix_dir and {} or {
+          "lua", "vim", "vimdoc", "javascript", "typescript", "tsx",
+          "python", "rust", "go", "c", "cpp", "json", "yaml", "toml",
+          "html", "css", "markdown", "markdown_inline", "bash", "regex",
+        },
+        sync_install   = false,
+        ignore_install = {},
+        highlight = {
+          enable                            = true,
+          additional_vim_regex_highlighting = false,
+        },
+        indent = { enable = true },
+        incremental_selection = {
+          enable  = true,
+          keymaps = {
+            init_selection   = "<C-space>",
+            node_incremental = "<C-space>",
+            node_decremental = "<BS>",
+          },
+        },
+      })
+    end,
+  },
 
   -- ── LSP ──────────────────────────────────────────────────
   {
@@ -259,16 +296,9 @@ require("lazy").setup({
     },
     config = function()
       require("neodev").setup()
-      require("mason").setup({ ui = { border = "rounded" } })
-      require("mason-lspconfig").setup({
-        ensure_installed = {
-          "lua_ls", "ts_ls", "pyright", "rust_analyzer",
-          "gopls", "cssls", "html", "jsonls",
-        },
-        automatic_installation = true,
-      })
-
-      -- Raccourcis LSP calqués sur Zed vim-mode
+      -- ── Raccourcis LSP calqués sur Zed vim-mode ─────────────
+      -- on_attach est défini AVANT mason-lspconfig.setup() car les
+      -- handlers y sont déclarés inline (API mason-lspconfig v2).
       local on_attach = function(_, bufnr)
         local map = function(mode, lhs, rhs, desc)
           vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc, silent = true })
@@ -286,43 +316,37 @@ require("lazy").setup({
         map("n", "gh",  vim.lsp.buf.hover,             "Hover docs")
         map("n", "gH",  vim.lsp.buf.signature_help,    "Signature help")
 
-        -- Actions  (Zed : <Space>a / ga)
-        map("n", "ga",           vim.lsp.buf.code_action,   "Code action")
-        map("v", "ga",           vim.lsp.buf.code_action,   "Code action (visual)")
-        map("n", "<leader>a",    vim.lsp.buf.code_action,   "Code action")
+        -- Actions (Zed : <Space>a / ga)
+        map("n", "ga",        vim.lsp.buf.code_action, "Code action")
+        map("v", "ga",        vim.lsp.buf.code_action, "Code action (visual)")
+        map("n", "<leader>a", vim.lsp.buf.code_action, "Code action")
 
-        -- Renommer  (Zed : <Space>r)
-        map("n", "<leader>r",    vim.lsp.buf.rename,        "Rename symbol")
+        -- Renommer (Zed : <Space>r)
+        map("n", "<leader>r", vim.lsp.buf.rename, "Rename symbol")
 
-        -- Formater  (Zed : <Space>f)
-        map("n", "<leader>f",    function()
-          vim.lsp.buf.format({ async = true })
-        end, "Format file")
-        map("v", "<leader>f",    function()
-          vim.lsp.buf.format({ async = true })
-        end, "Format selection")
+        -- Formater (Zed : <Space>f)
+        map("n", "<leader>f", function() vim.lsp.buf.format({ async = true }) end, "Format file")
+        map("v", "<leader>f", function() vim.lsp.buf.format({ async = true }) end, "Format selection")
 
-        -- Diagnostics  (Zed : ]d / [d  et  <Space>e)
-        map("n", "]d",  vim.diagnostic.goto_next,      "Next diagnostic")
-        map("n", "[d",  vim.diagnostic.goto_prev,      "Prev diagnostic")
-        map("n", "]e",  function()
+        -- Diagnostics (Zed : ]d / [d  et  <Space>e)
+        map("n", "]d", vim.diagnostic.goto_next, "Next diagnostic")
+        map("n", "[d", vim.diagnostic.goto_prev, "Prev diagnostic")
+        map("n", "]e", function()
           vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
         end, "Next error")
-        map("n", "[e",  function()
+        map("n", "[e", function()
           vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })
         end, "Prev error")
-        map("n", "<leader>E",   vim.diagnostic.open_float,  "Show diagnostics")
-        map("n", "<leader>q",   vim.diagnostic.setloclist,  "Diagnostics to loclist")
+        map("n", "<leader>E", vim.diagnostic.open_float, "Show diagnostics")
+        map("n", "<leader>q", vim.diagnostic.setloclist, "Diagnostics to loclist")
 
-        -- Hover (raccourci Zed <Space>k)
-        map("n", "<leader>k",   vim.lsp.buf.hover,          "Hover docs (alt)")
-
-        -- Symbols  (Zed : <Space>s)
-        map("n", "<leader>s",  "<cmd>Telescope lsp_document_symbols<cr>",   "Document symbols")
-        map("n", "<leader>S",  "<cmd>Telescope lsp_workspace_symbols<cr>",  "Workspace symbols")
+        -- Hover / Symbols
+        map("n", "<leader>k", vim.lsp.buf.hover, "Hover docs")
+        map("n", "<leader>s", "<cmd>Telescope lsp_document_symbols<cr>",  "Document symbols")
+        map("n", "<leader>S", "<cmd>Telescope lsp_workspace_symbols<cr>", "Workspace symbols")
       end
 
-      -- Config diagnostics visuels (style Zed)
+      -- Config diagnostics visuels 
       vim.diagnostic.config({
         virtual_text     = { prefix = "●", spacing = 4 },
         signs            = true,
@@ -338,15 +362,26 @@ require("lazy").setup({
         vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
       end
 
-      -- Appliquer on_attach à tous les serveurs
+      -- ── mason-lspconfig v2 : handlers déclarés dans setup() ──
+      -- setup_handlers() a été supprimé en v2. Les handlers vont
+      -- maintenant dans la clé `handlers` de setup().
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
-      require("mason-lspconfig").setup_handlers({
-        function(server_name)
-          require("lspconfig")[server_name].setup({
-            on_attach    = on_attach,
-            capabilities = capabilities,
-          })
-        end,
+      require("mason").setup({ ui = { border = "rounded" } })
+      require("mason-lspconfig").setup({
+        ensure_installed = {
+          "lua_ls", "ts_ls", "pyright", "rust_analyzer",
+          "gopls", "cssls", "html", "jsonls",
+        },
+        automatic_installation = true,
+        -- Handler par défaut : appliqué à tous les serveurs installés
+        handlers = {
+          function(server_name)
+            require("lspconfig")[server_name].setup({
+              on_attach    = on_attach,
+              capabilities = capabilities,
+            })
+          end,
+        },
       })
     end,
   },
@@ -502,7 +537,7 @@ require("lazy").setup({
     config = true,
   },
 
-  -- ── TERMINAL (Zed a un terminal intégré) ─────────────────
+  -- ── TERMINAL ─────────────────
   {
     "akinsho/toggleterm.nvim",
     keys = {
@@ -537,10 +572,22 @@ require("lazy").setup({
   {
     "folke/which-key.nvim",
     event  = "VeryLazy",
+    -- mini.icons est fourni par nixpkgs (mini-nvim), pas besoin de le
+    -- déclarer comme dépendance lazy : il est déjà dans le runtimepath.
+    init = function()
+      -- Initialiser mini.icons avant which-key pour éviter le warning
+      require("mini.icons").setup()
+    end,
     config = function()
       require("which-key").setup({
-        window = { border = "rounded" },
-        icons  = { breadcrumb = "»", separator = "→", group = "+" },
+        win   = { border = "rounded" },
+        icons = {
+          breadcrumb = "»",
+          separator  = "→",
+          group      = "+",
+          -- Utiliser mini.icons comme fournisseur d'icônes (élimine le warning)
+          provider   = "mini",
+        },
       })
       require("which-key").add({
         { "<leader>f",  group = "Find / Format" },
@@ -630,39 +677,6 @@ require("lazy").setup({
     },
   },
 })
-
--- ─── TREESITTER (configuré hors lazy — géré par nixpkgs) ─────
--- nvim-treesitter est dans le runtimepath via programs.neovim.plugins
--- Les parsers sont pré-compilés dans le store Nix, pas besoin de :TSUpdate
-vim.defer_fn(function()
-  local ok, configs = pcall(require, "nvim-treesitter.configs")
-  if not ok then
-    vim.notify("nvim-treesitter non trouvé dans le runtimepath.\n"
-      .. "Vérifier programs.neovim.plugins dans neovim.nix", vim.log.levels.WARN)
-    return
-  end
-  configs.setup({
-    -- Nix fournit les parsers : ne rien installer à la volée
-    auto_install   = false,
-    ensure_installed = {},     -- vide : tout est déjà dans le store Nix
-    sync_install   = false,
-    ignore_install = {},
-
-    highlight = {
-      enable                            = true,
-      additional_vim_regex_highlighting = false,
-    },
-    indent = { enable = true },
-    incremental_selection = {
-      enable  = true,
-      keymaps = {
-        init_selection   = "<C-space>",
-        node_incremental = "<C-space>",
-        node_decremental = "<BS>",
-      },
-    },
-  })
-end, 0)
 
 -- ─── RACCOURCIS GLOBAUX (hors LSP) ───────────────────────────
 
@@ -758,8 +772,3 @@ autocmd("FileType", {
     vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
   end,
 })
-
--- ─── FIN ─────────────────────────────────────────────────────
--- Place ce fichier dans ~/.config/nvim/init.lua
--- Premier lancement : nvim → lazy.nvim installe tout automatiquement
-
