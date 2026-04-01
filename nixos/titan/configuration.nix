@@ -26,6 +26,16 @@
     gnome.enable = true;
   };
 
+  #Games
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+  };
+
+  programs.gamemode.enable = true;
+  ###
+
   networking.networkmanager.ensureProfiles.profiles = {
     eth-connection = {
       connection = {
@@ -40,15 +50,6 @@
   };
 
   virtualisation.waydroid.enable = true;
-  hardware.graphics.enable = true;
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = true;
-    open = true;
-    nvidiaSettings = true;
-    forceFullCompositionPipeline = false;
-    package = config.boot.kernelPackages.nvidiaPackages.latest;
-  };
   xdg.portal.enable = true;
   services.flatpak.enable = true;
   services.printing.enable = true;
@@ -62,6 +63,11 @@
   };
   services.gvfs.enable = true; #for samba
   environment.systemPackages = with pkgs; [
+    mangohud
+    protonup-qt
+    lutris
+    bottles
+
     samba
     libmtp # Base library for MTP
     gphoto2 # Standard tool for Nikon/DSLR cameras
