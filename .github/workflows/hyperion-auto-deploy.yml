@@ -1,0 +1,72 @@
+name: "Hyperion deployments"
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Test or Prod"
+        required: true
+        type: choice
+        options:
+          - Test
+          - Prod
+jobs:
+  deploy-test-from-main:
+    if: ${{ github.event.inputs.target == 'Test' }}
+    runs-on: ubuntu-latest
+    env:
+      NIXPKGS_ALLOW_BROKEN: "1"
+      NIXPKGS_ALLOW_UNFREE: "1"
+      NIXPKGS_ALLOW_INSECURE: "1"
+      NIX_CONFIG: |
+        experimental-features = nix-command flakes
+        access-tokens = github.com=${{ secrets.GH_TOKEN }}
+      GIT_AUTHOR_NAME: github-actions[bot]
+      GIT_AUTHOR_EMAIL: github-actions[bot]@users.noreply.github.com
+      GIT_COMMITTER_NAME: github-actions[bot]
+      GIT_COMMITTER_EMAIL: github-actions[bot]@users.noreply.github.com
+    permissions:
+      actions: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+      - name: Setup hyperion/test branch
+        run: |
+          git remote remove origin
+          git remote add origin https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git checkout -b hyperion/test || git checkout hyperion/test
+          git reset --hard origin/main
+      - name: Push changes to remote
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git push --force --set-upstream origin hyperion/test
+  deploy-prod-from-test:
+    if: ${{ github.event.inputs.target == 'Prod' }}
+    runs-on: ubuntu-latest
+    env:
+      NIXPKGS_ALLOW_BROKEN: "1"
+      NIXPKGS_ALLOW_UNFREE: "1"
+      NIXPKGS_ALLOW_INSECURE: "1"
+      NIX_CONFIG: |
+        experimental-features = nix-command flakes
+        access-tokens = github.com=${{ secrets.GH_TOKEN }}
+      GIT_AUTHOR_NAME: github-actions[bot]
+      GIT_AUTHOR_EMAIL: github-actions[bot]@users.noreply.github.com
+      GIT_COMMITTER_NAME: github-actions[bot]
+      GIT_COMMITTER_EMAIL: github-actions[bot]@users.noreply.github.com
+    permissions:
+      actions: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+      - name: Setup hyperion/test branch
+        run: |
+          git remote remove origin
+          git remote add origin https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git checkout -b hyperion/prod || git checkout hyperion/prod
+          git reset --hard origin/hyperion/test
+      - name: Push changes to remote
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git push --force --set-upstream origin hyperion/prod
