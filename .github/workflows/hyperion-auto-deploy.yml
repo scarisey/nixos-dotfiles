@@ -14,12 +14,6 @@ jobs:
     if: ${{ github.event.inputs.target == 'Test' }}
     runs-on: ubuntu-latest
     env:
-      NIXPKGS_ALLOW_BROKEN: "1"
-      NIXPKGS_ALLOW_UNFREE: "1"
-      NIXPKGS_ALLOW_INSECURE: "1"
-      NIX_CONFIG: |
-        experimental-features = nix-command flakes
-        access-tokens = github.com=${{ secrets.GH_TOKEN }}
       GIT_AUTHOR_NAME: github-actions[bot]
       GIT_AUTHOR_EMAIL: github-actions[bot]@users.noreply.github.com
       GIT_COMMITTER_NAME: github-actions[bot]
@@ -29,19 +23,21 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v6
-      - name: Setup hyperion/test branch
-        run: |
-          git remote remove origin
-          git remote add origin https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          git fetch
-          git checkout -b hyperion/test || git checkout hyperion/test
-          git reset --hard origin/main
       - name: Generate a token
         id: generate-token
         uses: actions/create-github-app-token@v1
         with:
           app-id: ${{ secrets.GH_APP_ID }}
           private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+      - name: Reset hyperion/test branch on main
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+        run: |
+          git remote remove origin
+          git remote add origin https://${GH_TOKEN}@github.com/${{ github.repository }}.git
+          git fetch
+          git checkout -b hyperion/test || git checkout hyperion/test
+          git reset --hard origin/main
       - name: Push force
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
@@ -51,12 +47,6 @@ jobs:
     if: ${{ github.event.inputs.target == 'Prod' }}
     runs-on: ubuntu-latest
     env:
-      NIXPKGS_ALLOW_BROKEN: "1"
-      NIXPKGS_ALLOW_UNFREE: "1"
-      NIXPKGS_ALLOW_INSECURE: "1"
-      NIX_CONFIG: |
-        experimental-features = nix-command flakes
-        access-tokens = github.com=${{ secrets.GH_TOKEN }}
       GIT_AUTHOR_NAME: github-actions[bot]
       GIT_AUTHOR_EMAIL: github-actions[bot]@users.noreply.github.com
       GIT_COMMITTER_NAME: github-actions[bot]
@@ -66,19 +56,21 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v6
-      - name: Setup hyperion/test branch
-        run: |
-          git remote remove origin
-          git remote add origin https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          git fetch
-          git checkout -b hyperion/prod || git checkout hyperion/prod
-          git reset --hard hyperion/test
       - name: Generate a token
         id: generate-token
         uses: actions/create-github-app-token@v1
         with:
           app-id: ${{ secrets.GH_APP_ID }}
           private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+      - name: Reset hyperion/prod branch on hyperion/test
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+        run: |
+          git remote remove origin
+          git remote add origin https://${GH_TOKEN}@github.com/${{ github.repository }}.git
+          git fetch
+          git checkout -b hyperion/prod || git checkout hyperion/prod
+          git reset --hard origin/hyperion/test
       - name: Push force
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
