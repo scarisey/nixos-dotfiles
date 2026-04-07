@@ -50,6 +50,7 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMqEDm8BpcxUzHebnxsyeOGWOO6nfCQPFKqwqVTUV/S0 portable"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFfzo6os2jVd/4Q0BVk9sbn3GqQeyCddzCd4ZkgDmBLY galaxyS25"
       "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMWBJqOjJ7saqLyiUyE9Oe+rlDB7MoG7LjfAPiTZCrtrc9d6zb50oaXh7BsRpBy9lvyGYjo9WiB16Nntu+Dbwjk= titan"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII/9EwGzvoHYDgn4zg8TCtM1eV4q5wkNMi7/QIBKztHH hyperion"
     ];
   };
   environment.systemPackages = with pkgs; [
