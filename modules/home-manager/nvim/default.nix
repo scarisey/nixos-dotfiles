@@ -19,7 +19,6 @@ in {
       enable = true;
       defaultEditor = true; # EDITOR=nvim dans l'environnement
       viAlias = true; # vi → nvim
-      vimAlias = true; # vim → nvim
 
       # ── nvim-treesitter via nixpkgs (parsers pré-compilés) ────
       #
