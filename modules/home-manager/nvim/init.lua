@@ -642,16 +642,16 @@ require("lazy").setup({
   },
 
   -- ── SMOOTH SCROLL (UX Zed) ───────────────────────────────
-  {
-    "karb94/neoscroll.nvim",
-    event  = "VeryLazy",
-    config = function()
-      require("neoscroll").setup({
-        mappings       = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "zt", "zz", "zb" },
-        easing_function = "quadratic",
-      })
-    end,
-  },
+  -- {
+  --   "karb94/neoscroll.nvim",
+  --   event  = "VeryLazy",
+  --   config = function()
+  --     require("neoscroll").setup({
+  --       mappings       = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "zt", "zz", "zb" },
+  --       easing_function = "quadratic",
+  --     })
+  --   end,
+  -- },
 
   -- ── HIGHLIGHT MOT SOUS CURSEUR (Zed le fait nativement) ──
   {
