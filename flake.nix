@@ -29,7 +29,7 @@
     homelab-nix.url = "github:scarisey/homelab-nix";
 
     #Pull based deployments
-    pullix.url = "github:scarisey/pullix";
+    pullix.url = "github:scarisey/pullix/feat/hmSwitch";
 
     #Private vault - change for your own when fork
     private-vault = {
