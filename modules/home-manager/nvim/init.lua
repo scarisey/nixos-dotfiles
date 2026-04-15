@@ -203,47 +203,79 @@ require("lazy").setup({
     end,
   },
 
-  -- ── TELESCOPE ────────
+  -- ── SNACKS (picker, terminal, notifier, indent, words, scroll …) ──
   {
-    "nvim-telescope/telescope.nvim",
-    tag  = "0.1.5",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-    },
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy     = false,
     keys = {
-      { "<leader><space>", "<cmd>Telescope find_files<cr>",              desc = "Find files" },
-      { "<leader>/",       "<cmd>Telescope live_grep<cr>",               desc = "Project search" },
-      { "<leader>fb",      "<cmd>Telescope buffers<cr>",                 desc = "Buffers" },
-      { "<leader>fh",      "<cmd>Telescope help_tags<cr>",               desc = "Help" },
-      { "<leader>fs",      "<cmd>Telescope lsp_document_symbols<cr>",    desc = "Document symbols" },
-      { "<leader>fS",      "<cmd>Telescope lsp_workspace_symbols<cr>",   desc = "Workspace symbols" },
-      { "<leader>fd",      "<cmd>Telescope diagnostics<cr>",             desc = "Diagnostics" },
-      { "<leader>fr",      "<cmd>Telescope oldfiles<cr>",                desc = "Recent files" },
-      { "<leader>fc",      "<cmd>Telescope commands<cr>",                desc = "Commands" },
-      { "<leader>fw",      "<cmd>Telescope grep_string<cr>",             desc = "Search word" },
+      -- ── Picker (Telescope replacement) ──────────────────────────
+      { "<leader><space>", function() Snacks.picker.files() end,                 desc = "Find files" },
+      { "<leader>/",       function() Snacks.picker.grep() end,                  desc = "Project search" },
+      { "<leader>fb",      function() Snacks.picker.buffers() end,               desc = "Buffers" },
+      { "<leader>fh",      function() Snacks.picker.help() end,                  desc = "Help" },
+      { "<leader>fs",      function() Snacks.picker.lsp_symbols() end,           desc = "Document symbols" },
+      { "<leader>fS",      function() Snacks.picker.lsp_workspace_symbols() end, desc = "Workspace symbols" },
+      { "<leader>fd",      function() Snacks.picker.diagnostics() end,           desc = "Diagnostics" },
+      { "<leader>fr",      function() Snacks.picker.recent() end,                desc = "Recent files" },
+      { "<leader>fc",      function() Snacks.picker.commands() end,              desc = "Commands" },
+      { "<leader>fw",      function() Snacks.picker.grep_word() end,             desc = "Search word" },
+      -- ── Terminal (Toggleterm replacement) ────────────────────────
+      { "<C-`>",      function() Snacks.terminal.toggle(nil, { win = { position = "bottom", height = 0.3 } }) end, desc = "Toggle terminal" },
+      { "<leader>tt", function() Snacks.terminal.toggle(nil, { win = { position = "float" } }) end,               desc = "Float terminal" },
+      { "<leader>tv", function() Snacks.terminal.toggle(nil, { win = { position = "right", width = 0.4 } }) end,  desc = "Vertical terminal" },
+      -- ── Git ──────────────────────────────────────────────────────
+      { "<leader>gg", function() Snacks.lazygit() end,   desc = "LazyGit" },
+      { "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git browse" },
+      -- ── Misc ─────────────────────────────────────────────────────
+      { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete buffer" },
     },
-    config = function()
-      local telescope = require("telescope")
-      telescope.setup({
-        defaults = {
-          prompt_prefix   = "  ",
-          selection_caret = " ",
-          layout_strategy = "horizontal",
-          layout_config   = { prompt_position = "top", width = 0.85, height = 0.80 },
-          sorting_strategy = "ascending",
-          file_ignore_patterns = { "node_modules", ".git/" },
-          mappings = {
-            i = {
-              ["<C-j>"] = "move_selection_next",
-              ["<C-k>"] = "move_selection_previous",
-              ["<esc>"] = "close",
+    opts = {
+      -- ── Picker ────────────────────────────────────────────────────
+      -- fuzzy = false → exact substring match (fixes incomplete search results)
+      -- hidden = true → includes dotfiles, same as rg --hidden
+      picker = {
+        matcher = { fuzzy = false, smartcase = true },
+        sources = {
+          files     = { hidden = true, follow = true },
+          grep      = { hidden = true },
+          grep_word = { hidden = true },
+        },
+        win = {
+          input = {
+            keys = {
+              ["<C-j>"] = { "list_down", mode = { "i", "n" } },
+              ["<C-k>"] = { "list_up",   mode = { "i", "n" } },
+              ["<esc>"] = { "close",     mode = { "i", "n" } },
             },
           },
         },
-      })
-      telescope.load_extension("fzf")
-    end,
+      },
+      -- ── Notifier (nvim-notify + noice replacement) ────────────────
+      notifier = { enabled = true, timeout = 3000, style = "compact", top_down = false },
+      -- ── Terminal (Toggleterm replacement) ─────────────────────────
+      terminal  = { enabled = true },
+      -- ── Words (vim-illuminate replacement) ────────────────────────
+      words     = { enabled = true },
+      -- ── Indent (indent-blankline replacement) ─────────────────────
+      indent = {
+        enabled = true,
+        indent  = { char = "│" },
+        scope   = { enabled = true, hl = "Function" },
+      },
+      -- ── Smooth scroll (neoscroll replacement) ─────────────────────
+      scroll    = { enabled = true },
+      -- ── Extras ────────────────────────────────────────────────────
+      lazygit   = { enabled = true },
+      bufdelete = { enabled = true },
+      rename    = { enabled = true },
+      input     = { enabled = true },
+      gitbrowse = { enabled = true },
+      -- Disabled snacks features
+      dashboard    = { enabled = false },
+      statuscolumn = { enabled = false },
+      bigfile      = { enabled = false },
+    },
   },
 
   -- ── TREESITTER ─────────────────────────────────────────────
@@ -342,8 +374,8 @@ require("lazy").setup({
 
         -- Hover / Symbols
         map("n", "<leader>k", vim.lsp.buf.hover, "Hover docs")
-        map("n", "<leader>s", "<cmd>Telescope lsp_document_symbols<cr>",  "Document symbols")
-        map("n", "<leader>S", "<cmd>Telescope lsp_workspace_symbols<cr>", "Workspace symbols")
+        map("n", "<leader>s", function() Snacks.picker.lsp_symbols() end,           "Document symbols")
+        map("n", "<leader>S", function() Snacks.picker.lsp_workspace_symbols() end, "Workspace symbols")
       end
 
       -- Config diagnostics visuels 
@@ -482,20 +514,6 @@ require("lazy").setup({
     end,
   },
 
-  -- ── INDENTATION GUIDES (Zed en a nativement) ─────────────
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    main  = "ibl",
-    event = "BufReadPost",
-    config = function()
-      require("ibl").setup({
-        indent  = { char = "│", tab_char = "│" },
-        scope   = { enabled = true, highlight = "Function" },
-        exclude = { filetypes = { "help", "NvimTree", "lazy" } },
-      })
-    end,
-  },
-
   -- ── PAIRES AUTO (brackets comme Zed) ─────────────────────
   {
     "windwp/nvim-autopairs",
@@ -505,7 +523,7 @@ require("lazy").setup({
         check_ts              = true,
         ts_config             = { lua = { "string" }, javascript = { "template_string" } },
         fast_wrap             = { map = "<M-e>", chars = { "{", "[", "(", '"', "'" } },
-        disable_filetype      = { "TelescopePrompt" },
+        disable_filetype      = { "snacks_input" },
       })
       local cmp_autopairs = require("nvim-autopairs.completion.cmp")
       require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
@@ -537,37 +555,6 @@ require("lazy").setup({
     config = true,
   },
 
-  -- ── TERMINAL ─────────────────
-  {
-    "akinsho/toggleterm.nvim",
-    keys = {
-      -- Zed : ctrl+` pour le terminal
-      { "<C-`>",       "<cmd>ToggleTerm direction=horizontal<cr>", desc = "Toggle terminal" },
-      { "<leader>tt",  "<cmd>ToggleTerm direction=float<cr>",      desc = "Float terminal" },
-      { "<leader>tv",  "<cmd>ToggleTerm direction=vertical<cr>",   desc = "Vertical terminal" },
-    },
-    config = function()
-      require("toggleterm").setup({
-        size            = function(term)
-          if term.direction == "horizontal" then return 15
-          elseif term.direction == "vertical" then return vim.o.columns * 0.4
-          end
-        end,
-        float_opts      = { border = "curved", width = 100, height = 30 },
-        shade_terminals = true,
-      })
-      -- Quitter le mode terminal avec <Esc>
-      function _G.set_terminal_keymaps()
-        vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], { buffer = 0 })
-        vim.keymap.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], { buffer = 0 })
-        vim.keymap.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], { buffer = 0 })
-        vim.keymap.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], { buffer = 0 })
-        vim.keymap.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], { buffer = 0 })
-      end
-      vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
-    end,
-  },
-
   -- ── WHICH-KEY (aide contextuelle aux raccourcis) ─────────
   {
     "folke/which-key.nvim",
@@ -597,70 +584,6 @@ require("lazy").setup({
         { "g",          group = "Go to / Actions" },
         { "]",          group = "Next" },
         { "[",          group = "Prev" },
-      })
-    end,
-  },
-
-  -- ── NOTIFICATIONS STYLE ZED ──────────────────────────────
-  {
-    "rcarriga/nvim-notify",
-    config = function()
-      require("notify").setup({
-        render   = "minimal",
-        stages   = "fade",
-        timeout  = 3000,
-        top_down = false,
-      })
-      vim.notify = require("notify")
-    end,
-  },
-
-  -- ── NOICE (UI commandes façon Zed) ───────────────────────
-  {
-    "folke/noice.nvim",
-    event = "VeryLazy",
-    dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" },
-    config = function()
-      require("noice").setup({
-        lsp = {
-          override = {
-            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-            ["vim.lsp.util.stylize_markdown"]               = true,
-            ["cmp.entry.get_documentation"]                 = true,
-          },
-          hover      = { enabled = true },
-          signature  = { enabled = true },
-        },
-        presets = {
-          bottom_search         = true,
-          command_palette       = true,
-          long_message_to_split = true,
-          inc_rename            = false,
-        },
-      })
-    end,
-  },
-
-  -- ── SMOOTH SCROLL (UX Zed) ───────────────────────────────
-  -- {
-  --   "karb94/neoscroll.nvim",
-  --   event  = "VeryLazy",
-  --   config = function()
-  --     require("neoscroll").setup({
-  --       mappings       = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "zt", "zz", "zb" },
-  --       easing_function = "quadratic",
-  --     })
-  --   end,
-  -- },
-
-  -- ── HIGHLIGHT MOT SOUS CURSEUR (Zed le fait nativement) ──
-  {
-    "RRethy/vim-illuminate",
-    event = "BufReadPost",
-    config = function()
-      require("illuminate").configure({
-        providers = { "lsp", "treesitter", "regex" },
-        delay     = 100,
       })
     end,
   },
@@ -699,7 +622,6 @@ map("n", "<C-Right>", "<cmd>vertical resize +2<cr>", "Resize right")
 -- Buffers  (Zed : ctrl+tab)
 map("n", "<S-l>",      "<cmd>bnext<cr>",     "Next buffer")
 map("n", "<S-h>",      "<cmd>bprevious<cr>", "Prev buffer")
-map("n", "<leader>bd", "<cmd>bdelete<cr>",   "Delete buffer")
 map("n", "<leader>bo", "<cmd>%bd|e#|bd#<cr>", "Close other buffers")
 
 -- Fichier alternatif (Zed : ctrl+6)
@@ -766,9 +688,22 @@ autocmd("BufReadPost", {
 -- Fermer certains filetypes avec q
 autocmd("FileType", {
   group   = augroup("CloseWithQ", { clear = true }),
-  pattern = { "help", "lspinfo", "man", "notify", "qf", "spectre_panel", "startuptime" },
+  pattern = { "help", "lspinfo", "man", "notify", "snacks_notif", "qf", "spectre_panel", "startuptime" },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
     vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+  end,
+})
+
+-- Navigation dans les terminaux snacks (et tout autre :terminal)
+autocmd("TermOpen", {
+  group    = augroup("TermMappings", { clear = true }),
+  callback = function()
+    local t = function(lhs, rhs) vim.keymap.set("t", lhs, rhs, { buffer = 0, silent = true }) end
+    t("<esc>",  [[<C-\><C-n>]])
+    t("<C-h>", [[<Cmd>wincmd h<CR>]])
+    t("<C-j>", [[<Cmd>wincmd j<CR>]])
+    t("<C-k>", [[<Cmd>wincmd k<CR>]])
+    t("<C-l>", [[<Cmd>wincmd l<CR>]])
   end,
 })

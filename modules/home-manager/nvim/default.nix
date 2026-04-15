@@ -55,8 +55,8 @@ in {
             css
             markdown
             markdown_inline
-            bash # requis par noice pour le highlighting cmdline
-            regex # requis par noice pour le highlighting cmdline
+            bash # utile pour le highlighting treesitter bash
+            regex # utile pour le highlighting treesitter regex
             # Bonus utiles
             nix
             dockerfile
@@ -68,14 +68,12 @@ in {
       # Variables d'environnement injectées dans l'env de Neovim
       # (utile pour que Mason trouve les binaires Nix dans son PATH)
       extraPackages = with pkgs; [
-        # ── Recherche (Telescope live_grep + Spectre) ──────────
-        ripgrep # rg  — requis par telescope live_grep et spectre
-        fd # fd  — find_files plus rapide que find
-        fzf # fzf — telescope-fzf-native en a besoin au runtime
+        # ── Recherche (snacks.picker grep + Spectre) ───────────
+        ripgrep # rg  — requis par snacks.picker grep et spectre
+        fd      # fd  — requis par snacks.picker files
 
         # ── Compilation native ─────────────────────────────────
-        # telescope-fzf-native : build = "make"  (lazy l'appelle au premier lancement)
-        # nvim-treesitter      : parsers pré-compilés via plugins =, gcc non nécessaire
+        # nvim-treesitter : parsers pré-compilés via plugins =, gcc non nécessaire
         gcc
         gnumake
 
@@ -147,11 +145,11 @@ in {
 
     # ─── PACKAGES COMPLÉMENTAIRES ───────────────────────────────
     home.packages = with pkgs; [
-      # Diff / merge (Telescope diff, gitsigns)
+      # Diff / merge (snacks.picker diff, gitsigns)
       delta # git diff amélioré
       difftastic # diff structurel
 
-      # Outils shell souvent appelés depuis toggleterm
+      # Outils shell souvent appelés depuis snacks.terminal
       bat # cat amélioré
       eza # ls amélioré
       jq # JSON query (utile avec LSP JSON)
