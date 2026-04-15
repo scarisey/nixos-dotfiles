@@ -185,7 +185,7 @@ require("lazy").setup({
     "nvim-tree/nvim-tree.lua",
     cmd  = { "NvimTreeToggle", "NvimTreeFocus" },
     keys = {
-      { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Toggle file tree" },
+      { "<leader>e", "<cmd>NvimTreeFindFileToggle<cr>", desc = "Toggle file tree" },
     },
     config = function()
       require("nvim-tree").setup({
@@ -199,6 +199,7 @@ require("lazy").setup({
         git         = { enable = true },
         diagnostics = { enable = true, show_on_dirs = true },
         actions     = { open_file = { quit_on_open = false } },
+        update_focused_file = { enable = true, update_root = false },
       })
     end,
   },
