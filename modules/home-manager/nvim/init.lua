@@ -402,7 +402,7 @@ require("lazy").setup({
       require("mason-lspconfig").setup({
         ensure_installed = {
           "lua_ls", "ts_ls", "pyright", "rust_analyzer",
-          "gopls", "cssls", "html", "jsonls",
+          "gopls", "cssls", "html", "jsonls", "nil_ls"
         },
         automatic_installation = true,
         -- Handler par défaut : appliqué à tous les serveurs installés
