@@ -72,6 +72,13 @@ local function nix_rtp_path(pattern)
   return nil
 end
 
+-- Open the logs directory in a buffer --
+
+local function open_nvim_state_dir()
+  local state_dir = vim.fn.expand("$HOME/.local/state/nvim")
+  vim.cmd("edit " .. vim.fn.fnameescape(state_dir))
+end
+
 -- Path de nvim-treesitter dans le store Nix (nil si non-NixOS)
 local ts_nix_dir = nix_rtp_path("nvim%-treesitter")
 
@@ -228,7 +235,7 @@ require("lazy").setup({
       { "<leader>fu",      function() Snacks.picker.undo() end,                  desc = "Undo history" },
       { "<leader>fp",      function() Snacks.picker.resume() end,                desc = "Resume picker" },
       -- ── Terminal (Toggleterm replacement) ────────────────────────
-      { "<C-`>",      function() Snacks.terminal.toggle(nil, { win = { position = "bottom", height = 0.3 } }) end, desc = "Toggle terminal" },
+      { "<leader>th",      function() Snacks.terminal.toggle(nil, { win = { position = "bottom", height = 0.3 } }) end, desc = "Toggle terminal" },
       { "<leader>tt", function() Snacks.terminal.toggle(nil, { win = { position = "float" } }) end,               desc = "Float terminal" },
       { "<leader>tv", function() Snacks.terminal.toggle(nil, { win = { position = "right", width = 0.4 } }) end,  desc = "Vertical terminal" },
       -- ── Git ──────────────────────────────────────────────────────
@@ -242,6 +249,7 @@ require("lazy").setup({
       -- ── Notifier ─────────────────────────────────────────────────
       { "<leader>nh", function() Snacks.notifier.show_history() end,             desc = "Notification history" },
       { "<leader>nd", function() Snacks.notifier.hide() end,                     desc = "Dismiss notifications" },
+      { "<leader>nl", function() open_nvim_state_dir() end,                      desc = "Show logs directory" },
       -- ── Words ────────────────────────────────────────────────────
       { "]]", function() Snacks.words.jump(1,  true) end,                        desc = "Next reference" },
       { "[[", function() Snacks.words.jump(-1, true) end,                        desc = "Prev reference" },
