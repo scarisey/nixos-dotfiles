@@ -221,15 +221,33 @@ require("lazy").setup({
       { "<leader>fr",      function() Snacks.picker.recent() end,                desc = "Recent files" },
       { "<leader>fc",      function() Snacks.picker.commands() end,              desc = "Commands" },
       { "<leader>fw",      function() Snacks.picker.grep_word() end,             desc = "Search word" },
+      { "<leader>fg",      function() Snacks.picker.git_files() end,             desc = "Git files" },
+      { "<leader>fl",      function() Snacks.picker.lines() end,                 desc = "Buffer lines" },
+      { "<leader>fk",      function() Snacks.picker.keymaps() end,               desc = "Keymaps" },
+      { "<leader>fm",      function() Snacks.picker.marks() end,                 desc = "Marks" },
+      { "<leader>fu",      function() Snacks.picker.undo() end,                  desc = "Undo history" },
+      { "<leader>fp",      function() Snacks.picker.resume() end,                desc = "Resume picker" },
       -- ── Terminal (Toggleterm replacement) ────────────────────────
       { "<C-`>",      function() Snacks.terminal.toggle(nil, { win = { position = "bottom", height = 0.3 } }) end, desc = "Toggle terminal" },
       { "<leader>tt", function() Snacks.terminal.toggle(nil, { win = { position = "float" } }) end,               desc = "Float terminal" },
       { "<leader>tv", function() Snacks.terminal.toggle(nil, { win = { position = "right", width = 0.4 } }) end,  desc = "Vertical terminal" },
       -- ── Git ──────────────────────────────────────────────────────
-      { "<leader>gg", function() Snacks.lazygit() end,   desc = "LazyGit" },
-      { "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git browse" },
+      { "<leader>gg", function() Snacks.lazygit() end,                            desc = "LazyGit" },
+      { "<leader>gB", function() Snacks.gitbrowse() end,                         desc = "Git browse" },
+      { "<leader>gf", function() Snacks.lazygit.log_file() end,                  desc = "Lazygit file log" },
+      { "<leader>gl", function() Snacks.picker.git_log() end,                    desc = "Git log" },
+      { "<leader>gL", function() Snacks.picker.git_log_file() end,               desc = "Git log (file)" },
+      { "<leader>gS", function() Snacks.picker.git_status() end,                 desc = "Git status" },
+      { "<leader>gc", function() Snacks.picker.git_branches() end,               desc = "Git branches" },
+      -- ── Notifier ─────────────────────────────────────────────────
+      { "<leader>nh", function() Snacks.notifier.show_history() end,             desc = "Notification history" },
+      { "<leader>nd", function() Snacks.notifier.hide() end,                     desc = "Dismiss notifications" },
+      -- ── Words ────────────────────────────────────────────────────
+      { "]]", function() Snacks.words.jump(1,  true) end,                        desc = "Next reference" },
+      { "[[", function() Snacks.words.jump(-1, true) end,                        desc = "Prev reference" },
       -- ── Misc ─────────────────────────────────────────────────────
-      { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete buffer" },
+      { "<leader>bd", function() Snacks.bufdelete() end,                         desc = "Delete buffer" },
+      { "<leader>rF", function() Snacks.rename.rename_file() end,                desc = "Rename file" },
     },
     opts = {
       -- ── Picker ────────────────────────────────────────────────────
@@ -582,6 +600,8 @@ require("lazy").setup({
         { "<leader>g",  group = "Git" },
         { "<leader>t",  group = "Terminal" },
         { "<leader>h",  group = "Replace" },
+        { "<leader>n",  group = "Notifications" },
+        { "<leader>r",  group = "Rename" },
         { "g",          group = "Go to / Actions" },
         { "]",          group = "Next" },
         { "[",          group = "Prev" },
