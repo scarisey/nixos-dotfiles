@@ -467,15 +467,16 @@
         "nixpkgs": "nixpkgs_7"
       },
       "locked": {
-        "lastModified": 1776302315,
-        "narHash": "sha256-v2uAiaVWkfMPb5Zva/cAobFgBRJyGrbmRK8cfAV/KD8=",
+        "lastModified": 1776622369,
+        "narHash": "sha256-dOfwXlwOk2UkeEiAturhIlYwNuoIZVw/GnFKC2PQ0c0=",
         "owner": "scarisey",
         "repo": "homelab-nix",
-        "rev": "e287d0116bee0b48d24d4b3b13bb7e88eb9a01be",
+        "rev": "111a88325d38d29d9cd5bab56b04f241b4e22e63",
         "type": "github"
       },
       "original": {
         "owner": "scarisey",
+        "ref": "feat/postgresql",
         "repo": "homelab-nix",
         "type": "github"
       }
