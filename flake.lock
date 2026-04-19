@@ -476,7 +476,6 @@
       },
       "original": {
         "owner": "scarisey",
-        "ref": "feat/postgresql",
         "repo": "homelab-nix",
         "type": "github"
       }
@@ -816,11 +815,11 @@
     },
     "private-vault": {
       "locked": {
-        "lastModified": 1776609934,
-        "narHash": "sha256-fder8Ljibha7Brc2pXaEYAh6eEvf5m7zbY/Ikpj/37I=",
+        "lastModified": 1776624711,
+        "narHash": "sha256-fKAfTuzQTLsWfTzrAqkLXB7aIAnH8dIwyFJmJ1EkLLY=",
         "owner": "scarisey",
         "repo": "vault",
-        "rev": "565413057fea27e2fd67c575ac5e06493cbd0674",
+        "rev": "57108e8bc166411e6fcc6d51e6749d8cad77a20a",
         "type": "github"
       },
       "original": {
