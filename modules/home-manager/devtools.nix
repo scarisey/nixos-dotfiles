@@ -31,6 +31,7 @@ in {
     android = mkEnableOption "Android";
     duckdb = mkEnableOption "DuckDB";
     mistralVibe = mkEnableOption "Mistral Vibe CLI";
+    opencode = mkEnableOption "Opencode CLI";
     nixgl = {
       enable = mkEnableOption "Enable NixGL wrappers";
       defaultWrapper = mkOption {
@@ -104,6 +105,9 @@ in {
           ]
           ++ optionals (cfg.mistralVibe || cfg.all) [
             mistralVibe
+          ]
+          ++ optionals cfg.opencode [
+            opencode
           ];
       }
       (mkIf (cfg.javascript || cfg.all) {
@@ -115,6 +119,17 @@ in {
           JAVA_HOME = "${cfg.jdkPkg}/lib/openjdk";
         };
         home.file.".jdks/current".source = "${cfg.jdkPkg}/lib/openjdk";
+      })
+
+      (mkIf cfg.opencode {
+          sops.secrets."google_ai_studio/kilocode_api_key" = {
+            path = "${config.xdg.configHome}/opencode/google_ai_studio.key";
+            mode = "0400";
+          };
+          sops.secrets."openrouter/kilocode_api_key" = {
+            path = "${config.xdg.configHome}/opencode/openrouter.key";
+            mode = "0400";
+          };
       })
     ]);
 }

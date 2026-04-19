@@ -10,6 +10,7 @@
     // {
       copilotCli = inputs.copilot-cli.packages.${final.system}.default;
       mistralVibe = inputs.mistral-vibe.packages.${final.system}.default;
+      opencode = unstable.opencode;
       darktable = unstable.darktable;
       devenv = unstable.devenv;
       immich-unstable = unstable.immich;
