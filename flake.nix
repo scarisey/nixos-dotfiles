@@ -26,7 +26,7 @@
     copilot-cli.url = "github:scarisey/copilot-cli-flake";
 
     #Homelabe separate module
-    homelab-nix.url = "github:scarisey/homelab-nix/feat/postgresql";
+    homelab-nix.url = "github:scarisey/homelab-nix";
 
     #Pull based deployments
     pullix.url = "github:scarisey/pullix";
