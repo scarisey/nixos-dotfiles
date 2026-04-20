@@ -34,6 +34,8 @@ in {
         jq
         yq-go
         nvimpager
+        nurl #give an url, output a fetcher for nix
+        nix-init #give an url, output a derivation for nix
         nil #  nix LSP
         statix # nix linter
         ripgrep #recursive search fs for a regex
