@@ -122,14 +122,14 @@ in {
       })
 
       (mkIf cfg.opencode {
-          sops.secrets."google_ai_studio/kilocode_api_key" = {
-            path = "${config.xdg.configHome}/opencode/google_ai_studio.key";
-            mode = "0400";
-          };
-          sops.secrets."openrouter/kilocode_api_key" = {
-            path = "${config.xdg.configHome}/opencode/openrouter.key";
-            mode = "0400";
-          };
+        sops.secrets."google_ai_studio/kilocode_api_key" = {
+          path = "${config.xdg.configHome}/opencode/google_ai_studio.key";
+          mode = "0400";
+        };
+        sops.secrets."openrouter/kilocode_api_key" = {
+          path = "${config.xdg.configHome}/opencode/openrouter.key";
+          mode = "0400";
+        };
       })
     ]);
 }

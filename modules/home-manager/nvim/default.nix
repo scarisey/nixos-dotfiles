@@ -70,7 +70,7 @@ in {
       extraPackages = with pkgs; [
         # ── Recherche (snacks.picker grep + Spectre) ───────────
         ripgrep # rg  — requis par snacks.picker grep et spectre
-        fd      # fd  — requis par snacks.picker files
+        fd # fd  — requis par snacks.picker files
 
         # ── Compilation native ─────────────────────────────────
         # nvim-treesitter : parsers pré-compilés via plugins =, gcc non nécessaire

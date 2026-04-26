@@ -13,6 +13,7 @@ in {
   };
   config = mkIf cfg.enable {
     scarisey.nvim.enable = true;
+    services.ssh-agent.enable = true;
     fonts.fontconfig.enable = true;
     home.packages = with pkgs;
       [
