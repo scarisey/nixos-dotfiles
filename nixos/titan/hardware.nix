@@ -16,7 +16,7 @@
   boot.kernelModules = ["kvm-amd"];
   boot.extraModulePackages = [];
   boot.supportedFilesystems = ["btrfs" "cifs" "f2fs" "jfs" "ntfs" "reiserfs" "vfat" "xfs"];
-  boot.kernelParams = [ "amd_pstate=active" ];
+  boot.kernelParams = ["amd_pstate=active"];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/0c690bcc-0fd9-49b5-b3e5-446db760591c";
@@ -45,8 +45,8 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.graphics = {
-     enable = true;
-     enable32Bit = true;
+    enable = true;
+    enable32Bit = true;
   };
   hardware.nvidia = {
     modesetting.enable = true;

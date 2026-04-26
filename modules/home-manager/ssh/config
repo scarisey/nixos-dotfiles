@@ -1,5 +1,5 @@
 Include ~/.ssh/private_config
-
+AddKeysToAgent yes
 Host github.com
   HostName github.com
   User git
