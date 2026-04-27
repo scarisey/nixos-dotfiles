@@ -1,4 +1,3 @@
-theme = Arthur
 font-size = 11
 mouse-hide-while-typing = true
 gtk-tabs-location = bottom
@@ -20,3 +19,5 @@ keybind= ctrl+alt+h=goto_split:left
 keybind= ctrl+alt+l=goto_split:right
 keybind= ctrl+alt+k=goto_split:up
 keybind= global:ctrl+²=toggle_quick_terminal
+# theme is managed via ~/.config/ghostty/theme.conf (see toggle_light_theme)
+config-file = ~/.config/ghostty/theme.conf

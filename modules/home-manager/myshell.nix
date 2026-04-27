@@ -128,6 +128,36 @@ in {
         export MANPAGER="nvimpager -p -- -c 'lua nvimpager.maps=false' "
         source $HOME/.customzsh.rc &> /dev/null|| true
         export PATH=$PATH:$HOME/.local/bin/
+
+        toggle_light_theme() {
+          local theme_dir="$HOME/.config/theme"
+          local mode_file="$theme_dir/mode"
+          mkdir -p "$theme_dir"
+
+          local current_mode="dark"
+          [[ -f "$mode_file" ]] && current_mode=$(cat "$mode_file")
+          local new_mode
+          [[ "$current_mode" == "dark" ]] && new_mode="light" || new_mode="dark"
+          echo "$new_mode" > "$mode_file"
+
+          # --- Ghostty (auto-reloads when config-file changes via inotify) ---
+          # Run `ghostty +list-themes` to browse available theme names.
+          if [[ "$new_mode" == "light" ]]; then
+            echo 'theme = GitHub' > "$HOME/.config/ghostty/theme.conf"
+          else
+            echo 'theme = Arthur' > "$HOME/.config/ghostty/theme.conf"
+          fi
+          echo "Ghostty theme switched to $new_mode"
+
+          # --- Vim (new sessions pick this up) ---
+          if [[ "$new_mode" == "light" ]]; then
+            printf 'set background=light\ncolorscheme everforest\n' > "$theme_dir/vim.vim"
+          else
+            printf 'set background=dark\ncolorscheme everforest\n' > "$theme_dir/vim.vim"
+          fi
+          echo "Vim theme switched to $new_mode"
+
+        }
       '';
 
       history = {
@@ -219,5 +249,19 @@ in {
     home.file."git/.gitignore".source = ./git/gitignore;
 
     home.file.".ssh/config".source = ./ssh/config;
+
+    # Create ~/.config/ghostty/theme.conf on first activation (respects current mode).
+    # The theme name can be changed by editing the file or running toggle_light_theme.
+    home.activation.initGhosttyTheme = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      if [ ! -f "$HOME/.config/ghostty/theme.conf" ]; then
+        _mode=dark
+        [ -f "$HOME/.config/theme/mode" ] && _mode=$(cat "$HOME/.config/theme/mode")
+        if [ "$_mode" = "light" ]; then
+          echo "theme = GitHub Light" > "$HOME/.config/ghostty/theme.conf"
+        else
+          echo "theme = Arthur" > "$HOME/.config/ghostty/theme.conf"
+        fi
+      fi
+    '';
   };
 }
