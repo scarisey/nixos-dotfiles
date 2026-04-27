@@ -1,6 +1,70 @@
 vim.g.mapleader      = " "
 vim.g.maplocalleader = " "
 
+-- ─── THÈME MODE ──────────────────────────────────────────────
+local _theme_mode = (function()
+  local f = io.open(vim.fn.expand("~/.config/theme/mode"), "r")
+  if f then
+    local m = f:read("*l"); f:close()
+    return (m == "light") and "light" or "dark"
+  end
+  return "dark"
+end)()
+
+local function apply_theme(mode)
+  vim.o.background = mode
+  local opts = {
+    transparent          = false,
+    term_colors          = true,
+    ending_tildes        = false,
+    cmp_itemkind_colored = true,
+    highlights = {
+      NormalFloat  = { bg = "$bg1" },
+      FloatBorder  = { fg = "$bg3", bg = "$bg1" },
+      WinSeparator = { fg = "$bg3" },
+    },
+  }
+  if mode == "dark" then
+    opts.style  = "darker"
+    opts.colors = {
+      bg0     = "#1a1a1f",
+      bg1     = "#1f1f26",
+      bg2     = "#252530",
+      bg3     = "#2d2d3a",
+      bg_d    = "#151519",
+      bg_blue = "#3b4261",
+      fg      = "#cdd6f4",
+      purple  = "#c678dd",
+      green   = "#98c379",
+      orange  = "#d19a66",
+      blue    = "#61afef",
+      yellow  = "#e5c07b",
+      cyan    = "#56b6c2",
+      red     = "#e06c75",
+      grey    = "#5c6370",
+    }
+  else
+    opts.style = "light"
+  end
+  require("onedark").setup(opts)
+  require("onedark").load()
+end
+
+-- ─── THEME FILE WATCHER ──────────────────────────────────────
+local _theme_file = vim.fn.expand("~/.config/theme/mode")
+local _theme_watcher = vim.uv.new_fs_event()
+if _theme_watcher then
+  _theme_watcher:start(_theme_file, {}, vim.schedule_wrap(function(err)
+    if not err then
+      local f = io.open(_theme_file, "r")
+      if f then
+        local m = f:read("*l"); f:close()
+        apply_theme((m == "light") and "light" or "dark")
+      end
+    end
+  end))
+end
+
 -- ─── OPTIONS GÉNÉRALES ───────────────────────────────────────
 local opt = vim.opt
 
@@ -11,7 +75,7 @@ opt.cursorline     = true
 opt.signcolumn     = "yes"          -- toujours afficher la colonne des signes
 opt.colorcolumn    = ""
 opt.termguicolors  = true
-opt.background     = "dark"
+opt.background     = _theme_mode
 opt.showmode       = false          -- le statusline s'en charge
 opt.laststatus     = 3              -- statusline global (comme Zed)
 opt.cmdheight      = 0              -- masquer la cmdline au repos (style Zed)
@@ -85,43 +149,15 @@ local ts_nix_dir = nix_rtp_path("nvim%-treesitter")
 -- ─── PLUGINS ─────────────────────────────────────────────────
 require("lazy").setup({
 
-  -- ── THÈME (Zed One Dark) ─────────────────────────────────
+  -- ── THÈME (Zed One Dark / light) ─────────────────────────
   {
     "navarasu/onedark.nvim",
     priority = 1000,
     config = function()
-      require("onedark").setup({
-        style            = "darker",   -- "dark" | "darker" | "cool" | "deep"
-        transparent      = false,
-        term_colors      = true,
-        ending_tildes    = false,
-        cmp_itemkind_colored = true,
-        -- Personnalisation pour coller à Zed
-        colors = {
-          bg0      = "#1a1a1f",
-          bg1      = "#1f1f26",
-          bg2      = "#252530",
-          bg3      = "#2d2d3a",
-          bg_d     = "#151519",
-          bg_blue  = "#3b4261",
-          fg       = "#cdd6f4",
-          purple   = "#c678dd",
-          green    = "#98c379",
-          orange   = "#d19a66",
-          blue     = "#61afef",
-          yellow   = "#e5c07b",
-          cyan     = "#56b6c2",
-          red      = "#e06c75",
-          grey     = "#5c6370",
-        },
-        highlights = {
-          -- UI transparente style Zed
-          NormalFloat  = { bg = "$bg1" },
-          FloatBorder  = { fg = "$bg3", bg = "$bg1" },
-          WinSeparator = { fg = "$bg3" },
-        },
-      })
-      require("onedark").load()
+      apply_theme(_theme_mode)
+      vim.api.nvim_create_user_command("SetTheme", function(opts)
+        apply_theme(opts.args)
+      end, { nargs = 1 })
     end,
   },
 
