@@ -142,12 +142,14 @@ in {
 
           # --- Ghostty (auto-reloads when config-file changes via inotify) ---
           # Run `ghostty +list-themes` to browse available theme names.
-          if [[ "$new_mode" == "light" ]]; then
-            echo 'theme = GitHub' > "$HOME/.config/ghostty/theme.conf"
-          else
-            echo 'theme = Arthur' > "$HOME/.config/ghostty/theme.conf"
+          if [[ -d  "$HOME/.config/ghostty" ]];then
+              if [[ "$new_mode" == "light" ]]; then
+                echo 'theme = GitHub' > "$HOME/.config/ghostty/theme.conf"
+              else
+                echo 'theme = Arthur' > "$HOME/.config/ghostty/theme.conf"
+              fi
+              echo "Ghostty theme switched to $new_mode"
           fi
-          echo "Ghostty theme switched to $new_mode"
 
           # --- Vim (new sessions pick this up) ---
           if [[ "$new_mode" == "light" ]]; then
@@ -253,14 +255,16 @@ in {
     # Create ~/.config/ghostty/theme.conf on first activation (respects current mode).
     # The theme name can be changed by editing the file or running toggle_light_theme.
     home.activation.initGhosttyTheme = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      if [ ! -f "$HOME/.config/ghostty/theme.conf" ]; then
-        _mode=dark
-        [ -f "$HOME/.config/theme/mode" ] && _mode=$(cat "$HOME/.config/theme/mode")
-        if [ "$_mode" = "light" ]; then
-          echo "theme = GitHub Light" > "$HOME/.config/ghostty/theme.conf"
-        else
-          echo "theme = Arthur" > "$HOME/.config/ghostty/theme.conf"
-        fi
+      if [[ -d  "$HOME/.config/ghostty" ]];then
+          if [ ! -f "$HOME/.config/ghostty/theme.conf" ]; then
+            _mode=dark
+            [ -f "$HOME/.config/theme/mode" ] && _mode=$(cat "$HOME/.config/theme/mode")
+            if [ "$_mode" = "light" ]; then
+              echo "theme = GitHub Light" > "$HOME/.config/ghostty/theme.conf"
+            else
+              echo "theme = Arthur" > "$HOME/.config/ghostty/theme.conf"
+            fi
+          fi
       fi
     '';
   };

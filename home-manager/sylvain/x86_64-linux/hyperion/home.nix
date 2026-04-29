@@ -36,6 +36,7 @@
     homeManager = {
       package = inputs.home-manager.packages.x86_64-linux.home-manager;
       username = "${config.home.username}";
+      group = "users";
     };
   };
 
