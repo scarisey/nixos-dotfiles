@@ -467,11 +467,11 @@
         "nixpkgs": "nixpkgs_7"
       },
       "locked": {
-        "lastModified": 1777621640,
-        "narHash": "sha256-9hInrWnNI0IzVe4aMKXoSY4CgtAft9mUc02fr5dFVng=",
+        "lastModified": 1777647717,
+        "narHash": "sha256-cTKVUii2ib4jqhE1QHKTPfzmnUSqcuMr61UG4gRYG4c=",
         "owner": "scarisey",
         "repo": "homelab-nix",
-        "rev": "6fb1594c9158e93c947182b760b195bf50d0b5a9",
+        "rev": "fc953f896ab30142c23d52242c0fbe5271b551f3",
         "type": "github"
       },
       "original": {
@@ -836,11 +836,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1777562038,
-        "narHash": "sha256-X3pfqpv3Pp3stMQ9NDuJ6qCnrXVFSL12dIl8YUkgMpg=",
+        "lastModified": 1777648159,
+        "narHash": "sha256-cKSfYL+9+RsFo9qGwwZ+CvViZx5bODRqMT9U93rdYos=",
         "owner": "scarisey",
         "repo": "pullix",
-        "rev": "f66df260466da4658b103da6a457c2301f62f391",
+        "rev": "df04ec2c14a3e10673047cc7b4f56249a4d97b5c",
         "type": "github"
       },
       "original": {
