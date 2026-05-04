@@ -45,6 +45,15 @@ function fetch_all() {
   parallel ghq get {} <$remotes
 }
 
+function update_all() {
+  _checkArg $1
+  projects=$(mktemp)
+  remotes=$(mktemp)
+  glab api groups/$1/projects -X GET -f simple=true -f include_subgroups=true -f per_page=100 --paginate >$projects
+  cat $projects | jq -r '.[]|.ssh_url_to_repo' >$remotes
+  parallel git --git-dir={} pull <$remotes
+}
+
 function _filter_project() {
   _checkArg $1
   _checkArg $2
