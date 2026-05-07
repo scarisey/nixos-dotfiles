@@ -5,6 +5,7 @@
   docker = import ./docker.nix;
   i3Xfce = import ./i3.nix;
   kde = import ./kde.nix;
+  llama-cpp = import ./llama-cpp.nix;
   gnome = import ./gnome.nix;
   cloud = import ./cloud.nix;
   distrobox = import ./distrobox.nix;
