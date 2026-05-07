@@ -18,6 +18,8 @@
       plex = unstable.plex;
       windsurf = unstable.windsurf;
       zed-editor = unstable.zed-editor;
+      llama-cpp = unstable.llama-cpp;
+      llama-cpp-rocm = unstable.llama-cpp-rocm;
     };
 
   modifications = final: prev: {};
