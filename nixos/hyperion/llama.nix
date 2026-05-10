@@ -3,7 +3,7 @@
   modelUrl = "https://huggingface.co/lmstudio-community/gemma-4-E4B-it-GGUF/resolve/main/gemma-4-E4B-it-Q4_K_M.gguf";
 in {
   scarisey.llama-cpp = {
-    enable = true;
+    enable = false;
     model = modelFile;
     host = "127.0.0.1";
     port = 7070;
