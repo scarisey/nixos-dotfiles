@@ -836,11 +836,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1778125659,
-        "narHash": "sha256-GKByK7fr4YD4RFsHlFNQjFovo++XRpDyVdJnaWUw+uI=",
+        "lastModified": 1778587823,
+        "narHash": "sha256-IgHqzMrIZB8HxPijttJ3iOJHE68Y8TUbq6XdRrRnmvc=",
         "owner": "scarisey",
         "repo": "pullix",
-        "rev": "c384e4c81696b839a1cdc11b68d558f22d8ae2be",
+        "rev": "f428c271a74598f9b90b4bf25fd7c367e987a09c",
         "type": "github"
       },
       "original": {
