@@ -26,10 +26,10 @@
     copilot-cli.url = "github:scarisey/copilot-cli-flake";
 
     #Homelabe separate module
-    homelab-nix.url = "github:scarisey/homelab-nix";
+    homelab-nix.url = "github:scarisey/homelab-nix/debug/alloy";
 
     #Pull based deployments
-    pullix.url = "github:scarisey/pullix";
+    pullix.url = "github:scarisey/pullix/fix/traces";
 
     #Private vault - change for your own when fork
     private-vault = {

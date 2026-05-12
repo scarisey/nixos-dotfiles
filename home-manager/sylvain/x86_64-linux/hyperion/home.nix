@@ -32,7 +32,7 @@
     };
     environmentFile = config.sops.secrets."hyperion/nix_config_pullix".path;
     verbose_logs = false;
-    otelHttpEndpoint = "http://localhost:4318/v1/metrics";
+    otelHttpEndpoint = "http://localhost:4318";
     homeManager = {
       package = inputs.home-manager.packages.x86_64-linux.home-manager;
       username = "${config.home.username}";
