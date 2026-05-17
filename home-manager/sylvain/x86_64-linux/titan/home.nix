@@ -8,10 +8,8 @@
   scarisey.gui.obs = true;
   scarisey.devtools.enable = true;
   scarisey.devtools.all = true;
-  scarisey.devtools.vscode = true;
   scarisey.devtools.intellij = true;
   scarisey.devtools.zed = true;
-  scarisey.devtools.android = true;
   scarisey.devtools.opencode = true;
   scarisey.gnome.enable = true;
   scarisey.restic = {
@@ -20,9 +18,8 @@
   };
 
   home.packages = with pkgs; [
-    picard
-    windsurf
     darktable
-    copilotCli
+    nvtopPackages.nvidia
+    lmstudio
   ];
 }

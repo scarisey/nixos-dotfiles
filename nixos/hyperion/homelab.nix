@@ -5,10 +5,13 @@
 }: let
   privateModulesGroup = config.scarisey.privateModules.group;
 in {
-  services.jellyfin.enable = true;
+  services.jellyfin = {
+    enable = true;
+    openFirewall = true;
+  };
   users.users.jellyfin.extraGroups = [privateModulesGroup];
   users.users.sylvain.extraGroups = lib.mkAfter [privateModulesGroup];
-  networking.firewall = {allowedUDPPorts = [1900];}; #DLNA
+  networking.firewall = {allowedUDPPorts = [1900 2869 5004 5005];}; #DLNA
   scarisey.homelab = {
     enable = lib.mkForce true;
     settings = {

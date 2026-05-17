@@ -13,6 +13,7 @@
     ./frigate.nix
     ./homelab.nix
     ./immich.nix
+    ./llama.nix
     ./microbin.nix
     ./nfs.nix
     ./samba.nix
