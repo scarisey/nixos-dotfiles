@@ -85,8 +85,7 @@ in {
         # pour les installer et les exécuter.
 
         # Node.js → ts_ls, pyright, cssls, html, jsonls, eslint
-        nodejs_20
-        nodePackages.npm # certains serveurs LSP s'installent via npm
+        nodejs-slim
 
         # Python → pyright, ruff-lsp
         # Sur Nix, pip ne s'expose pas via python3Packages.pip directement :
@@ -115,11 +114,13 @@ in {
         tree-sitter # CLI tree-sitter (parsers custom)
         shellcheck # LSP bash (bashls)
         stylua # formatter Lua (utilisé par lua_ls)
-        nodePackages.prettier # formatter JS/TS/HTML/CSS/JSON
+        prettier # formatter JS/TS/HTML/CSS/JSON
         black # formatter Python
         isort # imports Python
         gofumpt # formatter Go
       ];
+      withRuby = true;
+      withPython3 = true;
     };
 
     # ─── CONFIGURATION ──────────────────────────────────────────

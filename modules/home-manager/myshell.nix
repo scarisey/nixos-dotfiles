@@ -40,7 +40,7 @@ in {
         nil #  nix LSP
         statix # nix linter
         ripgrep #recursive search fs for a regex
-        neofetch
+        fastfetch
         pstree
         zip
         unrar
@@ -115,6 +115,7 @@ in {
     programs.yazi = {
       enable = true;
       enableZshIntegration = true;
+      shellWrapperName = "y";
     };
 
     programs.zsh = {

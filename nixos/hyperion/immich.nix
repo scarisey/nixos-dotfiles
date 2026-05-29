@@ -21,8 +21,6 @@ in {
     database = {
       enable = true;
       createDB = true;
-      enableVectors = false;
-      enableVectorChord = true;
     };
   };
 }

@@ -36,7 +36,6 @@ in {
           defaultSession = "xfce+i3";
           gdm = {
             enable = true;
-            wayland = false;
           };
         };
         windowManager.i3 = {

@@ -9,12 +9,6 @@ with lib; let
 in {
   options.scarisey.gnome = {
     enable = mkEnableOption "My gnome config";
-    wayland = mkOption {
-      default = true;
-      example = true;
-      type = lib.types.bool;
-      description = "Is wayland enabled";
-    };
   };
   config =
     mkIf cfg.enable
@@ -22,7 +16,6 @@ in {
       services.xserver.xkb.layout = config.console.keyMap;
       services.displayManager = {
         gdm.enable = true;
-        gdm.wayland = cfg.wayland;
       };
       services.desktopManager = {
         gnome.enable = true;

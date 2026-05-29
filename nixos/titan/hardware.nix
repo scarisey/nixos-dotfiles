@@ -30,6 +30,7 @@
 
   fileSystems."/aux" = {
     device = "/dev/disk/by-label/Aux";
+    fsType = "ntfs";
   };
 
   swapDevices = [];
