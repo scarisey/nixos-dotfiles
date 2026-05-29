@@ -8,7 +8,7 @@
     nixpkgs-master.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
 
     # Home manager
-    home-manager.url = "github:nix-community/home-manager/release-25.11";
+    home-manager.url = "https://flakehub.com/f/nix-community/home-manager/0.2605.*";
 
     #For secrets encryption
     sops-nix.url = "github:Mic92/sops-nix";
