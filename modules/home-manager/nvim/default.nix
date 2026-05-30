@@ -10,9 +10,10 @@ in {
   config = lib.mkIf cfg.enable {
     #nvim
     home.shellAliases.cleanNvim = ''
-      rm -Rf ~/.local/share/nvim
-      rm -Rf ~/.local/state/nvim
-      rm -Rf ~/.cache/nvim
+      rm -rf ~/.local/share/nvim/lazy
+      rm -rf ~/.local/share/nvim/mason
+      rm -rf ~/.local/state/nvim
+      rm -rf ~/.cache/nvim
     '';
     # ─── NEOVIM ─────────────────────────────────────────────────
     programs.neovim = {
@@ -85,7 +86,7 @@ in {
         # pour les installer et les exécuter.
 
         # Node.js → ts_ls, pyright, cssls, html, jsonls, eslint
-        nodejs-slim
+        # nodejs is provided by withNodeJs = true above (added to PATH via runtimeDeps)
 
         # Python → pyright, ruff-lsp
         # Sur Nix, pip ne s'expose pas via python3Packages.pip directement :
@@ -119,8 +120,13 @@ in {
         isort # imports Python
         gofumpt # formatter Go
       ];
+      extraPython3Packages = ps: with ps; [ pynvim ];
       withRuby = true;
       withPython3 = true;
+      withNodeJs = true;
+      extraConfig = ''
+        let g:loaded_perl_provider = 0
+      '';
     };
 
     # ─── CONFIGURATION ──────────────────────────────────────────
