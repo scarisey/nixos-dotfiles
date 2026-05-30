@@ -10,7 +10,6 @@
   scarisey.devtools.all = true;
   scarisey.devtools.intellij = true;
   scarisey.devtools.zed = true;
-  scarisey.devtools.opencode = true;
   scarisey.gnome.enable = true;
   scarisey.restic = {
     enable = true;
@@ -19,7 +18,5 @@
 
   home.packages = with pkgs; [
     darktable
-    nvtopPackages.nvidia
-    lmstudio
   ];
 }
