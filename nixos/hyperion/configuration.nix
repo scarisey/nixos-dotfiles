@@ -40,7 +40,7 @@
       };
     };
     environmentFile = config.sops.secrets."hyperion/nix_config_pullix".path;
-    verbose_logs = false;
+    verbose_logs = true;
     otelHttpEndpoint = "http://localhost:4318";
   };
 
