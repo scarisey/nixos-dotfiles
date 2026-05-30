@@ -41,7 +41,7 @@
     };
     environmentFile = config.sops.secrets."hyperion/nix_config_pullix".path;
     verbose_logs = false;
-    otelHttpEndpoint = "http://localhost:4318/v1/metrics";
+    otelHttpEndpoint = "http://localhost:4318";
   };
 
   environment.systemPackages = with pkgs; [
