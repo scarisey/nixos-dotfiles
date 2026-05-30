@@ -126,25 +126,12 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- ─── HELPER : localiser un plugin injecté par Nix dans le rtp ───
--- Nix wraps neovim avec --cmd "set rtp^=..." AVANT que init.lua tourne.
--- On scanne donc le rtp ici pour trouver le path Nix du plugin.
-local function nix_rtp_path(pattern)
-  for _, p in ipairs(vim.api.nvim_list_runtime_paths()) do
-    if p:find(pattern, 1, false) then return p end
-  end
-  return nil
-end
-
 -- Open the logs directory in a buffer --
 
 local function open_nvim_state_dir()
   local state_dir = vim.fn.expand("$HOME/.local/state/nvim")
   vim.cmd("edit " .. vim.fn.fnameescape(state_dir))
 end
-
--- Path de nvim-treesitter dans le store Nix (nil si non-NixOS)
-local ts_nix_dir = nix_rtp_path("nvim%-treesitter")
 
 -- ─── PLUGINS ─────────────────────────────────────────────────
 require("lazy").setup({
@@ -339,46 +326,6 @@ require("lazy").setup({
       statuscolumn = { enabled = false },
       bigfile      = { enabled = false },
     },
-  },
-
-  -- ── TREESITTER ─────────────────────────────────────────────
-  -- Sur NixOS  : ts_nix_dir pointe vers le store Nix → lazy utilise ce
-  --              path directement, pas de clone git, parsers pré-compilés.
-  -- Hors NixOS : ts_nix_dir = nil → lazy clone depuis GitHub normalement.
-  {
-    "nvim-treesitter/nvim-treesitter",
-    -- Si Nix a mis le plugin dans le rtp, on le pointe directement.
-    -- lazy n'essaiera pas de le télécharger ou compiler quoi que ce soit.
-    dir    = ts_nix_dir,   -- nil sur non-NixOS → comportement lazy normal
-    build  = ts_nix_dir and nil or ":TSUpdate",
-    event  = "BufReadPost",
-    config = function()
-      require("nvim-treesitter.configs").setup({
-        -- NixOS : parsers pré-compilés dans le store, rien à installer
-        -- Autre : lazy gère l'installation via ensure_installed
-        auto_install     = ts_nix_dir == nil,
-        ensure_installed = ts_nix_dir and {} or {
-          "lua", "vim", "vimdoc", "javascript", "typescript", "tsx",
-          "python", "rust", "go", "c", "cpp", "json", "yaml", "toml",
-          "html", "css", "markdown", "markdown_inline", "bash", "regex",
-        },
-        sync_install   = false,
-        ignore_install = {},
-        highlight = {
-          enable                            = true,
-          additional_vim_regex_highlighting = false,
-        },
-        indent = { enable = true },
-        incremental_selection = {
-          enable  = true,
-          keymaps = {
-            init_selection   = "<C-space>",
-            node_incremental = "<C-space>",
-            node_decremental = "<BS>",
-          },
-        },
-      })
-    end,
   },
 
   -- ── LSP ──────────────────────────────────────────────────
@@ -658,12 +605,24 @@ require("lazy").setup({
   ui = { border = "rounded" },
   checker = { enabled = true, notify = false },
   change_detection = { notify = false },
-  -- Empêcher lazy de gérer nvim-treesitter (géré par Nix/nixpkgs)
   performance = {
     rtp = {
       disabled_plugins = {},
     },
   },
+})
+
+-- ─── TREESITTER ──────────────────────────────────────────────
+-- nvim-treesitter v0.10 supprime l'ancienne API
+-- require("nvim-treesitter.configs").setup(...).
+-- Le plugin gère uniquement l'installation des parsers (TSInstall, etc.) ;
+-- le highlighting et l'indentation passent par vim.treesitter (Neovim built-in).
+-- Le plugin est fourni par Nix via le packpath (chargé après init.lua).
+-- pcall : ignore silencieusement si le parser n'est pas dispo pour ce filetype.
+vim.api.nvim_create_autocmd("FileType", {
+  callback = function(ev)
+    pcall(vim.treesitter.start, ev.buf)
+  end,
 })
 
 -- ─── RACCOURCIS GLOBAUX (hors LSP) ───────────────────────────
@@ -734,7 +693,7 @@ local autocmd = vim.api.nvim_create_autocmd
 autocmd("TextYankPost", {
   group    = augroup("YankHighlight", { clear = true }),
   callback = function()
-    vim.highlight.on_yank({ higroup = "Visual", timeout = 200 })
+    vim.hl.on_yank({ higroup = "Visual", timeout = 200 })
   end,
 })
 
