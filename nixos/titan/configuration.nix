@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   ...
 }: {
@@ -24,6 +23,7 @@
     docker.enable = true;
     qemu.enable = true;
     gnome.enable = true;
+    cosmic.enable = true;
   };
 
   #Games
