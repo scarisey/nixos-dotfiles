@@ -41,11 +41,13 @@
       RuntimeMaxUse=512MB
     '';
   };
+  # handle virtual devices
+  hardware.uinput.enable = true;
   users.users.sylvain = {
     shell = pkgs.zsh;
     isNormalUser = true;
     description = "sylvain";
-    extraGroups = ["networkmanager" "wheel" "docker" "libvirtd" "kvm"];
+    extraGroups = ["networkmanager" "wheel" "docker" "libvirtd" "kvm" "uinput" "video" "render"];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMqEDm8BpcxUzHebnxsyeOGWOO6nfCQPFKqwqVTUV/S0 portable"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFfzo6os2jVd/4Q0BVk9sbn3GqQeyCddzCd4ZkgDmBLY galaxyS25"

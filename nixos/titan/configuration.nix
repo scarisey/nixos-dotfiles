@@ -26,6 +26,14 @@
     cosmic.enable = true;
   };
 
+  #Remote sessions
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true; # Donne les capacités nécessaires pour l'injection d'inputs sous Wayland
+    openFirewall = true; # Ouvre automatiquement les ports réseau requis
+  };
+
   #Games
   programs.steam = {
     enable = true;
