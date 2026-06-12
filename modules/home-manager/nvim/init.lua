@@ -729,5 +729,8 @@ autocmd("TermOpen", {
     t("<C-j>", [[<Cmd>wincmd j<CR>]])
     t("<C-k>", [[<Cmd>wincmd k<CR>]])
     t("<C-l>", [[<Cmd>wincmd l<CR>]])
+    t("<C-&>",      [[<Cmd>lua Snacks.terminal.toggle(nil, { win = { position = "bottom", height = 0.3 } })<CR>]])
+    t("<leader>tt", [[<Cmd>lua Snacks.terminal.toggle(nil, { win = { position = "float" } })<CR>]])
+    t("<leader>tv", [[<Cmd>lua Snacks.terminal.toggle(nil, { win = { position = "right", width = 0.4 } })<CR>]])
   end,
 })
