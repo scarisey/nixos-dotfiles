@@ -16,6 +16,10 @@
     hddBackup1 = true;
   };
 
+  home.packages = with pkgs; [
+    filter-nef-by-rating
+  ];
+
   services.pullix = {
     enable = true;
     hostname = "hyperion";
