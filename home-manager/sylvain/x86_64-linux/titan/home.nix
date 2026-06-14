@@ -18,5 +18,6 @@
 
   home.packages = with pkgs; [
     darktable
+    filter-nef-by-rating
   ];
 }

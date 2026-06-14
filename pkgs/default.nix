@@ -4,6 +4,7 @@
   adoc = pkgs.callPackage ./adoc {};
   antora = pkgs.callPackage ./antora {};
   basic-secret = pkgs.callPackage ./basic-secret {};
+  filter-nef-by-rating = pkgs.callPackage ./filter-nef-by-rating {};
   git-prune = pkgs.callPackage ./git-prune {};
   glab-tools = pkgs.callPackage ./glab-tools {};
   graalvm-21 = pkgs.callPackage ./graalvm-21 {};
