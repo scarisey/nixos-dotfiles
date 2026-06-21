@@ -21,53 +21,12 @@ in {
       defaultEditor = true; # EDITOR=nvim dans l'environnement
       viAlias = true; # vi → nvim
 
-      # ── nvim-treesitter via nixpkgs (parsers pré-compilés) ────
-      #
-      # Neovim est wrappé par Nix avec un environnement LuaJIT isolé.
-      # Quand lazy installe nvim-treesitter dans ~/.local/share/nvim/lazy/,
-      # ce chemin est inconnu de cet environnement → "module not found".
-      # La solution : passer par programs.neovim.plugins, qui injecte
-      # le plugin directement dans le runtimepath du wrapper Nix.
-      #
-      # Les parsers listés ici sont des .so pré-compilés dans le store Nix.
-      # Zéro compilation au démarrage, zéro besoin de :TSUpdate.
       plugins = with pkgs.vimPlugins; [
         # mini.icons : requis par which-key v3+ pour l'affichage des icônes
         mini-nvim
-
-        (nvim-treesitter.withPlugins (p:
-          with p; [
-            # Langages utilisés dans init.lua
-            lua
-            vim
-            vimdoc
-            javascript
-            typescript
-            tsx
-            python
-            rust
-            go
-            c
-            cpp
-            json
-            yaml
-            toml
-            html
-            css
-            markdown
-            markdown_inline
-            bash # utile pour le highlighting treesitter bash
-            regex # utile pour le highlighting treesitter regex
-            # Bonus utiles
-            nix
-            dockerfile
-            sql
-            graphql
-          ]))
+        nvim-treesitter.withAllGrammars
       ];
 
-      # Variables d'environnement injectées dans l'env de Neovim
-      # (utile pour que Mason trouve les binaires Nix dans son PATH)
       extraPackages = with pkgs; [
         # ── Recherche (snacks.picker grep + Spectre) ───────────
         ripgrep # rg  — requis par snacks.picker grep et spectre
@@ -81,16 +40,6 @@ in {
         # ── Git (gitsigns, lazy.nvim bootstrap) ───────────────
         git
 
-        # ── LSP / Mason runtime deps ───────────────────────────
-        # Mason télécharge les binaires LSP ; il a besoin de ces runtimes
-        # pour les installer et les exécuter.
-
-        # Node.js → ts_ls, pyright, cssls, html, jsonls, eslint
-        # nodejs is provided by withNodeJs = true above (added to PATH via runtimeDeps)
-
-        # Python → pyright, ruff-lsp
-        # Sur Nix, pip ne s'expose pas via python3Packages.pip directement :
-        # il faut construire un interpréteur qui l'embarque.
         (python3.withPackages (ps:
           with ps; [
             pip
