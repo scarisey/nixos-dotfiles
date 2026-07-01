@@ -42,6 +42,17 @@
     environmentFile = config.sops.secrets."hyperion/nix_config_pullix".path;
     verbose_logs = true;
     otelHttpEndpoint = "http://localhost:4318";
+    webhooks = {
+        onTestSucceeded = {
+            url ="https://api.github.com/repos/scarisey/nixos-dotfiles/actions/workflows/hyperion-auto-deploy.yml/dispatches"; 
+            method = "POST";
+            headers = [
+                "Authorization: Bearer <GITHUB_TOKEN>"
+                "Accept: application/vnd.github+json"
+            ];
+            data = ''{"ref":"main", "inputs": {"environment": "prod"}}'';
+        };
+    };
   };
 
   environment.systemPackages = with pkgs; [
