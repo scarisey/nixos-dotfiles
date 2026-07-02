@@ -58,6 +58,7 @@ in {
         cryfs
         cht-sh
         cz-cli
+        sshfs
 
         #sops
         sops
