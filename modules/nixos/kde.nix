@@ -11,13 +11,7 @@ in {
     enable = mkEnableOption "My kde config";
   };
   config = mkIf cfg.enable {
-    services.xserver = {
-      # Enable the X11 windowing system.
-      enable = true;
-      # Configure keymap in X11
-      xkb.layout = "fr";
-      xkb.variant = "azerty";
-    };
+    services.xserver.xkb.layout = config.console.keyMap;
     services = {
       displayManager = {
         sddm.enable = true;
@@ -27,12 +21,24 @@ in {
     };
     programs.dconf.enable = true; #gnome compat
     environment.systemPackages = with pkgs; [
-      krita
-      kolourpaint
-      plasma5Packages.kalk
-      libsForQt5.qtstyleplugin-kvantum
-      yakuake
-      adwaita-icon-theme
+     # KDE Utilities
+      kdePackages.discover # Optional: Software center for Flatpaks/firmware updates
+      kdePackages.kcalc # Calculator
+      kdePackages.kcharselect # Character map
+      kdePackages.kclock # Clock app
+      kdePackages.kcolorchooser # Color picker
+      kdePackages.kolourpaint # Simple paint program
+      kdePackages.ksystemlog # System log viewer
+      kdePackages.sddm-kcm # SDDM configuration module
+      kdiff3 # File/directory comparison tool
+      
+      # Hardware/System Utilities (Optional)
+      kdePackages.isoimagewriter # Write hybrid ISOs to USB
+      kdePackages.partitionmanager # Disk and partition management
+      hardinfo2 # System benchmarks and hardware info
+      wayland-utils # Wayland diagnostic tools
+      wl-clipboard # Wayland copy/paste support
+      vlc # Media player
     ];
   };
 }
