@@ -22,7 +22,7 @@
     network.enable = true;
     docker.enable = true;
     qemu.enable = true;
-    gnome.enable = true;
+    kde.enable = true;
   };
 
   #Remote sessions
