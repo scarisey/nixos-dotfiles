@@ -11,16 +11,13 @@ in {
     enable = mkEnableOption "KDE settings";
   };
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [libsForQt5.ksshaskpass libsForQt5.kwallet-pam materia-kde-theme papirus-icon-theme];
 
-    home.file.".config/plasma-workspace/env/ssh-agent-startup.sh" = {
-      source = ./kde/ssh-agent-startup.sh;
-    };
-    home.file.".config/plasma-workspace/shutdown/ssh-agent-shutdown.sh" = {
-      source = ./kde/ssh-agent-shutdown.sh;
-    };
-    home.file.".config/autostart-scripts/kwallet-ssh-add.sh" = {
-      source = ./kde/kwallet-ssh-add.sh;
-    };
+    # FIX: deduplicate entries in XDG_DATA_DIRS (performance impact)
+    home.sessionVariablesExtra = ''
+      if [ -n "$XDG_DATA_DIRS" ]; then
+        XDG_DATA_DIRS=$(echo "$XDG_DATA_DIRS" | tr ':' '\n' | awk '!seen[$0]++' | paste -sd: -)
+        export XDG_DATA_DIRS
+      fi
+    '';
   };
 }

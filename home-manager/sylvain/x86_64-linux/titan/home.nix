@@ -14,6 +14,7 @@
     enable = true;
     all = true;
   };
+  scarisey.kde.enable = true;
 
   home.packages = with pkgs; [
     darktable
