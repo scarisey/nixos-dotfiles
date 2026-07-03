@@ -62,11 +62,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1783036940,
-        "narHash": "sha256-B0QkwQBtyS7ISdWWupD0wn/pzxpgbjQsZT91/H2dC0g=",
+        "lastModified": 1783082132,
+        "narHash": "sha256-p8FhxWYwJiY5sCd2kGrbfd3y5Q7p4KxPe8eXJQosCKY=",
         "owner": "scarisey",
         "repo": "copilot-cli-flake",
-        "rev": "27d29eaa83067107c27f0bbba6af431fa459ae72",
+        "rev": "e5727a1cdcf39cba6f32cb61210c9635ef47d623",
         "type": "github"
       },
       "original": {
