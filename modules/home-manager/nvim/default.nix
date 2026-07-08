@@ -69,7 +69,7 @@ in {
         isort # imports Python
         gofumpt # formatter Go
       ];
-      extraPython3Packages = ps: with ps; [ pynvim ];
+      extraPython3Packages = ps: with ps; [pynvim];
       withRuby = true;
       withPython3 = true;
       withNodeJs = true;

@@ -59,6 +59,7 @@ in {
         cht-sh
         cz-cli
         sshfs
+        herdr #multiplexer
 
         #sops
         sops
@@ -253,6 +254,12 @@ in {
     home.file."git/.gitignore".source = ./git/gitignore;
 
     home.file.".ssh/config".source = ./ssh/config;
+    xdg.configFile."config.toml" = {
+      enable = true;
+      source = ./herdr/config.toml;
+      target = "herdr/config.toml";
+      force = true;
+    };
 
     # Create ~/.config/ghostty/theme.conf on first activation (respects current mode).
     # The theme name can be changed by editing the file or running toggle_light_theme.

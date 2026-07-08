@@ -25,3 +25,4 @@
   modifications = final: prev: {};
 }
 // {homelab-nix-overlay = inputs.homelab-nix.overlays.default;}
+// {herdr-overlay = inputs.herdr.overlays.default;}
