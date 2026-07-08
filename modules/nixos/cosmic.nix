@@ -2,9 +2,9 @@
   lib,
   config,
   ...
-}:with lib;
-let
- cfg = config.scarisey.cosmic;
+}:
+with lib; let
+  cfg = config.scarisey.cosmic;
 in {
   options.scarisey.cosmic = {
     enable = mkEnableOption "Enable Cosmic Desktop environment.";

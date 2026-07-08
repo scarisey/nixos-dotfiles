@@ -21,7 +21,7 @@ in {
     };
     programs.dconf.enable = true; #gnome compat
     environment.systemPackages = with pkgs; [
-     # KDE Utilities
+      # KDE Utilities
       kdePackages.discover # Optional: Software center for Flatpaks/firmware updates
       kdePackages.kcalc # Calculator
       kdePackages.kcharselect # Character map
@@ -31,7 +31,7 @@ in {
       kdePackages.ksystemlog # System log viewer
       kdePackages.sddm-kcm # SDDM configuration module
       kdiff3 # File/directory comparison tool
-      
+
       # Hardware/System Utilities (Optional)
       kdePackages.isoimagewriter # Write hybrid ISOs to USB
       kdePackages.partitionmanager # Disk and partition management

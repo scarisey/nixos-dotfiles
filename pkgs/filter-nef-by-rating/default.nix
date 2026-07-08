@@ -1,5 +1,7 @@
-{ lib, python3 }:
-
+{
+  lib,
+  python3,
+}:
 python3.pkgs.buildPythonApplication {
   pname = "filter-nef-by-rating";
   version = "1.0.0";
@@ -7,7 +9,7 @@ python3.pkgs.buildPythonApplication {
   src = ./.; # place default.nix next to filter_nef_by_rating.py
 
   # Pure stdlib — no runtime deps beyond Python itself
-  propagatedBuildInputs = [ ];
+  propagatedBuildInputs = [];
 
   # No setup.py / pyproject.toml: install the script directly
   format = "other";
@@ -30,9 +32,9 @@ python3.pkgs.buildPythonApplication {
       printed, symlinked, or hard-linked into an output directory.
       Fully non-destructive: source files are never modified.
     '';
-    license     = lib.licenses.mit;
-    maintainers = [ ];
+    license = lib.licenses.mit;
+    maintainers = [];
     mainProgram = "filter-nef-by-rating";
-    platforms   = lib.platforms.unix;
+    platforms = lib.platforms.unix;
   };
 }

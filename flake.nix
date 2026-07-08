@@ -19,6 +19,9 @@
     #ghostty terminal
     ghostty.url = "github:ghostty-org/ghostty";
 
+    #herdr multiplexer
+    herdr.url = "github:ogulcancelik/herdr";
+
     # Mistral Vibe
     mistral-vibe.url = "github:mistralai/mistral-vibe";
 

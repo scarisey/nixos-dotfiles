@@ -11,7 +11,6 @@ in {
     enable = mkEnableOption "KDE settings";
   };
   config = mkIf cfg.enable {
-
     # FIX: deduplicate entries in XDG_DATA_DIRS (performance impact)
     home.sessionVariablesExtra = ''
       if [ -n "$XDG_DATA_DIRS" ]; then
