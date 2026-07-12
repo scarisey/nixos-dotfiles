@@ -61,6 +61,10 @@
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
+    extraPackages = with pkgs;[
+      mesa
+      libva
+    ];
   };
   hardware.amdgpu.opencl.enable = true;
   services.pulseaudio.enable = false;
