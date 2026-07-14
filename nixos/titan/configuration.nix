@@ -53,7 +53,10 @@
     };
   };
 
-  virtualisation.waydroid.enable = true;
+  virtualisation.waydroid = {
+    enable = true;
+    package = pkgs.waydroid-nftables;
+  };
   xdg.portal.enable = true;
   services.flatpak.enable = true;
   services.printing.enable = true;
