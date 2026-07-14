@@ -10,6 +10,7 @@
   scarisey.devtools.all = true;
   scarisey.devtools.intellij = true;
   scarisey.devtools.zed = true;
+  scarisey.devtools.opencode = true;
   scarisey.restic = {
     enable = true;
     all = true;
