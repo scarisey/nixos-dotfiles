@@ -24,7 +24,7 @@
     "@antora/lunr-extension": "^1.0.0-alpha.13",
     "@antora/site-generator": "3.1.15",
     "@sntke/antora-mermaid-extension": "^0.0.13",
-    "asciidoctor-kroki": "^0.18.1"
+    "asciidoctor-kroki": "^1.0.1"
   },
   "engines": {
     "node": ">=16.0.0"
