@@ -49,9 +49,9 @@
     description = "sylvain";
     extraGroups = ["networkmanager" "wheel" "docker" "libvirtd" "kvm" "uinput" "video" "render"];
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMqEDm8BpcxUzHebnxsyeOGWOO6nfCQPFKqwqVTUV/S0 portable"
+      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLgoELNv4jTtrESfowlapxA33kJ+q1eHBED7ZvBObcbMrGwclmWKgelczhjxJ6iTpbe21BrrfFkEd5u1cjXHHMU= portable"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFfzo6os2jVd/4Q0BVk9sbn3GqQeyCddzCd4ZkgDmBLY galaxyS25"
-      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEFENGeTpyFZR0RsSHeENU5yKWwe7eJQuDB4iSPLRs6pNYIFZe5RfVi+CwZGeQeGFHJ5juaysOg8qj2tOn8d/Og= sylvain@titan"
+      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEFENGeTpyFZR0RsSHeENU5yKWwe7eJQuDB4iSPLRs6pNYIFZe5RfVi+CwZGeQeGFHJ5juaysOg8qj2tOn8d/Og= titan"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII/9EwGzvoHYDgn4zg8TCtM1eV4q5wkNMi7/QIBKztHH hyperion"
     ];
   };
