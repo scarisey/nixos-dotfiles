@@ -11,10 +11,21 @@ local _theme_mode = (function()
   return "dark"
 end)()
 
-local function apply_theme(mode)
+-- ─── TRANSPARENCE ────────────────────────────────────────────
+local _transparency_file = vim.fn.expand("~/.config/theme/transparency")
+local _theme_transparent = (function()
+  local f = io.open(_transparency_file, "r")
+  if f then
+    local m = f:read("*l"); f:close()
+    return m == "on"
+  end
+  return false
+end)()
+
+local function apply_theme(mode, transparent)
   vim.o.background = mode
   local opts = {
-    transparent          = false,
+    transparent          = transparent,
     term_colors          = true,
     ending_tildes        = false,
     cmp_itemkind_colored = true,
@@ -59,7 +70,23 @@ if _theme_watcher then
       local f = io.open(_theme_file, "r")
       if f then
         local m = f:read("*l"); f:close()
-        apply_theme((m == "light") and "light" or "dark")
+        _theme_mode = (m == "light") and "light" or "dark"
+        apply_theme(_theme_mode, _theme_transparent)
+      end
+    end
+  end))
+end
+
+-- ─── TRANSPARENCY FILE WATCHER ───────────────────────────────
+local _transparency_watcher = vim.uv.new_fs_event()
+if _transparency_watcher then
+  _transparency_watcher:start(_transparency_file, {}, vim.schedule_wrap(function(err)
+    if not err then
+      local f = io.open(_transparency_file, "r")
+      if f then
+        local m = f:read("*l"); f:close()
+        _theme_transparent = (m == "on")
+        apply_theme(_theme_mode, _theme_transparent)
       end
     end
   end))
@@ -141,9 +168,9 @@ require("lazy").setup({
     "navarasu/onedark.nvim",
     priority = 1000,
     config = function()
-      apply_theme(_theme_mode)
+      apply_theme(_theme_mode, _theme_transparent)
       vim.api.nvim_create_user_command("SetTheme", function(opts)
-        apply_theme(opts.args)
+        apply_theme(opts.args, _theme_transparent)
       end, { nargs = 1 })
     end,
   },

@@ -163,6 +163,31 @@ in {
           echo "Vim theme switched to $new_mode"
 
         }
+
+        toggle_transparency() {
+          local theme_dir="$HOME/.config/theme"
+          local transparency_file="$theme_dir/transparency"
+          mkdir -p "$theme_dir"
+
+          local current_state="off"
+          [[ -f "$transparency_file" ]] && current_state=$(cat "$transparency_file")
+          local new_state
+          [[ "$current_state" == "off" ]] && new_state="on" || new_state="off"
+          echo "$new_state" > "$transparency_file"
+
+          # --- Ghostty (auto-reloads when config-file changes via inotify) ---
+          if [[ -d "$HOME/.config/ghostty" ]]; then
+            if [[ "$new_state" == "on" ]]; then
+              printf 'background-opacity = 0.85\nbackground-blur-radius = 20\n' > "$HOME/.config/ghostty/transparency.conf"
+            else
+              printf 'background-opacity = 1\nbackground-blur-radius = 0\n' > "$HOME/.config/ghostty/transparency.conf"
+            fi
+            echo "Ghostty transparency switched to $new_state"
+          fi
+
+          # --- Neovim (running instances pick this up via the fs watcher on transparency file) ---
+          echo "Neovim transparency switched to $new_state"
+        }
       '';
 
       history = {
@@ -272,6 +297,22 @@ in {
               echo "theme = GitHub Light" > "$HOME/.config/ghostty/theme.conf"
             else
               echo "theme = Arthur" > "$HOME/.config/ghostty/theme.conf"
+            fi
+          fi
+      fi
+    '';
+
+    # Create ~/.config/ghostty/transparency.conf on first activation (respects current state).
+    # Toggle with toggle_transparency.
+    home.activation.initGhosttyTransparency = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      if [[ -d  "$HOME/.config/ghostty" ]];then
+          if [ ! -f "$HOME/.config/ghostty/transparency.conf" ]; then
+            _state=off
+            [ -f "$HOME/.config/theme/transparency" ] && _state=$(cat "$HOME/.config/theme/transparency")
+            if [ "$_state" = "on" ]; then
+              printf 'background-opacity = 0.85\nbackground-blur-radius = 20\n' > "$HOME/.config/ghostty/transparency.conf"
+            else
+              printf 'background-opacity = 1\nbackground-blur-radius = 0\n' > "$HOME/.config/ghostty/transparency.conf"
             fi
           fi
       fi

@@ -21,3 +21,5 @@ keybind= ctrl+alt+k=goto_split:up
 keybind= global:ctrl+²=toggle_quick_terminal
 # theme is managed via ~/.config/ghostty/theme.conf (see toggle_light_theme)
 config-file = ~/.config/ghostty/theme.conf
+# background transparency is managed via ~/.config/ghostty/transparency.conf (see toggle_transparency)
+config-file = ~/.config/ghostty/transparency.conf
