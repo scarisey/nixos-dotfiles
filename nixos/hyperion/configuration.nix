@@ -49,8 +49,9 @@
             headers = [
                 "Authorization: Bearer <GITHUB_TOKEN>"
                 "Accept: application/vnd.github+json"
+                "X-GitHub-Api-Version: 2026-03-10"
             ];
-            data = ''{"ref":"main", "inputs": {"environment": "prod"}}'';
+            data = ''{"ref":"main", "inputs": {"target": "Prod"}}'';
         };
     };
   };
