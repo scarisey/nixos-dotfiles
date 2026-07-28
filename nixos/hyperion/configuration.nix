@@ -47,7 +47,7 @@
             url ="https://api.github.com/repos/scarisey/nixos-dotfiles/actions/workflows/hyperion-auto-deploy.yml/dispatches"; 
             method = "POST";
             headers = [
-                "Authorization: Bearer <GITHUB_TOKEN>"
+                "Authorization: Bearer <WEBHOOK_PAT>"
                 "Accept: application/vnd.github+json"
                 "X-GitHub-Api-Version: 2026-03-10"
             ];
