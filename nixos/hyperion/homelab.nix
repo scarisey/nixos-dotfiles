@@ -68,6 +68,34 @@ in {
         environmentFile = "${config.sops.secrets."hyperion/ionos/environmentFile".path}";
       };
       grafana = {
+        basic.enabled = false;
+        auth = {
+          disable_login_form = true;
+        };
+        generic_oauth = {
+            enabled = true;
+            name = "zitadel_nix";
+            icon = "signin";
+
+            #allow_sign_up = true;      # true for first registration
+            client_id = "$__file{${config.sops.secrets."hyperion/grafana/zitadel_client_id".path}}";
+            # PKCE flow, now client secret
+
+            scopes = "openid profile email roles offline_access";
+            auth_url = "https://hyperion-homelab-ayyqgi.us1.zitadel.cloud/oauth/v2/authorize";
+            token_url = "https://hyperion-homelab-ayyqgi.us1.zitadel.cloud/oauth/v2/token";
+            api_url = "https://hyperion-homelab-ayyqgi.us1.zitadel.cloud/oidc/v1/userinfo";
+
+            use_pkce = true;
+
+            login_attribute_path = "preferred_username";
+            email_attribute_path = "email";
+            name_attribute_path = "name";
+
+            # rôle Grafana admin mappé depuis un attribut Zitadel (optionnel)
+            # allow_assign_grafana_admin = true;
+            role_attribute_path = "contains(keys(\"urn:zitadel:iam:org:project:roles\"), 'monitoring_admin') && 'GrafanaAdmin' || contains(keys(\"urn:zitadel:iam:org:project:roles\"), 'monitoring_editor') && 'Editor' || 'Viewer'";
+          };
         security = {
           admin_user = "admin";
           admin_password = "$__file{/run/secrets/hyperion/grafana/init_passwd}"; #only for first setup

@@ -112,6 +112,10 @@
       mode = "0440";
       group = "grafana";
     };
+    secrets."hyperion/grafana/zitadel_client_id" = {
+      mode = "0440";
+      group = "grafana";
+    };
     secrets."hyperion/postgresql/grafana_role_postscript" = {
       mode = "0440";
       group = "postgres";
