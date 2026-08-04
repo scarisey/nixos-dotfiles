@@ -109,9 +109,9 @@ in {
           ++ optionals cfg.opencode [
             opencode
           ];
-          programs.zsh.initContent = lib.mkOrder 1500 ''
-            eval "$(devenv hook zsh)"
-          '';
+        programs.zsh.initContent = lib.mkOrder 1500 ''
+          eval "$(devenv hook zsh)"
+        '';
       }
       (mkIf (cfg.javascript || cfg.all) {
         home.activation.npmSetPrefix = hm.dag.entryAfter ["reloadSystemd"] "$DRY_RUN_CMD ${config.home.path}/bin/npm $VERBOSE_ARG set prefix ${npmGlobalDir}"; #then npm -g install should work
