@@ -43,16 +43,16 @@
     verbose_logs = true;
     otelHttpEndpoint = "http://localhost:4318";
     webhooks = {
-        onTestSuccess = {
-            url ="https://api.github.com/repos/scarisey/nixos-dotfiles/actions/workflows/hyperion-auto-deploy.yml/dispatches"; 
-            method = "POST";
-            headers = [
-                "Authorization: Bearer <WEBHOOK_PAT>"
-                "Accept: application/vnd.github+json"
-                "X-GitHub-Api-Version: 2026-03-10"
-            ];
-            data = ''{"ref":"main", "inputs": {"target": "Prod"}}'';
-        };
+      onTestSuccess = {
+        url = "https://api.github.com/repos/scarisey/nixos-dotfiles/actions/workflows/hyperion-auto-deploy.yml/dispatches";
+        method = "POST";
+        headers = [
+          "Authorization: Bearer <WEBHOOK_PAT>"
+          "Accept: application/vnd.github+json"
+          "X-GitHub-Api-Version: 2026-03-10"
+        ];
+        data = ''{"ref":"main", "inputs": {"target": "Prod"}}'';
+      };
     };
   };
 
