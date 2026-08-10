@@ -53,6 +53,12 @@ in {
         # On utilise rustup pour que Mason puisse gérer les toolchains
         rustup
 
+        # Rust → débogueur (codelldb, package dédié fourni par nixpkgs qui
+        # expose un binaire `codelldb` autonome sur le PATH). rustaceanvim
+        # détecte automatiquement `codelldb` sur le PATH, pas besoin de le
+        # télécharger via Mason ni de le configurer manuellement.
+        vscode-extensions.vadimcn.vscode-lldb.adapter
+
         # ── Utilitaires système (Mason downloader) ─────────────
         unzip # Mason décompresse des archives .zip
         curl # Mason télécharge via curl

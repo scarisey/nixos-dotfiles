@@ -450,8 +450,92 @@ require("lazy").setup({
               capabilities = capabilities,
             })
           end,
+          -- rust_analyzer est entièrement géré par rustaceanvim (LSP + DAP),
+          -- on désactive donc son setup via lspconfig pour éviter un double client.
+          ["rust_analyzer"] = function() end,
         },
       })
+    end,
+  },
+
+  -- ── DEBUG (DAP) ───────────────────────────────────────────
+  -- Backend générique de débogage (breakpoints, step, UI, valeurs inline).
+  -- Utilisé par rustaceanvim pour déboguer binaires ET tests unitaires Rust.
+  {
+    "mfussenegger/nvim-dap",
+    dependencies = {
+      "rcarriga/nvim-dap-ui",
+      "nvim-neotest/nvim-nio",
+      "theHamsta/nvim-dap-virtual-text",
+    },
+    keys = {
+      { "<F5>",       function() require("dap").continue() end,          desc = "Debug: Continue" },
+      { "<F10>",      function() require("dap").step_over() end,         desc = "Debug: Step over" },
+      { "<F11>",      function() require("dap").step_into() end,         desc = "Debug: Step into" },
+      { "<F12>",      function() require("dap").step_out() end,          desc = "Debug: Step out" },
+      { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle breakpoint" },
+      { "<leader>dB", function()
+          require("dap").set_breakpoint(vim.fn.input("Condition: "))
+        end, desc = "Conditional breakpoint" },
+      { "<leader>dc", function() require("dap").continue() end,          desc = "Continue" },
+      { "<leader>dl", function() require("dap").run_last() end,          desc = "Run last" },
+      { "<leader>dt", function() require("dap").terminate() end,         desc = "Terminate" },
+      { "<leader>dr", function() require("dap").repl.toggle() end,       desc = "Toggle REPL" },
+      { "<leader>du", function() require("dapui").toggle() end,          desc = "Toggle UI" },
+    },
+    config = function()
+      local dap   = require("dap")
+      local dapui = require("dapui")
+
+      dapui.setup()
+      require("nvim-dap-virtual-text").setup({ commented = true })
+
+      -- Ouverture / fermeture automatique de l'UI de debug
+      dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open() end
+      dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close() end
+      dap.listeners.before.event_exited["dapui_config"]     = function() dapui.close() end
+
+      -- Signes visuels des breakpoints / point d'arrêt courant
+      vim.fn.sign_define("DapBreakpoint",         { text = "●", texthl = "DiagnosticError" })
+      vim.fn.sign_define("DapBreakpointCondition", { text = "◆", texthl = "DiagnosticWarn" })
+      vim.fn.sign_define("DapStopped",             { text = "▶", texthl = "DiagnosticInfo", linehl = "Visual" })
+    end,
+  },
+
+  -- ── RUST : LSP dédié + Runnables / Testables / Debuggables ──
+  -- rustaceanvim gère rust-analyzer lui-même (voir handler no-op ci-dessus)
+  -- ainsi que le lancement de binaires/tests et leur débogage via nvim-dap
+  -- et codelldb (fourni par Nix, cf. CODELLDB_ADAPTER dans home-manager).
+  {
+    "mrcjkb/rustaceanvim",
+    version = "^6",
+    lazy    = false, -- doit se charger avant l'ouverture d'un fichier .rs
+    ft      = { "rust" },
+    init = function()
+      vim.g.rustaceanvim = {
+        tools = {
+          hover_actions = { auto_focus = true },
+        },
+        server = {
+          on_attach = function(_, bufnr)
+            local map = function(mode, lhs, rhs, desc)
+              vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc, silent = true })
+            end
+            -- Préfixe <leader>c (Cargo) : <leader>r est déjà pris par le rename LSP
+            map("n", "<leader>cr", function() vim.cmd.RustLsp("runnables") end,     "Rust: Run (runnables)")
+            map("n", "<leader>ct", function() vim.cmd.RustLsp("testables") end,     "Rust: Run unit tests")
+            map("n", "<leader>cd", function() vim.cmd.RustLsp("debuggables") end,   "Rust: Debug (run/tests)")
+            map("n", "<leader>co", function() vim.cmd.RustLsp("openCargo") end,     "Rust: Open Cargo.toml")
+            map("n", "<leader>ce", function() vim.cmd.RustLsp("explainError") end,  "Rust: Explain error")
+            map("n", "<leader>cm", function() vim.cmd.RustLsp("expandMacro") end,   "Rust: Expand macro")
+          end,
+        },
+        dap = {
+          -- rustaceanvim détecte automatiquement `codelldb` sur le PATH
+          -- (fourni par vscode-extensions.vadimcn.vscode-lldb.adapter dans
+          -- home-manager) : pas besoin de configurer l'adaptateur ici.
+        },
+      }
     end,
   },
 
@@ -620,6 +704,8 @@ require("lazy").setup({
         { "<leader>h",  group = "Replace" },
         { "<leader>n",  group = "Notifications" },
         { "<leader>r",  group = "Rename" },
+        { "<leader>c",  group = "Cargo / Rust" },
+        { "<leader>d",  group = "Debug" },
         { "g",          group = "Go to / Actions" },
         { "]",          group = "Next" },
         { "[",          group = "Prev" },
