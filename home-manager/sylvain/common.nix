@@ -8,7 +8,7 @@
 }: {
   imports =
     builtins.attrValues outputs.homeManagerModules
-    ++ [inputs.sops-nix.homeManagerModules.sops inputs.android-nixpkgs.hmModule inputs.pullix.homeManagerModules.default];
+    ++ [inputs.sops-nix.homeManagerModules.sops inputs.android-nixpkgs.hmModule inputs.pullix.homeManagerModules.default inputs.determinate.homeManagerModules.default ];
 
   nixpkgs.config = {
     allowUnfree = true;
@@ -34,7 +34,7 @@
       warn-dirty = false;
     };
     registry.nixpkgs.flake = inputs.nixpkgs;
-    package = pkgs.nix;
+    package = lib.mkForce pkgs.nix;
     extraOptions = ''
       !include ${config.home.homeDirectory}/.config/nix/nix-custom.conf
     '';
