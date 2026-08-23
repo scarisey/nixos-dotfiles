@@ -438,7 +438,7 @@ require("lazy").setup({
       require("mason").setup({ ui = { border = "rounded" } })
       require("mason-lspconfig").setup({
         ensure_installed = {
-          "lua_ls", "ts_ls", "pyright", "rust_analyzer",
+          "lua_ls", "ts_ls", "pyright",
           "gopls", "cssls", "html", "jsonls", "nil_ls"
         },
         automatic_installation = true,
@@ -450,9 +450,6 @@ require("lazy").setup({
               capabilities = capabilities,
             })
           end,
-          -- rust_analyzer est entièrement géré par rustaceanvim (LSP + DAP),
-          -- on désactive donc son setup via lspconfig pour éviter un double client.
-          ["rust_analyzer"] = function() end,
         },
       })
     end,
