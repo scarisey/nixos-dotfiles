@@ -160,6 +160,55 @@ local function open_nvim_state_dir()
   vim.cmd("edit " .. vim.fn.fnameescape(state_dir))
 end
 
+-- ─── RACCOURCIS LSP (calqués sur le vim-mode de Zed) ─────────
+-- Référence : https://zed.dev/docs/vim#language-server
+-- Défini ici pour être partagé entre nvim-lspconfig ET rustaceanvim,
+-- afin que les mêmes raccourcis fonctionnent dans tous les langages.
+local function on_attach(_, bufnr)
+  local map = function(mode, lhs, rhs, desc)
+    vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc, silent = true })
+  end
+
+  -- Navigation (Zed : gd / gD / gy / gI / gr / gA)
+  map("n", "gd", vim.lsp.buf.definition,      "Go to definition")
+  map("n", "gD", vim.lsp.buf.declaration,     "Go to declaration")
+  map("n", "gy", vim.lsp.buf.type_definition, "Go to type definition")
+  map("n", "gI", vim.lsp.buf.implementation,  "Go to implementation")
+  map("n", "gr", vim.lsp.buf.references,      "Find references")
+  map("n", "gA", vim.lsp.buf.references,      "Find all references")
+
+  -- Documentation / annotation de type (Zed : gh → hover inline)
+  map("n", "gh", vim.lsp.buf.hover,          "Hover docs")
+  map("n", "K",  vim.lsp.buf.hover,          "Hover docs (alias vim)")
+  map("n", "gH", vim.lsp.buf.signature_help, "Signature help")
+
+  -- Symboles (Zed : gs = fichier courant, gS = projet entier)
+  map("n", "gs", function() Snacks.picker.lsp_symbols() end,           "Document symbols")
+  map("n", "gS", function() Snacks.picker.lsp_workspace_symbols() end, "Workspace symbols")
+
+  -- Actions (Zed : g . ouvre le menu d'actions)
+  map("n", "g.", vim.lsp.buf.code_action, "Code action")
+  map("v", "g.", vim.lsp.buf.code_action, "Code action (visual)")
+
+  -- Renommer (Zed : c d)
+  map("n", "cd", vim.lsp.buf.rename, "Rename symbol")
+
+  -- Formater (Zed : ctrl-shift-i)
+  map("n", "<C-S-i>", function() vim.lsp.buf.format({ async = true }) end, "Format file")
+  map("v", "<C-S-i>", function() vim.lsp.buf.format({ async = true }) end, "Format selection")
+
+  -- Diagnostics (Zed : ]d / [d)
+  map("n", "]d", vim.diagnostic.goto_next, "Next diagnostic")
+  map("n", "[d", vim.diagnostic.goto_prev, "Prev diagnostic")
+  map("n", "]e", function()
+    vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
+  end, "Next error")
+  map("n", "[e", function()
+    vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })
+  end, "Prev error")
+  map("n", "<C-w>d", vim.diagnostic.open_float, "Show diagnostics")
+end
+
 -- ─── PLUGINS ─────────────────────────────────────────────────
 require("lazy").setup({
 
@@ -366,54 +415,10 @@ require("lazy").setup({
     config = function()
       require("neodev").setup()
       -- ── Raccourcis LSP calqués sur Zed vim-mode ─────────────
-      -- on_attach est défini AVANT mason-lspconfig.setup() car les
-      -- handlers y sont déclarés inline (API mason-lspconfig v2).
-      local on_attach = function(_, bufnr)
-        local map = function(mode, lhs, rhs, desc)
-          vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc, silent = true })
-        end
-
-        -- Navigation (identique Zed vim-mode)
-        map("n", "gd",  vim.lsp.buf.definition,       "Go to definition")
-        map("n", "gD",  vim.lsp.buf.declaration,       "Go to declaration")
-        map("n", "gy",  vim.lsp.buf.type_definition,   "Go to type definition")
-        map("n", "gi",  vim.lsp.buf.implementation,    "Go to implementation")
-        map("n", "gr",  vim.lsp.buf.references,        "Find references")
-        map("n", "gR",  vim.lsp.buf.references,        "Find references (alt)")
-
-        -- Informations (Zed : gh → hover)
-        map("n", "gh",  vim.lsp.buf.hover,             "Hover docs")
-        map("n", "gH",  vim.lsp.buf.signature_help,    "Signature help")
-
-        -- Actions (Zed : <Space>a / ga)
-        map("n", "ga",        vim.lsp.buf.code_action, "Code action")
-        map("v", "ga",        vim.lsp.buf.code_action, "Code action (visual)")
-        map("n", "<leader>a", vim.lsp.buf.code_action, "Code action")
-
-        -- Renommer (Zed : <Space>r)
-        map("n", "<leader>r", vim.lsp.buf.rename, "Rename symbol")
-
-        -- Formater (Zed : <Space>f)
-        map("n", "<leader>f", function() vim.lsp.buf.format({ async = true }) end, "Format file")
-        map("v", "<leader>f", function() vim.lsp.buf.format({ async = true }) end, "Format selection")
-
-        -- Diagnostics (Zed : ]d / [d  et  <Space>e)
-        map("n", "]d", vim.diagnostic.goto_next, "Next diagnostic")
-        map("n", "[d", vim.diagnostic.goto_prev, "Prev diagnostic")
-        map("n", "]e", function()
-          vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
-        end, "Next error")
-        map("n", "[e", function()
-          vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })
-        end, "Prev error")
-        map("n", "<leader>E", vim.diagnostic.open_float, "Show diagnostics")
-        map("n", "<leader>q", vim.diagnostic.setloclist, "Diagnostics to loclist")
-
-        -- Hover / Symbols
-        map("n", "<leader>k", vim.lsp.buf.hover, "Hover docs")
-        map("n", "<leader>s", function() Snacks.picker.lsp_symbols() end,           "Document symbols")
-        map("n", "<leader>S", function() Snacks.picker.lsp_workspace_symbols() end, "Workspace symbols")
-      end
+      -- on_attach (défini en tête de fichier, partagé avec rustaceanvim)
+      -- doit exister AVANT mason-lspconfig.setup() car les handlers y sont
+      -- déclarés inline (API mason-lspconfig v2).
+      -- Raccourcis : gd gD gy gI gr gA gh K gs gS g. ]d [d …
 
       -- Config diagnostics visuels 
       vim.diagnostic.config({
@@ -514,11 +519,13 @@ require("lazy").setup({
           hover_actions = { auto_focus = true },
         },
         server = {
-          on_attach = function(_, bufnr)
+          -- Chaîner on_attach (raccourcis Zed) avant les raccourcis Cargo
+          on_attach = function(client, bufnr)
+            on_attach(client, bufnr)
             local map = function(mode, lhs, rhs, desc)
               vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc, silent = true })
             end
-            -- Préfixe <leader>c (Cargo) : <leader>r est déjà pris par le rename LSP
+            -- Préfixe <leader>c (Cargo) : le rename LSP est sur cd (style Zed)
             map("n", "<leader>cr", function() vim.cmd.RustLsp("runnables") end,     "Rust: Run (runnables)")
             map("n", "<leader>ct", function() vim.cmd.RustLsp("testables") end,     "Rust: Run unit tests")
             map("n", "<leader>cd", function() vim.cmd.RustLsp("debuggables") end,   "Rust: Debug (run/tests)")
@@ -695,7 +702,7 @@ require("lazy").setup({
         },
       })
       require("which-key").add({
-        { "<leader>f",  group = "Find / Format" },
+        { "<leader>f",  group = "Find" },
         { "<leader>g",  group = "Git" },
         { "<leader>t",  group = "Terminal" },
         { "<leader>h",  group = "Replace" },
