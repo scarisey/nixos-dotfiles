@@ -801,6 +801,9 @@ map("n", "<leader>L",  "<cmd>Lazy<cr>",  "Open Lazy")
 -- Ouvrir Mason
 map("n", "<leader>M",  "<cmd>Mason<cr>", "Open Mason")
 
+-- Quitter le mode terminal avec Ctrl + q
+map("t", "<C-q>", [[<C-\><C-n>]], "Quitter le terminal avec Ctrl+q")
+
 -- ─── AUTOCOMMANDES ───────────────────────────────────────────
 
 local augroup = vim.api.nvim_create_augroup
