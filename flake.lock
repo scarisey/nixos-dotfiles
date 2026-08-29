@@ -829,11 +829,11 @@
     },
     "private-modules": {
       "locked": {
-        "lastModified": 1780055982,
-        "narHash": "sha256-BfOWQBpG3zER52aW35yBegTsaRqr5ZONGljE5fqOegw=",
+        "lastModified": 1787989221,
+        "narHash": "sha256-4YKIep8diLWqCnZZhEZO3A4+tScv6s8WZardHoU0ISA=",
         "owner": "scarisey",
         "repo": "private-nix-modules",
-        "rev": "64f887671cd87313b371ac9836f807c6ad2193e4",
+        "rev": "3f8c128968bcb94927636cd13d7090f2e140bdb3",
         "type": "github"
       },
       "original": {
