@@ -1,6 +1,6 @@
 {
   "name": "antora",
-  "version": "3.1.15",
+  "version": "3.2.0",
   "description": "A meta package for Antora that installs both the CLI and site generator.",
   "license": "MPL-2.0",
   "author": "OpenDevise Inc. (https://opendevise.com)",
@@ -11,7 +11,8 @@
   "homepage": "https://antora.org",
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/antora/antora.git"
+    "url": "git+https://gitlab.com/antora/antora.git",
+    "directory": "packages/antora"
   },
   "bugs": {
     "url": "https://gitlab.com/antora/antora/issues"
@@ -20,14 +21,14 @@
     "antora": "bin/antora"
   },
   "dependencies": {
-    "@antora/cli": "3.1.15",
+    "@antora/cli": "3.2.0",
     "@antora/lunr-extension": "^1.0.0-alpha.13",
-    "@antora/site-generator": "3.1.15",
+    "@antora/site-generator": "3.2.0",
     "@sntke/antora-mermaid-extension": "^0.0.13",
     "asciidoctor-kroki": "^1.0.1"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=20.0.0"
   },
   "files": [
     "bin/"
@@ -41,7 +42,7 @@
     "web publishing"
   ],
   "scripts": {
-    "prepublishOnly": "npx -y downdoc --prepublish",
-    "postpublish": "npx -y downdoc --postpublish"
+    "prepublishOnly": "npx -y downdoc@latest --prepublish",
+    "postpublish": "npx -y downdoc@latest --postpublish"
   }
 }
