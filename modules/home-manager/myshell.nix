@@ -126,11 +126,25 @@ in {
       enableCompletion = true;
       autosuggestion.enable = true;
       initContent = ''
+        # oh-my-zsh's termsupport plugin sets the tab title to the running
+        # command on preexec (e.g. the alias' underlying command). Disable it
+        # so our own precmd hook below is the sole source of the tab title.
+        export DISABLE_AUTO_TITLE="true"
+
         eval "$(pay-respects zsh)"
         export PAGER="nvimpager -p -- -c 'lua nvimpager.maps=false' "
         export MANPAGER="nvimpager -p -- -c 'lua nvimpager.maps=false' "
         source $HOME/.customzsh.rc &> /dev/null|| true
         export PATH=$PATH:$HOME/.local/bin/
+
+        # Set terminal tab title to the last directory component of $PWD.
+        autoload -Uz add-zsh-hook
+        _set_tab_title_to_dir() {
+          local dir="''${PWD##*/}"
+          [[ "$PWD" == "$HOME" ]] && dir="~"
+          print -Pn "\e]2;$dir\a"
+        }
+        add-zsh-hook precmd _set_tab_title_to_dir
 
         toggle_light_theme() {
           local theme_dir="$HOME/.config/theme"
