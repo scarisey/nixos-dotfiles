@@ -519,6 +519,10 @@ require("lazy").setup({
           hover_actions = { auto_focus = true },
         },
         server = {
+          -- Mêmes capabilities que les autres LSP (snippets, resolve, etc.)
+          -- pour que nvim-cmp bénéficie de la complétion enrichie de
+          -- rust-analyzer, comme pour les serveurs gérés par mason-lspconfig.
+          capabilities = require("cmp_nvim_lsp").default_capabilities(),
           -- Chaîner on_attach (raccourcis Zed) avant les raccourcis Cargo
           on_attach = function(client, bufnr)
             on_attach(client, bufnr)
