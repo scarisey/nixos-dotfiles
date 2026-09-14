@@ -728,6 +728,12 @@ require("lazy").setup({
   change_detection = { notify = false },
   performance = {
     rtp = {
+      -- reset = true (le défaut de lazy.nvim) viderait le runtimepath et en
+      -- exclurait les plugins fournis par Nix (ex: mini.nvim installé via
+      -- programs.neovim.plugins dans ~/.local/share/nvim/site/pack/hm/start),
+      -- provoquant l'erreur "module 'mini.icons' not found". On désactive ce
+      -- reset pour conserver ces plugins Nix dans le runtimepath.
+      reset = false,
       disabled_plugins = {},
     },
   },
