@@ -9,6 +9,7 @@
   devtools = import ./devtools.nix;
   myshell = import ./myshell.nix;
   nvim = import ./nvim/default.nix;
+  nvim-nixvim = import ./nvim-nixvim.nix;
   i3Xfce = import ./i3Xfce;
   quickemu = import ./quickemu.nix;
   cloud = import ./cloud.nix;

@@ -49,9 +49,24 @@ in {
         # Go → gopls
         go
 
-        # Rust → rust-analyzer
-        # On utilise rustup pour que Mason puisse gérer les toolchains
-        rustup
+        # Rust → rust-analyzer, cargo, rustc, clippy, rustfmt fournis
+        # directement par nixpkgs.
+        #
+        # On n'utilise PLUS `rustup` : ses toolchains sont téléchargées puis
+        # patchées (patchelf) contre le glibc du nixpkgs courant au moment de
+        # `rustup toolchain install`. Ce lien est figé dans le temps ; dès
+        # que nixpkgs met à jour glibc et que l'ancienne version est
+        # garbage-collectée du store, les binaires cargo/rustc installés
+        # deviennent des liens morts ("No such file or directory" alors que
+        # le fichier existe : c'est son interpréteur ELF qui pointe vers un
+        # chemin disparu) — vécu en conditions réelles avec rustaceanvim
+        # (`cargo metadata` en échec). cargo/rustc en paquets Nix classiques
+        # n'ont pas ce problème : ce sont de vraies dérivations, jamais
+        # patchées a posteriori, donc jamais cassées par un GC de glibc.
+        cargo
+        rustc
+        clippy
+        rustfmt
 
         # Rust → débogueur (codelldb, package dédié fourni par nixpkgs qui
         # expose un binaire `codelldb` autonome sur le PATH). rustaceanvim
@@ -65,6 +80,13 @@ in {
         wget # fallback de curl
         gnutar # archives .tar.gz
         gzip
+
+        # Nix → nil (LSP), fourni directement par Nix : le paquet Mason
+        # "nil" s'installe via `cargo install`, or seul `rustup` est
+        # présent sur le PATH (sans toolchain par défaut), donc `cargo`
+        # est introuvable et l'installation Mason échoue
+        # (voir "nil_ls" retiré de ensure_installed dans init.lua).
+        nil
 
         # ── Outils divers ──────────────────────────────────────
         tree-sitter # CLI tree-sitter (parsers custom)
@@ -96,7 +118,7 @@ in {
       CARGO_HOME = "${config.home.homeDirectory}/.cargo";
       GOPATH = "${config.home.homeDirectory}/go";
       GOROOT = "${pkgs.go}/share/go";
-      # PATH étendu pour que Mason trouve rustup/cargo au premier lancement
+      # PATH étendu pour que Mason/rustaceanvim trouvent cargo au premier lancement
       PATH = lib.concatStringsSep ":" [
         "${config.home.homeDirectory}/.cargo/bin"
         "${config.home.homeDirectory}/go/bin"

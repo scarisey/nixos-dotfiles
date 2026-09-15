@@ -31,6 +31,13 @@
     #Homelabe separate module
     homelab-nix.url = "github:scarisey/homelab-nix";
 
+    # Nixvim : configuration Neovim déclarative en Nix (remplace
+    # progressivement le module nvim/ historique basé sur lazy.nvim + Mason)
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     #Pull based deployments
     pullix.url = "github:scarisey/pullix/fix/hmModule";
 

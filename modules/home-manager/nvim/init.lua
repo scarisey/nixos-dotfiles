@@ -458,7 +458,7 @@ require("lazy").setup({
       require("mason-lspconfig").setup({
         ensure_installed = {
           "lua_ls", "ts_ls", "pyright",
-          "gopls", "cssls", "html", "jsonls", "nil_ls"
+          "gopls", "cssls", "html", "jsonls",
         },
         automatic_installation = true,
         -- Handler par défaut : appliqué à tous les serveurs installés
@@ -470,6 +470,14 @@ require("lazy").setup({
             })
           end,
         },
+      })
+
+      -- Nix (nil_ls) : binaire `nil` fourni directement par Nix (voir
+      -- extraPackages), pas géré par Mason (son installeur utilise
+      -- `cargo install`, absent car seul `rustup` est sur le PATH).
+      require("lspconfig").nil_ls.setup({
+        on_attach    = on_attach,
+        capabilities = capabilities,
       })
     end,
   },
