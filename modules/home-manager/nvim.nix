@@ -1,11 +1,11 @@
 # Configuration Neovim déclarative via nixvim (https://github.com/nix-community/nixvim).
 #
-# Remplace progressivement le module `nvim/` historique (lazy.nvim + Mason) :
+# Remplace l'ancien module lazy.nvim + Mason (retiré) :
 #   - Plus de Mason : chaque LSP/outil est un paquet Nix (`plugins.lsp.servers.<x>.enable`),
 #     donc plus de dépendance à `cargo`/`npm`/réseau au runtime pour les installer.
 #   - Plus de lazy.nvim : nixvim génère et charge lui-même le runtime Neovim,
 #     donc plus de désynchronisation possible entre le packpath Nix et l'init.lua
-#     (c'est exactement le bug treesitter/Comment.nvim rencontré avec le module DIY).
+#     (c'est le bug treesitter/Comment.nvim rencontré avec l'ancien module DIY).
 #   - Les bouts de logique trop dynamiques pour être déclaratifs (thème
 #     jour/nuit avec watcher de fichier, transparence à chaud) restent en Lua
 #     via `extraConfigLua`, échappatoire volontaire de nixvim.
@@ -16,25 +16,13 @@
   inputs,
   ...
 }: let
-  cfg = config.scarisey.nvim-nixvim;
+  cfg = config.scarisey.nvim;
 in {
-  options.scarisey.nvim-nixvim.enable = lib.mkEnableOption "Enable Nvim config (nixvim, déclaratif, sans Mason/lazy.nvim).";
+  options.scarisey.nvim.enable = lib.mkEnableOption "Enable Nvim config (nixvim, déclaratif, sans Mason/lazy.nvim).";
 
   imports = [inputs.nixvim.homeManagerModules.nixvim];
 
   config = lib.mkIf cfg.enable {
-    assertions = [
-      {
-        assertion = !config.scarisey.nvim.enable;
-        message = ''
-          scarisey.nvim (ancien module lazy.nvim/Mason) et scarisey.nvim-nixvim
-          (nouveau module déclaratif) sont mutuellement exclusifs : activez
-          l'un ou l'autre, pas les deux (ils fourniraient chacun leur propre
-          binaire `nvim`).
-        '';
-      }
-    ];
-
     home.shellAliases = {
       vi = "nvim";
       vim = "nvim";
