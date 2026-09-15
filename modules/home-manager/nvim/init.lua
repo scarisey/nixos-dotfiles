@@ -142,6 +142,20 @@ opt.confirm        = true
 opt.completeopt    = { "menu", "menuone", "noselect" }
 opt.shortmess:append("c")
 
+-- ─── PLUGINS FOURNIS PAR NIX (programs.neovim.plugins) ──────
+-- Home Manager dépose ces plugins (mini.nvim, nvim-treesitter +
+-- nvim-treesitter-grammars) dans
+-- ~/.local/share/nvim/site/pack/hm/start/, mais Neovim (empaqueté par
+-- Nix) démarre avec un 'packpath' restreint à $VIMRUNTIME : les
+-- paquets "start" de ce dossier ne sont donc jamais chargés
+-- automatiquement. On réintègre stdpath("data")/site dans 'packpath'
+-- puis on force leur chargement (équivalent au chargement natif au
+-- démarrage). Sans ça, require("nvim-treesitter") et les parsers
+-- treesitter (rust, etc.) sont introuvables, ce qui casse notamment
+-- Comment.nvim (qui s'appuie sur treesitter pour son commentstring).
+vim.opt.packpath:prepend(vim.fn.stdpath("data") .. "/site")
+vim.cmd("packloadall!")
+
 -- ─── LAZY.NVIM BOOTSTRAP ─────────────────────────────────────
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -745,7 +759,50 @@ require("lazy").setup({
 -- Le plugin gère uniquement l'installation des parsers (TSInstall, etc.) ;
 -- le highlighting et l'indentation passent par vim.treesitter (Neovim built-in).
 -- Le plugin est fourni par Nix via le packpath (chargé après init.lua).
--- pcall : ignore silencieusement si le parser n'est pas dispo pour ce filetype.
+--
+-- IMPORTANT : pour cette version de nvim-treesitter, `.withAllGrammars`
+-- (déclaré côté Nix dans programs.neovim.plugins) ne bundle plus les
+-- parsers compilés (.so) : ils doivent être installés à l'exécution via
+-- require("nvim-treesitter").install() (compilation avec gcc/tree-sitter,
+-- fournis par extraPackages). Sans ça, vim.treesitter.get_parser() renvoie
+-- nil pour tous les langages, ce qui casse silencieusement le highlighting
+-- ET Comment.nvim (qui s'appuie sur treesitter pour calculer le
+-- commentstring et plante si le parser est absent, ex: fichiers Rust).
+local ts_ensure_installed = {
+  "rust", "lua", "vim", "vimdoc", "query",
+  "go", "python", "bash", "json", "yaml", "toml",
+  "html", "css", "javascript", "typescript", "markdown", "nix",
+}
+
+local function ts_install_missing(langs)
+  local ok, nvim_ts = pcall(require, "nvim-treesitter")
+  if not ok then
+    return
+  end
+  local installed = nvim_ts.get_installed and nvim_ts.get_installed("parsers") or {}
+  local installed_set = {}
+  for _, lang in ipairs(installed) do
+    installed_set[lang] = true
+  end
+  local missing = {}
+  for _, lang in ipairs(langs) do
+    if not installed_set[lang] then
+      table.insert(missing, lang)
+    end
+  end
+  if #missing > 0 then
+    pcall(nvim_ts.install, missing)
+  end
+end
+
+-- Installe les parsers manquants au démarrage (asynchrone, non bloquant).
+vim.api.nvim_create_autocmd("VimEnter", {
+  once = true,
+  callback = function()
+    pcall(ts_install_missing, ts_ensure_installed)
+  end,
+})
+
 vim.api.nvim_create_autocmd("FileType", {
   callback = function(ev)
     pcall(vim.treesitter.start, ev.buf)
