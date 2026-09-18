@@ -25,9 +25,6 @@
     # Mistral Vibe
     mistral-vibe.url = "github:mistralai/mistral-vibe";
 
-    #copilot CLI from a flake of mine
-    copilot-cli.url = "github:scarisey/copilot-cli-flake";
-
     #Homelabe separate module
     homelab-nix.url = "github:scarisey/homelab-nix";
 

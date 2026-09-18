@@ -1,6 +1,6 @@
 # Claude AI Context for NixOS Dotfiles
 
-This file provides context for Claude AI (via GitHub Copilot CLI or other AI assistants) when working with this NixOS configuration repository.
+This file provides context for Claude AI when working with this NixOS configuration repository.
 
 ## Repository Overview
 
@@ -84,7 +84,6 @@ Each includes `../common.nix` which imports all home-manager modules and sets up
 | `android-nixpkgs` | Android SDK | Latest |
 | `ghostty` | Terminal emulator | Latest |
 | `nixgl` | OpenGL for non-NixOS | Latest |
-| `copilot-cli` | GitHub Copilot CLI | scarisey's flake |
 | `homelab-nix` | Homelab modules | scarisey's repo |
 | `private-vault` | Encrypted secrets | Private repo |
 | `private-modules` | Private modules | Private repo |
