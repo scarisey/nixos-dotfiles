@@ -8,7 +8,6 @@
   in
     import ../pkgs {pkgs = final;}
     // {
-      copilotCli = inputs.copilot-cli.packages.${final.system}.default;
       mistralVibe = inputs.mistral-vibe.packages.${final.system}.default;
       opencode = unstable.opencode;
       darktable = unstable.darktable;

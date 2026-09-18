@@ -103,7 +103,7 @@ in {
           ++ optionals (cfg.duckdb || cfg.all) [
             duckdb
           ]
-          ++ optionals (cfg.mistralVibe || cfg.all) [
+          ++ optionals cfg.mistralVibe [
             mistralVibe
           ]
           ++ optionals cfg.opencode [
