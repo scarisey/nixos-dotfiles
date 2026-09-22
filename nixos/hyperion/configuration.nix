@@ -15,6 +15,7 @@
     ./immich.nix
     ./llama.nix
     ./microbin.nix
+    ./microvm.nix
     ./nfs.nix
     ./samba.nix
     ./vpnServer.nix
@@ -62,14 +63,6 @@
   ];
   services.fail2ban.enable = true;
 
-  services.smartd = {
-    enable = true;
-    devices = [
-      {
-        device = "/dev/sda";
-      }
-    ];
-  };
   hardware.graphics = {
     enable = true;
     enable32Bit = true;

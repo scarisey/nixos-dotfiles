@@ -10,7 +10,7 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   boot.initrd.availableKernelModules = ["nvme" "ahci" "xhci_pci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci"];
   boot.initrd.kernelModules = ["amdgpu"];
-  boot.kernelModules = ["wireguard"];
+  boot.kernelModules = ["wireguard" "kvm-amd"];
   boot.extraModulePackages =
     lib.optional (lib.versionOlder config.boot.kernelPackages.kernel.version "5.6")
     config.boot.kernelPackages.wireguard;
@@ -30,13 +30,24 @@
   fileSystems."/data/disk1" = {
     device = "/dev/disk/by-uuid/e25681a2-916c-4761-a0fe-cb83e97fcf00";
     fsType = "ext4";
+    options = [ "defaults" "noatime" ];
   };
 
   fileSystems."/data/disk2" = {
     device = "/dev/disk/by-uuid/8f5fcf04-403e-4202-a124-1fea9e6eb83c";
     fsType = "ext4";
+    options = [ "defaults" "noatime" ];
   };
 
+  services.smartd = {
+    enable = true;
+    defaults.monitored = "-a -o on -S on -n standby,q"; # -n standby empêche d'interroger si le disque est en veille
+    devices = [
+      {
+        device = "/dev/sda";
+      }
+    ];
+  };
   swapDevices = [];
 
   networking.useDHCP = lib.mkDefault true;
