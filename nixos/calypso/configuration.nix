@@ -9,7 +9,6 @@ in {
   ];
 
   home-manager = {
-    enable = true;
     useGlobalPkgs = true;
     useUserPackages = true;
     users.sylvain = import ../../home-manager/sylvain/x86_64-linux/calypso/home.nix;

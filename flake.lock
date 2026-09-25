@@ -888,11 +888,11 @@
     },
     "private-vault": {
       "locked": {
-        "lastModified": 1785666793,
-        "narHash": "sha256-wMRufi4ywOqJUeyb55eVYz+btRtTiHCAWOiDU+fd2HQ=",
+        "lastModified": 1790318739,
+        "narHash": "sha256-CrlvDHBStnKKAisnPfmwYpOilgpKohrODCkhUQNxU54=",
         "owner": "scarisey",
         "repo": "vault",
-        "rev": "2ac64ff8d8e912535c5f5c9c7f0a14afb3e9c09f",
+        "rev": "7c7640ce9617204393f0f4a2d83a810c186979be",
         "type": "github"
       },
       "original": {
