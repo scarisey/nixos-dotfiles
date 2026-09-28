@@ -1,6 +1,13 @@
-{inputs, outputs, ...}: let
+{
+  inputs,
+  outputs,
+  lib,
+  config,
+  ...
+}: let
   mac = "02:00:00:00:0a:02";
   tap = "vm-calypso";
+  disks = "/data/disk2/vms/calypso-disks";
 in {
   imports = [
     inputs.home-manager.nixosModules.home-manager
@@ -12,12 +19,22 @@ in {
     useGlobalPkgs = true;
     useUserPackages = true;
     users.sylvain = import ../../home-manager/sylvain/x86_64-linux/calypso/home.nix;
-    extraSpecialArgs = { inherit inputs outputs; };
+    extraSpecialArgs = {inherit inputs outputs;};
   };
   microvm = {
     hypervisor = "qemu";
     vcpu = 4;
     mem = 16384;
+    # Without a writable store overlay, microvm.nix disables nix-daemon,
+    # and home-manager activation (which needs a working nix) fails at boot.
+    writableStoreOverlay = "/nix/.rw-store";
+    volumes = [
+      {
+        image = "${disks}/nix-store-overlay.img";
+        mountPoint = config.microvm.writableStoreOverlay;
+        size = 20480;
+      }
+    ];
     interfaces = [
       {
         type = "tap";
@@ -61,4 +78,11 @@ in {
   };
 
   nixpkgs.hostPlatform = "x86_64-linux";
+
+  systemd.tmpfiles.rules = [
+    "d /data/secrets 0700 sylvain users -"
+  ];
+
+  # Incompatible with microvm.writableStoreOverlay
+  nix.settings.auto-optimise-store = lib.mkForce false;
 }
