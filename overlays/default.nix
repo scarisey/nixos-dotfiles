@@ -9,6 +9,7 @@
     import ../pkgs {pkgs = final;}
     // {
       mistralVibe = inputs.mistral-vibe.packages.${final.system}.default;
+      headroom-cli = inputs.headroom.packages.${final.system}.default;
       opencode = unstable.opencode;
       darktable = unstable.darktable;
       devenv = unstable.devenv;
