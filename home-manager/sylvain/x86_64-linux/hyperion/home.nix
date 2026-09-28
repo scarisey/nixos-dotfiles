@@ -10,11 +10,6 @@
 
   scarisey.myshell.enable = true;
   scarisey.devtools.enable = true;
-  scarisey.restic = {
-    enable = true;
-    all = false;
-    hddBackup1 = true;
-  };
 
   home.packages = with pkgs; [
     filter-nef-by-rating

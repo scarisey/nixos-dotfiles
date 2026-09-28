@@ -18,7 +18,8 @@ in {
   systemd.tmpfiles.rules = [
     "d /data/disk2/vms 0755 root root -"
     "d ${shareDir} 0755 root root -"
-    "d ${shareDir}-disks 0755 root root -"
+    "d ${shareDir}-disks 0750 microvm kvm -"
+    "Z ${shareDir}-disks - microvm kvm -"
   ];
 
   networking.networkmanager.unmanaged = ["interface-name:${tap}"];
