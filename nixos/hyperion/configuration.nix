@@ -15,7 +15,6 @@
     ./immich.nix
     ./llama.nix
     ./microbin.nix
-    ./microvm.nix
     ./nfs.nix
     ./samba.nix
     ./vpnServer.nix

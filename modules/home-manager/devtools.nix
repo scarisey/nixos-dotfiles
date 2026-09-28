@@ -105,9 +105,6 @@ in {
           ]
           ++ optionals cfg.mistralVibe [
             mistralVibe
-          ]
-          ++ optionals cfg.opencode [
-            opencode
           ];
         programs.zsh.initContent = lib.mkOrder 1500 ''
           eval "$(devenv hook zsh)"
@@ -123,15 +120,10 @@ in {
         };
         home.file.".jdks/current".source = "${cfg.jdkPkg}/lib/openjdk";
       })
-
       (mkIf cfg.opencode {
-        sops.secrets."google_ai_studio/kilocode_api_key" = {
-          path = "${config.xdg.configHome}/opencode/google_ai_studio.key";
-          mode = "0400";
-        };
-        sops.secrets."openrouter/kilocode_api_key" = {
-          path = "${config.xdg.configHome}/opencode/openrouter.key";
-          mode = "0400";
+        programs.headroom = {
+          enable = true;
+          harness.package = pkgs.opencode;
         };
       })
     ]);

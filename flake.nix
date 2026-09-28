@@ -28,6 +28,9 @@
     #Homelabe separate module
     homelab-nix.url = "github:scarisey/homelab-nix";
 
+    #Headroom custom flake
+    headroom.url = "github:scarisey/headroom-flake";
+
     #MicroVMs
     microvm = {
       url = "github:microvm-nix/microvm.nix";
