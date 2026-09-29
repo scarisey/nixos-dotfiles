@@ -30,13 +30,13 @@
   fileSystems."/data/disk1" = {
     device = "/dev/disk/by-uuid/e25681a2-916c-4761-a0fe-cb83e97fcf00";
     fsType = "ext4";
-    options = [ "defaults" "noatime" ];
+    options = ["defaults" "noatime"];
   };
 
   fileSystems."/data/disk2" = {
     device = "/dev/disk/by-uuid/8f5fcf04-403e-4202-a124-1fea9e6eb83c";
     fsType = "ext4";
-    options = [ "defaults" "noatime" ];
+    options = ["defaults" "noatime"];
   };
 
   services.smartd = {

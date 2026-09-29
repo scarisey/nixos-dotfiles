@@ -23,7 +23,7 @@ in {
   };
   microvm = {
     hypervisor = "qemu";
-    vcpu = 4;
+    vcpu = 6;
     mem = 16384;
     # Without a writable store overlay, microvm.nix disables nix-daemon,
     # and home-manager activation (which needs a working nix) fails at boot.

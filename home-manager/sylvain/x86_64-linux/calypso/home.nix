@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  config,
   ...
 }: {
   imports = [
@@ -13,9 +14,22 @@
   scarisey.myshell.enable = true;
   scarisey.devtools = {
     enable = true;
+    opencode = true;
   };
 
   home.packages = with pkgs; [
     gh
   ];
+
+  sops.secrets = {
+    "calypso/openrouter/demo_api_key" = {
+      mode = "0400";
+    };
+    "calypso/relace/demo_api_key" = {
+      mode = "0400";
+    };
+    "calypso/github/pat" = {
+      mode = "0400";
+    };
+  };
 }
