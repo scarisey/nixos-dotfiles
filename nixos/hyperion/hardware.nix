@@ -59,7 +59,7 @@
   hardware.cpu.amd.updateMicrocode = true;
   boot.kernelParams = [
     "quiet"
-    "amd_pstate=passive" # permet au scheduler de descendre la fréquence plus souvent
+    "amd_pstate=active"
     "acpi_enforce_resources=lax"
   ];
   powerManagement.cpuFreqGovernor = "powersave";
@@ -69,12 +69,12 @@
     settings = {
       CPU_SCALING_GOVERNOR_ON_AC = "powersave";
       CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-      CPU_ENERGY_PERF_POLICY_ON_AC = "power";
+      CPU_ENERGY_PERF_POLICY_ON_AC = "balance_power";
       CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
-      PLATFORM_PROFILE_ON_AC = "low-power";
+      PLATFORM_PROFILE_ON_AC = "balanced";
       PLATFORM_PROFILE_ON_BAT = "low-power";
       CPU_MIN_PERF_ON_AC = 0;
-      CPU_MAX_PERF_ON_AC = 40;
+      CPU_MAX_PERF_ON_AC = 100;
       CPU_MIN_PERF_ON_BAT = 0;
       CPU_MAX_PERF_ON_BAT = 20;
     };
