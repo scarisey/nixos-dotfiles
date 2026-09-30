@@ -48,6 +48,10 @@ in {
         tag = "ro-store";
         source = "/nix/store";
         mountPoint = "/nix/.ro-store";
+        # The host store is immutable, so the guest can cache it aggressively
+        # instead of revalidating metadata on every lookup.
+        readOnly = true;
+        cache = "always";
       }
       {
         proto = "virtiofs";
