@@ -2,15 +2,16 @@
 # These should be stuff you would like to share with others, not your personal configurations.
 {
   bootanimation = import ./bootanimation.nix;
+  cloud = import ./cloud.nix;
   cosmic = import ./cosmic.nix;
+  distrobox = import ./distrobox.nix;
   docker = import ./docker.nix;
+  gnome = import ./gnome.nix;
+  harness = import ./harness.nix;
   i3Xfce = import ./i3.nix;
   kde = import ./kde.nix;
   llama-cpp = import ./llama-cpp.nix;
-  gnome = import ./gnome.nix;
-  cloud = import ./cloud.nix;
-  distrobox = import ./distrobox.nix;
-  qemu = import ./qemu.nix;
   network = import ./network.nix;
+  qemu = import ./qemu.nix;
   vpn = import ./vpn.nix;
 }
