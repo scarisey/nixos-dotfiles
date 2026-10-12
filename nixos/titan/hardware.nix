@@ -57,5 +57,6 @@
     forceFullCompositionPipeline = false;
     package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
+  hardware.bluetooth.enable = true;
   powerManagement.cpuFreqGovernor = "performance";
 }
