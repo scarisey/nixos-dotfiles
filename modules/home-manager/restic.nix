@@ -23,14 +23,6 @@ with lib; let
     export RESTIC_PASSWORD_FILE="${config.sops.secrets."restic/protonDrive".path}"
     ${pkgs.restic}/bin/restic "$@"
   '';
-  resticCronos = pkgs.writeShellScriptBin "restic-cronos" ''
-    export RESTIC_REPOSITORY="s3:https://s3.eu-central-003.backblazeb2.com/cronos-backups"
-    export RESTIC_PASSWORD_FILE="${config.sops.secrets."restic/cronos-backups/repositoryPwd".path}"
-    set -a
-    source ${config.sops.secrets."restic/cronos-backups/backblaze/envFile".path}
-    set +a
-    ${pkgs.restic}/bin/restic "$@"
-  '';
 in {
   options.scarisey.restic = {
     enable = mkEnableOption "Restic settings.";
@@ -46,14 +38,11 @@ in {
         resticHdd1
       ]
       ++ optionals cfg.all [
-        resticCronos
         resticProton
         mountProton
       ];
 
     sops.secrets."restic/hdd-backup-1/repositoryPwd" = mkIf (cfg.all || cfg.hddBackup1) {};
     sops.secrets."restic/protonDrive" = mkIf cfg.all {};
-    sops.secrets."restic/cronos-backups/repositoryPwd" = mkIf cfg.all {};
-    sops.secrets."restic/cronos-backups/backblaze/envFile" = mkIf cfg.all {};
   };
 }
