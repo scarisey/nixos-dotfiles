@@ -13,6 +13,7 @@
 
   home.packages = with pkgs; [
     filter-nef-by-rating
+    tuios
   ];
 
   services.pullix = {
