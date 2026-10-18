@@ -19,6 +19,9 @@
     #ghostty terminal
     ghostty.url = "github:ghostty-org/ghostty";
 
+    #tuios multiplexer
+    tuios.url = "github:Gaurav-Gosain/tuios";
+
     #herdr multiplexer
     herdr.url = "github:ogulcancelik/herdr";
 

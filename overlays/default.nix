@@ -8,18 +8,19 @@
   in
     import ../pkgs {pkgs = final;}
     // {
-      mistralVibe = inputs.mistral-vibe.packages.${final.system}.default;
-      headroom-cli = inputs.headroom.packages.${final.system}.default;
-      opencode = unstable.opencode;
       darktable = unstable.darktable;
       devenv = unstable.devenv;
-      immich-unstable = unstable.immich;
       ghostty = inputs.ghostty.packages.${final.system}.default;
+      headroom-cli = inputs.headroom.packages.${final.system}.default;
+      immich-unstable = unstable.immich;
+      llama-cpp-rocm = unstable.llama-cpp-rocm;
+      llama-cpp = unstable.llama-cpp;
+      mistralVibe = inputs.mistral-vibe.packages.${final.system}.default;
+      opencode = unstable.opencode;
       plex = unstable.plex;
+      tuios = inputs.tuios.packages.${final.system}.default;
       windsurf = unstable.windsurf;
       zed-editor = unstable.zed-editor;
-      llama-cpp = unstable.llama-cpp;
-      llama-cpp-rocm = unstable.llama-cpp-rocm;
     };
 
   modifications = final: prev: {};
