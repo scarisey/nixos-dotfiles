@@ -11,7 +11,6 @@
       darktable = unstable.darktable;
       devenv = unstable.devenv;
       ghostty = inputs.ghostty.packages.${final.system}.default;
-      headroom-cli = inputs.headroom.packages.${final.system}.default;
       immich-unstable = unstable.immich;
       llama-cpp-rocm = unstable.llama-cpp-rocm;
       llama-cpp = unstable.llama-cpp;
@@ -26,4 +25,3 @@
   modifications = final: prev: {};
 }
 // {homelab-nix-overlay = inputs.homelab-nix.overlays.default;}
-// {herdr-overlay = inputs.herdr.overlays.default;}

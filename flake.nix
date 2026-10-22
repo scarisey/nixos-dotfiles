@@ -22,17 +22,11 @@
     #tuios multiplexer
     tuios.url = "github:Gaurav-Gosain/tuios";
 
-    #herdr multiplexer
-    herdr.url = "github:ogulcancelik/herdr";
-
     # Mistral Vibe
     mistral-vibe.url = "github:mistralai/mistral-vibe";
 
     #Homelabe separate module
     homelab-nix.url = "github:scarisey/homelab-nix";
-
-    #Headroom custom flake
-    headroom.url = "github:scarisey/headroom-flake";
 
     #MicroVMs
     microvm = {
