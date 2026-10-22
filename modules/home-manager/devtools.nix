@@ -120,11 +120,5 @@ in {
         };
         home.file.".jdks/current".source = "${cfg.jdkPkg}/lib/openjdk";
       })
-      (mkIf cfg.opencode {
-        programs.headroom = {
-          enable = true;
-          harness.package = pkgs.opencode;
-        };
-      })
     ]);
 }
