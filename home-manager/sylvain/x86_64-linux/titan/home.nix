@@ -18,6 +18,7 @@
   scarisey.kde.enable = true;
 
   home.packages = with pkgs; [
+    tuios
     darktable
     filter-nef-by-rating
   ];
