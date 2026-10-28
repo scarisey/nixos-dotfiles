@@ -6,8 +6,7 @@
   scarisey.myshell.enable = true;
   scarisey.devtools.enable = true;
 
-  home.packages = with pkgs;[
+  home.packages = with pkgs; [
     ghostty
   ];
-
 }

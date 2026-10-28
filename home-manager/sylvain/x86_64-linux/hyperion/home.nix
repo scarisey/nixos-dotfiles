@@ -6,6 +6,7 @@
 }: {
   imports = [
     ../../common.nix
+    ./harness.nix
   ];
 
   scarisey.myshell.enable = true;
