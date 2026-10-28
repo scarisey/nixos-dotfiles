@@ -15,7 +15,7 @@
       llama-cpp-rocm = unstable.llama-cpp-rocm;
       llama-cpp = unstable.llama-cpp;
       mistralVibe = inputs.mistral-vibe.packages.${final.system}.default;
-      opencode = unstable.opencode;
+      opencode = inputs.opencode.packages.${final.system}.opencode;
       plex = unstable.plex;
       tuios = inputs.tuios.packages.${final.system}.default;
       windsurf = unstable.windsurf;
@@ -25,3 +25,4 @@
   modifications = final: prev: {};
 }
 // {homelab-nix-overlay = inputs.homelab-nix.overlays.default;}
+// {harness-jail-overlay = inputs.harness-jail.overlays.default;}
