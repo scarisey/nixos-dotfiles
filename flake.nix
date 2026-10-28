@@ -38,6 +38,9 @@
       url = "github:nix-community/nixvim";
     };
 
+    #Opencode
+    opencode.url = "github:anomalyco/opencode";
+
     #Pull based deployments
     pullix.url = "github:scarisey/pullix";
 
@@ -49,6 +52,9 @@
     private-modules = {
       url = "github:scarisey/private-nix-modules";
     };
+
+    #harness custom tooling
+    harness-jail.url = "github:scarisey/harness-jail";
   };
 
   outputs = {
