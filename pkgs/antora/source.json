@@ -1,6 +1,6 @@
 {
-  "version": "3.2.1",
-  "integrity": "sha512-yQwSUnPCGZfBx4nGgY2oTqV0eWbDYIVE/z+tgM14/4oHgzAt9JcT3sIPO03AKj2FeWf7otVFEfUPMbxI/wybFw==",
-  "filename": "antora-3.2.1.tgz",
-  "deps": "sha256-qoIhsZYN0HEwlcJIrfdloSnoAm/1Lpz5h/v8JNeaIIY="
+  "version": "3.2.2",
+  "integrity": "sha512-c5oRoHggeLl1oNZ2w0LIgb+qpC5+qFvRs9308IvuNoUHE1aYczvF5bZ/teZg6XeZLtucwTke/7Ehd+WoXCsnZw==",
+  "filename": "antora-3.2.2.tgz",
+  "deps": "sha256-MStoXx37i68mI85EYOrkevnQQ+GoLZQgESb6CFeAVNA="
 }
