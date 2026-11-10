@@ -23,7 +23,7 @@
 
   nixpkgs.config.allowBroken = true; #FIXME for immich to build
 
-  scarisey.privateModules.enable = true;
+  scarisey.privateModules.enable = false;
 
   services.pullix = {
     enable = true;
