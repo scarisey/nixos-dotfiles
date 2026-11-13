@@ -18,6 +18,7 @@
       opencode = inputs.opencode.packages.${final.system}.opencode;
       plex = unstable.plex;
       tuios = inputs.tuios.packages.${final.system}.default;
+      vscode-fhs = unstable.vscode-fhs;
       windsurf = unstable.windsurf;
       zed-editor = unstable.zed-editor;
     };
