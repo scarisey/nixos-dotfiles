@@ -1090,11 +1090,11 @@
     },
     "private-modules": {
       "locked": {
-        "lastModified": 1794330592,
-        "narHash": "sha256-ET66L8nUq8aTOKlKLrXZN7DW+J1Dfn7LJggN0vU/ZCs=",
+        "lastModified": 1794678080,
+        "narHash": "sha256-6UC3Eccxv/AoumS39ec2Hxk+aI+sdMoRJs5CoZpUbDo=",
         "owner": "scarisey",
         "repo": "private-nix-modules",
-        "rev": "ca639824897f0b46edb4708392c059653c067445",
+        "rev": "972128ad1a886ce15f5f7088b95afa6095ff598e",
         "type": "github"
       },
       "original": {
@@ -1105,11 +1105,11 @@
     },
     "private-vault": {
       "locked": {
-        "lastModified": 1790676466,
-        "narHash": "sha256-Kuuu/R+1NJPlTQ6DgEMwYNzMUEjDMpWopLzvaZOYqK0=",
+        "lastModified": 1794677428,
+        "narHash": "sha256-Xa8E0tsgSV/Gtgt/jOtG45nq1JQD4Sig5CiVWWm6mCM=",
         "owner": "scarisey",
         "repo": "vault",
-        "rev": "a3e1806679c59a6e6896838e20d5930f6ad90ef2",
+        "rev": "f8926aac2d2d43a8891b59ab0b9f23cd439074c4",
         "type": "github"
       },
       "original": {
